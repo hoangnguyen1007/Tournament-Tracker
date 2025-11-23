@@ -102,7 +102,8 @@ namespace TeamListForm
         {
             var players = new List<Player>();
             string sql = @"
-        SELECT 
+        SELECT
+            p.ID,
             p.PLAYERNAME,
             p.POSITION,
             p.AGE,
@@ -125,6 +126,8 @@ namespace TeamListForm
                     {
                         players.Add(new Player
                         {
+                            ID = reader.GetInt32("ID"),
+
                             PlayerName = reader["PLAYERNAME"]?.ToString().Trim() ?? "",
                             Position = reader["POSITION"]?.ToString().Trim() ?? "",
                             Age = reader.IsDBNull("AGE") ? 0 : reader.GetInt32("AGE"),
@@ -137,7 +140,7 @@ namespace TeamListForm
         }
         public static void InsertPlayer(Player player)
         {
-            string sql = "INSERT INTO Players (PlayerName, Age, Position, TeamID) VALUES (@Name, @Age, @Pos, @TeamID)";
+            string sql = "INSERT INTO Players (PlayerName, Age, Position, IDTEAM) VALUES (@Name, @Age, @Pos, @TeamID)";
             using var conn = new SqlConnection(connectionString);
             using var cmd = new SqlCommand(sql, conn);
             cmd.Parameters.AddWithValue("@Name", player.PlayerName);
@@ -156,6 +159,7 @@ namespace TeamListForm
             cmd.Parameters.AddWithValue("@Name", player.PlayerName);
             cmd.Parameters.AddWithValue("@Age", player.Age);
             cmd.Parameters.AddWithValue("@Pos", player.Position);
+            cmd.Parameters.AddWithValue("@ID", player.ID);
             conn.Open();
             cmd.ExecuteNonQuery();
         }

@@ -47,6 +47,7 @@
             btnCancel.TabIndex = 14;
             btnCancel.Text = "Cancel";
             btnCancel.UseVisualStyleBackColor = true;
+            this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
             // 
             // btnOption
             // 
@@ -57,6 +58,7 @@
             btnOption.TabIndex = 13;
             btnOption.Text = "Save";
             btnOption.UseVisualStyleBackColor = true;
+            this.btnOption.Click += new System.EventHandler(this.btnSave_Click);
             // 
             // txtPlayerName
             // 
