@@ -1,4 +1,4 @@
-﻿namespace tournament_tracker
+﻿namespace TeamListForm
 {
     partial class MatchResultForm
     {

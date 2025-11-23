@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace tournament_tracker
+namespace TeamListForm
 {
     public partial class MatchesScheduleForm : Form
     {
@@ -16,5 +16,12 @@ namespace tournament_tracker
         {
             InitializeComponent();
         }
+
+        private void updateButton_Click(object sender, EventArgs e)
+        {
+            MatchResultForm match_result = new MatchResultForm();
+            match_result.ShowDialog();
+        }
+
     }
 }
