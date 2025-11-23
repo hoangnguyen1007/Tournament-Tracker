@@ -10,9 +10,9 @@ using System.Windows.Forms;
 
 namespace tournament_tracker
 {
-    public partial class mainForm : Form
+    public partial class MatchesScheduleForm : Form
     {
-        public mainForm()
+        public MatchesScheduleForm()
         {
             InitializeComponent();
         }
