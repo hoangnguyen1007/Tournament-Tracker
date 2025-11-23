@@ -59,22 +59,10 @@ IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[Ac
 BEGIN
     CREATE TABLE [dbo].[Account](
         [ID] [int] IDENTITY(1,1) NOT NULL,
-        [DisplayName] [nvarchar](100) NULL, -- Tên hiển thị (VD: Admin, Staff)
-        [UserName] [varchar](100) NOT NULL, -- Tên đăng nhập
-        [Password] [varchar](100) NOT NULL, -- Mật khẩu
-        [Type] [int] DEFAULT 1,             -- Loại tài khoản (1: User, 0: Admin...)
-        [CreatedAt] [datetime] DEFAULT GETDATE(), -- Ngày tạo (Tự động lấy giờ hiện tại)
+	[Username] [nvarchar](50) NOT NULL,
+	[PasswordHash] [nvarchar](255) NOT NULL,
+	[CreatedAt] [datetime] NULL,
         PRIMARY KEY CLUSTERED ([ID] ASC)
-    );
-    
-    -- Thêm một tài khoản mẫu để test đăng nhập luôn
-    INSERT INTO Account (DisplayName, UserName, Password, Type) 
-    VALUES (N'Admin', 'admin', '123456', 0);
-    
-    PRINT 'Da tao bang Account va them tai khoan mau (admin/123456)';
-END
-ELSE
-BEGIN
-    PRINT 'Bang Account da ton tai roi.';
-END
+        );
+    END
 GO
