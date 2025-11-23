@@ -30,10 +30,14 @@ namespace TourApp
 
         private void logOutToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            HomeForm homeform = new HomeForm();
-            homeform.Show();
+            LoginForm homeform = new LoginForm();
             this.Hide();
-            this.Dispose();
+            homeform.Show();
+        }
+
+        private void Home_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            Application.Exit();
         }
     }
 }
