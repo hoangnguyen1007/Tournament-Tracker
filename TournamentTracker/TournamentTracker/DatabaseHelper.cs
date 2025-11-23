@@ -203,14 +203,6 @@ namespace TeamListForm
                 using (SqlConnection conn = new SqlConnection(connectionString))
                 {
                     conn.Open();
-
-                    // Debug: xem database đang kết nối
-                    using (var dbCheck = new SqlCommand("SELECT DB_NAME()", conn))
-                    {
-                        string dbName = (string)dbCheck.ExecuteScalar();
-                        MessageBox.Show("Connected database: " + dbName);
-                    }
-
                     // Kiểm tra username đã tồn tại
                     using (SqlCommand check = new SqlCommand("SELECT COUNT(*) FROM dbo.Account WHERE Username=@username", conn))
                     {
@@ -218,7 +210,6 @@ namespace TeamListForm
                         int exists = (int)check.ExecuteScalar();
                         if (exists > 0)
                         {
-                            MessageBox.Show("Username already exists!");
                             return false;
                         }
                     }
