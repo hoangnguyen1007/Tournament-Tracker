@@ -1,6 +1,6 @@
 ﻿namespace TourApp
 {
-    partial class HomeForm
+    partial class LoginForm
     {
         /// <summary>
         ///  Required designer variable.
@@ -28,11 +28,11 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(HomeForm));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(LoginForm));
             loginPanel = new Panel();
             resLink = new LinkLabel();
             label2 = new Label();
-            button1 = new Button();
+            logBtn = new Button();
             loginLabel = new Label();
             passTextBox = new TextBox();
             passLabel = new Label();
@@ -43,7 +43,7 @@
             res_conPassTextBox = new TextBox();
             loginLink = new LinkLabel();
             label3 = new Label();
-            button2 = new Button();
+            resBtn = new Button();
             label4 = new Label();
             res_passTextBox = new TextBox();
             label5 = new Label();
@@ -61,7 +61,7 @@
             loginPanel.BackColor = Color.Transparent;
             loginPanel.Controls.Add(resLink);
             loginPanel.Controls.Add(label2);
-            loginPanel.Controls.Add(button1);
+            loginPanel.Controls.Add(logBtn);
             loginPanel.Controls.Add(loginLabel);
             loginPanel.Controls.Add(passTextBox);
             loginPanel.Controls.Add(passLabel);
@@ -97,19 +97,20 @@
             label2.TabIndex = 6;
             label2.Text = "Don't have an account?, ";
             // 
-            // button1
+            // logBtn
             // 
-            button1.BackColor = Color.FromArgb(64, 64, 64);
-            button1.BackgroundImage = (Image)resources.GetObject("button1.BackgroundImage");
-            button1.FlatAppearance.BorderSize = 0;
-            button1.FlatStyle = FlatStyle.Flat;
-            button1.Font = new Font("Segoe UI", 26F);
-            button1.ForeColor = Color.Transparent;
-            button1.Location = new Point(136, 275);
-            button1.Name = "button1";
-            button1.Size = new Size(75, 71);
-            button1.TabIndex = 5;
-            button1.UseVisualStyleBackColor = false;
+            logBtn.BackColor = Color.FromArgb(64, 64, 64);
+            logBtn.BackgroundImage = (Image)resources.GetObject("logBtn.BackgroundImage");
+            logBtn.FlatAppearance.BorderSize = 0;
+            logBtn.FlatStyle = FlatStyle.Flat;
+            logBtn.Font = new Font("Segoe UI", 26F);
+            logBtn.ForeColor = Color.Transparent;
+            logBtn.Location = new Point(136, 275);
+            logBtn.Name = "logBtn";
+            logBtn.Size = new Size(75, 71);
+            logBtn.TabIndex = 5;
+            logBtn.UseVisualStyleBackColor = false;
+            logBtn.Click += logBtn_Click;
             // 
             // loginLabel
             // 
@@ -173,7 +174,7 @@
             registerPanel.Controls.Add(res_conPassTextBox);
             registerPanel.Controls.Add(loginLink);
             registerPanel.Controls.Add(label3);
-            registerPanel.Controls.Add(button2);
+            registerPanel.Controls.Add(resBtn);
             registerPanel.Controls.Add(label4);
             registerPanel.Controls.Add(res_passTextBox);
             registerPanel.Controls.Add(label5);
@@ -231,19 +232,20 @@
             label3.TabIndex = 6;
             label3.Text = "Have an account?";
             // 
-            // button2
+            // resBtn
             // 
-            button2.BackColor = Color.FromArgb(64, 64, 64);
-            button2.BackgroundImage = (Image)resources.GetObject("button2.BackgroundImage");
-            button2.FlatAppearance.BorderSize = 0;
-            button2.FlatStyle = FlatStyle.Flat;
-            button2.Font = new Font("Segoe UI", 26F);
-            button2.ForeColor = Color.Transparent;
-            button2.Location = new Point(136, 328);
-            button2.Name = "button2";
-            button2.Size = new Size(75, 71);
-            button2.TabIndex = 5;
-            button2.UseVisualStyleBackColor = false;
+            resBtn.BackColor = Color.FromArgb(64, 64, 64);
+            resBtn.BackgroundImage = (Image)resources.GetObject("resBtn.BackgroundImage");
+            resBtn.FlatAppearance.BorderSize = 0;
+            resBtn.FlatStyle = FlatStyle.Flat;
+            resBtn.Font = new Font("Segoe UI", 26F);
+            resBtn.ForeColor = Color.Transparent;
+            resBtn.Location = new Point(136, 328);
+            resBtn.Name = "resBtn";
+            resBtn.Size = new Size(75, 71);
+            resBtn.TabIndex = 5;
+            resBtn.UseVisualStyleBackColor = false;
+            resBtn.Click += resBtn_Click;
             // 
             // label4
             // 
@@ -298,6 +300,7 @@
             res_usnTextBox.Name = "res_usnTextBox";
             res_usnTextBox.Size = new Size(253, 37);
             res_usnTextBox.TabIndex = 0;
+            res_usnTextBox.TextChanged += res_usnTextBox_TextChanged;
             // 
             // label1
             // 
@@ -320,7 +323,7 @@
             pictureBox2.TabIndex = 2;
             pictureBox2.TabStop = false;
             // 
-            // HomeForm
+            // LoginForm
             // 
             AutoScaleDimensions = new SizeF(10F, 25F);
             AutoScaleMode = AutoScaleMode.Font;
@@ -331,8 +334,9 @@
             Controls.Add(label1);
             Controls.Add(loginPanel);
             Icon = (Icon)resources.GetObject("$this.Icon");
-            Name = "HomeForm";
+            Name = "LoginForm";
             Text = "Home";
+            FormClosed += LoginForm_FormClosed;
             loginPanel.ResumeLayout(false);
             loginPanel.PerformLayout();
             registerPanel.ResumeLayout(false);
@@ -351,7 +355,7 @@
         private TextBox passTextBox;
         private Label label1;
         private Label loginLabel;
-        private Button button1;
+        private Button logBtn;
         private LinkLabel linkLabel1;
         private Label label2;
         private PictureBox pictureBox1;
@@ -360,7 +364,7 @@
         private TextBox res_conPassTextBox;
         private LinkLabel linkLabel2;
         private Label label3;
-        private Button button2;
+        private Button resBtn;
         private Label label4;
         private TextBox res_passTextBox;
         private Label label5;

@@ -6,13 +6,24 @@ using System.Threading.Tasks;
 using System.Collections.Generic;
 using Microsoft.Data.SqlClient;
 using System.Data;
+using System.Security.Cryptography;
+
 
 namespace TeamListForm
 {
     internal class DatabaseHelper
     {
         private static string connectionString =
-            @"Data Source=DESKTOP-LOJ3INE\SQLEXPRESS;Initial Catalog=TournamentTracker;Integrated Security=True;TrustServerCertificate=True;";
+            @"Data Source=localhost;
+  Initial Catalog=TournamentTracker;
+  Integrated Security=True;
+  Persist Security Info=False;
+  Pooling=False;
+  MultipleActiveResultSets=False;
+  Encrypt=False;
+  TrustServerCertificate=True;
+  Application Name=""SQL Server Management Studio"";
+  Command Timeout=30";
 
         // TEAMS
         public static List<Team> GetTeams(string search = "")
@@ -177,6 +188,78 @@ namespace TeamListForm
 
             conn.Open();
             cmd.ExecuteNonQuery();
+        }
+        public bool Register(string username, string password)
+        {
+            string hashedPassword;
+            using (SHA256 sha = SHA256.Create())
+            {
+                byte[] bytes = sha.ComputeHash(Encoding.UTF8.GetBytes(password));
+                hashedPassword = BitConverter.ToString(bytes).Replace("-", "");
+            }
+
+            try
+            {
+                using (SqlConnection conn = new SqlConnection(connectionString))
+                {
+                    conn.Open();
+
+                    // Debug: xem database đang kết nối
+                    using (var dbCheck = new SqlCommand("SELECT DB_NAME()", conn))
+                    {
+                        string dbName = (string)dbCheck.ExecuteScalar();
+                        MessageBox.Show("Connected database: " + dbName);
+                    }
+
+                    // Kiểm tra username đã tồn tại
+                    using (SqlCommand check = new SqlCommand("SELECT COUNT(*) FROM dbo.Account WHERE Username=@username", conn))
+                    {
+                        check.Parameters.AddWithValue("@username", username);
+                        int exists = (int)check.ExecuteScalar();
+                        if (exists > 0)
+                        {
+                            MessageBox.Show("Username already exists!");
+                            return false;
+                        }
+                    }
+
+                    // Thêm account mới
+                    using (SqlCommand cmd = new SqlCommand(
+                        "INSERT INTO dbo.Account (Username, PasswordHash) VALUES (@username, @password)", conn))
+                    {
+                        cmd.Parameters.AddWithValue("@username", username);
+                        cmd.Parameters.AddWithValue("@password", hashedPassword);
+                        cmd.ExecuteNonQuery();
+                    }
+
+                    return true;
+                }
+            }
+            catch (SqlException ex)
+            {
+                MessageBox.Show("SQL Error: " + ex.Message);
+                return false;
+            }
+        }
+
+        public bool Login(string username, string password)
+        {
+            string hashedPassword;
+            using (SHA256 sha = SHA256.Create())
+            {
+                byte[] bytes = sha.ComputeHash(Encoding.UTF8.GetBytes(password));
+                hashedPassword = BitConverter.ToString(bytes).Replace("-", "");
+            }
+
+            using (SqlConnection conn = new SqlConnection(connectionString))
+            {
+                conn.Open();
+                SqlCommand cmd = new SqlCommand("SELECT COUNT(*) FROM Account WHERE Username=@username AND PasswordHash=@password", conn);
+                cmd.Parameters.AddWithValue("@username", username);
+                cmd.Parameters.AddWithValue("@password", hashedPassword);
+                int match = (int)cmd.ExecuteScalar();
+                return match > 0; // true nếu tồn tại, false nếu không
+            }
         }
     }
 }

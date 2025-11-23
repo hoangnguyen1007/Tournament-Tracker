@@ -121,31 +121,31 @@
             Account.ImageScalingSize = new Size(24, 24);
             Account.Items.AddRange(new ToolStripItem[] { myAccountToolStripMenuItem, settingsToolStripMenuItem, logOutToolStripMenuItem, exitToolStripMenuItem });
             Account.Name = "Account";
-            Account.Size = new Size(241, 165);
+            Account.Size = new Size(177, 132);
             // 
             // myAccountToolStripMenuItem
             // 
             myAccountToolStripMenuItem.Name = "myAccountToolStripMenuItem";
-            myAccountToolStripMenuItem.Size = new Size(240, 32);
+            myAccountToolStripMenuItem.Size = new Size(176, 32);
             myAccountToolStripMenuItem.Text = "My account";
             // 
             // settingsToolStripMenuItem
             // 
             settingsToolStripMenuItem.Name = "settingsToolStripMenuItem";
-            settingsToolStripMenuItem.Size = new Size(240, 32);
+            settingsToolStripMenuItem.Size = new Size(176, 32);
             settingsToolStripMenuItem.Text = "Settings";
             // 
             // logOutToolStripMenuItem
             // 
             logOutToolStripMenuItem.Name = "logOutToolStripMenuItem";
-            logOutToolStripMenuItem.Size = new Size(240, 32);
+            logOutToolStripMenuItem.Size = new Size(176, 32);
             logOutToolStripMenuItem.Text = "Log out";
             logOutToolStripMenuItem.Click += logOutToolStripMenuItem_Click;
             // 
             // exitToolStripMenuItem
             // 
             exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            exitToolStripMenuItem.Size = new Size(240, 32);
+            exitToolStripMenuItem.Size = new Size(176, 32);
             exitToolStripMenuItem.Text = "Exit";
             // 
             // createBtn
@@ -210,6 +210,7 @@
             Icon = (Icon)resources.GetObject("$this.Icon");
             Name = "Home";
             Text = " ";
+            FormClosed += Home_FormClosed;
             panel1.ResumeLayout(false);
             panel1.PerformLayout();
             Account.ResumeLayout(false);
