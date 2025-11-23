@@ -10,11 +10,17 @@ using System.Windows.Forms;
 
 namespace tournament_tracker
 {
-    public partial class mainForm : Form
+    public partial class MatchScheduleForm : Form
     {
-        public mainForm()
+        public MatchScheduleForm()
         {
             InitializeComponent();
+        }
+
+        private void updateButton_Click(object sender, EventArgs e)
+        {
+            MatchResultForm resultForm = new MatchResultForm();
+            resultForm.ShowDialog();
         }
     }
 }
