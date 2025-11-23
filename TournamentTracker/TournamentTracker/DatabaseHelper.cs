@@ -14,7 +14,7 @@ namespace TeamListForm
     internal class DatabaseHelper
     {
         private static string connectionString =
-            @"Data Source=localhost;
+            @"Data Source=.\SQLEXPRESS;
   Initial Catalog=TournamentTracker;
   Integrated Security=True;
   Persist Security Info=False;

@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace tournament_tracker
+namespace TeamListForm
 {
     public partial class MatchResultForm : Form
     {

@@ -1,4 +1,4 @@
-﻿namespace tournament_tracker
+﻿namespace TeamListForm
 {
     partial class MatchesScheduleForm
     {
@@ -30,21 +30,20 @@
         {
             DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle3 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle4 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle6 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle5 = new DataGridViewCellStyle();
             headerPanel = new Panel();
             titleLabel = new Label();
             matchesLabel = new Label();
             choiceRoundComboBox = new ComboBox();
             matchesDataGridView = new DataGridView();
-            updateButton = new Button();
-            standingsDataGridView = new DataGridView();
-            standingsLabel = new Label();
             colHome = new DataGridViewTextBoxColumn();
             colScore = new DataGridViewTextBoxColumn();
             colAway = new DataGridViewTextBoxColumn();
+            updateButton = new Button();
+            standingsDataGridView = new DataGridView();
             colSTT = new DataGridViewTextBoxColumn();
             colTeam = new DataGridViewTextBoxColumn();
             colP = new DataGridViewTextBoxColumn();
@@ -55,6 +54,7 @@
             colGA = new DataGridViewTextBoxColumn();
             colGD = new DataGridViewTextBoxColumn();
             colPTS = new DataGridViewTextBoxColumn();
+            standingsLabel = new Label();
             headerPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)matchesDataGridView).BeginInit();
             ((System.ComponentModel.ISupportInitialize)standingsDataGridView).BeginInit();
@@ -145,6 +145,36 @@
             matchesDataGridView.Size = new Size(585, 487);
             matchesDataGridView.TabIndex = 3;
             // 
+            // colHome
+            // 
+            colHome.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            colHome.DataPropertyName = "HomeTeamName";
+            colHome.FillWeight = 85.82887F;
+            colHome.HeaderText = "HOME";
+            colHome.MinimumWidth = 150;
+            colHome.Name = "colHome";
+            // 
+            // colScore
+            // 
+            colScore.AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
+            colScore.DataPropertyName = "ScoreDisplay";
+            dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            colScore.DefaultCellStyle = dataGridViewCellStyle2;
+            colScore.FillWeight = 128.3422F;
+            colScore.HeaderText = "SCORE";
+            colScore.MinimumWidth = 80;
+            colScore.Name = "colScore";
+            colScore.Width = 80;
+            // 
+            // colAway
+            // 
+            colAway.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            colAway.DataPropertyName = "AwayTeamName";
+            colAway.FillWeight = 85.82887F;
+            colAway.HeaderText = "AWAY";
+            colAway.MinimumWidth = 150;
+            colAway.Name = "colAway";
+            // 
             // updateButton
             // 
             updateButton.BackColor = Color.FromArgb(0, 180, 80);
@@ -160,6 +190,7 @@
             updateButton.TabIndex = 4;
             updateButton.Text = "UPDATE RESULTS";
             updateButton.UseVisualStyleBackColor = false;
+            updateButton.Click += updateButton_Click;
             // 
             // standingsDataGridView
             // 
@@ -196,47 +227,6 @@
             standingsDataGridView.RowTemplate.Height = 24;
             standingsDataGridView.Size = new Size(585, 558);
             standingsDataGridView.TabIndex = 5;
-            // 
-            // standingsLabel
-            // 
-            standingsLabel.AutoSize = true;
-            standingsLabel.Font = new Font("Segoe UI", 13F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            standingsLabel.ForeColor = Color.Gold;
-            standingsLabel.Location = new Point(649, 105);
-            standingsLabel.Name = "standingsLabel";
-            standingsLabel.Size = new Size(136, 30);
-            standingsLabel.TabIndex = 6;
-            standingsLabel.Text = "STANDINGS";
-            // 
-            // colHome
-            // 
-            colHome.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-            colHome.DataPropertyName = "HomeTeamName";
-            colHome.FillWeight = 85.82887F;
-            colHome.HeaderText = "HOME";
-            colHome.MinimumWidth = 150;
-            colHome.Name = "colHome";
-            // 
-            // colScore
-            // 
-            colScore.AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
-            colScore.DataPropertyName = "ScoreDisplay";
-            dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            colScore.DefaultCellStyle = dataGridViewCellStyle2;
-            colScore.FillWeight = 128.3422F;
-            colScore.HeaderText = "SCORE";
-            colScore.MinimumWidth = 80;
-            colScore.Name = "colScore";
-            colScore.Width = 80;
-            // 
-            // colAway
-            // 
-            colAway.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-            colAway.DataPropertyName = "AwayTeamName";
-            colAway.FillWeight = 85.82887F;
-            colAway.HeaderText = "AWAY";
-            colAway.MinimumWidth = 150;
-            colAway.Name = "colAway";
             // 
             // colSTT
             // 
@@ -330,6 +320,17 @@
             colPTS.MinimumWidth = 40;
             colPTS.Name = "colPTS";
             colPTS.Width = 64;
+            // 
+            // standingsLabel
+            // 
+            standingsLabel.AutoSize = true;
+            standingsLabel.Font = new Font("Segoe UI", 13F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            standingsLabel.ForeColor = Color.Gold;
+            standingsLabel.Location = new Point(649, 105);
+            standingsLabel.Name = "standingsLabel";
+            standingsLabel.Size = new Size(136, 30);
+            standingsLabel.TabIndex = 6;
+            standingsLabel.Text = "STANDINGS";
             // 
             // MatchesScheduleForm
             // 
