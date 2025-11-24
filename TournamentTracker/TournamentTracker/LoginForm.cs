@@ -46,14 +46,12 @@ namespace TourApp
             res_conPassTextBox.Text = "";
             res_passTextBox.Text = "";
             res_usnTextBox.Text = "";
-            this.AcceptButton = resBtn;
         }
 
         private void loginLink_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             loginPanel.Visible = true;
             registerPanel.Visible = false;
-            this.AcceptButton = logBtn;
         }
 
         private void registerPanel_Paint(object sender, PaintEventArgs e)
@@ -145,6 +143,11 @@ namespace TourApp
                 logBtn.PerformClick();
                 e.SuppressKeyPress = true;
             }
+        }
+
+        private void loginLabel_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }
