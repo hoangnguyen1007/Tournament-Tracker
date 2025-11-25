@@ -66,3 +66,17 @@ BEGIN
         );
     END
 GO
+
+
+--Thêm dữ liệu test
+-- Thêm 4 đội bóng vào bảng Teams
+INSERT INTO Teams (TEAMNAME, COACH) VALUES (N'Manchester Utd', N'Erik ten Hag');
+INSERT INTO Teams (TEAMNAME, COACH) VALUES (N'Chelsea FC', N'Pochettino');
+INSERT INTO Teams (TEAMNAME, COACH) VALUES (N'Arsenal', N'Arteta');
+INSERT INTO Teams (TEAMNAME, COACH) VALUES (N'Liverpool', N'Klopp');
+-- Thêm 2 trận đấu cho Vòng 1
+INSERT INTO Matches (Round, HomeTeamID, AwayTeamID, HomeScore, AwayScore) 
+VALUES (1, 1, 2, NULL, NULL); -- MU (1) vs Chelsea (2)
+
+INSERT INTO Matches (Round, HomeTeamID, AwayTeamID, HomeScore, AwayScore) 
+VALUES (1, 3, 4, NULL, NULL); -- Arsenal (3) vs Liverpool (4)
