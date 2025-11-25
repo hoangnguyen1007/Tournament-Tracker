@@ -121,5 +121,10 @@ namespace TeamListForm
             var playerForm = new PlayerListForm(selectedTeam.ID, selectedTeam.TEAMNAME);
             playerForm.ShowDialog();
         }
+
+        private void btnCloseForm_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
     }
 }

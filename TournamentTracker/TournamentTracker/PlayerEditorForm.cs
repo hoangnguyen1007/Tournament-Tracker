@@ -14,7 +14,7 @@ namespace TeamListForm
     public partial class PlayerEditorForm : Form
     {
         private readonly int _teamId;
-        private Player _player;
+        private Player? _player;
         private readonly bool _isEdit;
 
         // THÊM MỚI
