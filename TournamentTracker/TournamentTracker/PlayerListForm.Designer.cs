@@ -28,84 +28,90 @@
         /// </summary>
         private void InitializeComponent()
         {
-            panel1 = new Panel();
+            panelHeader = new Panel();
             lbTitle = new Label();
-            panel2 = new Panel();
+            panelSearch = new Panel();
             btnSearch = new Button();
             txtSearch = new TextBox();
             lbSearch = new Label();
-            panel4 = new Panel();
+            panelOptionBtn = new Panel();
             btnDelete = new Button();
             btnUpdate = new Button();
             btnAdd = new Button();
             dgvPlayers = new DataGridView();
-            panel1.SuspendLayout();
-            panel2.SuspendLayout();
-            panel4.SuspendLayout();
+            panelHeader.SuspendLayout();
+            panelSearch.SuspendLayout();
+            panelOptionBtn.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dgvPlayers).BeginInit();
             SuspendLayout();
             // 
-            // panel1
+            // panelHeader
             // 
-            panel1.Controls.Add(lbTitle);
-            panel1.Location = new Point(52, 30);
-            panel1.Name = "panel1";
-            panel1.Size = new Size(814, 100);
-            panel1.TabIndex = 0;
+            panelHeader.Controls.Add(lbTitle);
+            panelHeader.Location = new Point(52, 30);
+            panelHeader.Name = "panelHeader";
+            panelHeader.Size = new Size(814, 100);
+            panelHeader.TabIndex = 0;
             // 
             // lbTitle
             // 
             lbTitle.AutoSize = true;
+            lbTitle.Font = new Font("Segoe UI", 18F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            lbTitle.ForeColor = Color.FromArgb(40, 156, 56);
             lbTitle.Location = new Point(35, 29);
             lbTitle.Name = "lbTitle";
-            lbTitle.Size = new Size(167, 15);
+            lbTitle.Size = new Size(352, 32);
             lbTitle.TabIndex = 1;
             lbTitle.Text = "DANH SÁCH CẦU THỦ CỦA ...";
             // 
-            // panel2
+            // panelSearch
             // 
-            panel2.Controls.Add(btnSearch);
-            panel2.Controls.Add(txtSearch);
-            panel2.Controls.Add(lbSearch);
-            panel2.Location = new Point(52, 189);
-            panel2.Name = "panel2";
-            panel2.Size = new Size(814, 90);
-            panel2.TabIndex = 1;
+            panelSearch.Controls.Add(btnSearch);
+            panelSearch.Controls.Add(txtSearch);
+            panelSearch.Controls.Add(lbSearch);
+            panelSearch.ForeColor = Color.FromArgb(40, 156, 56);
+            panelSearch.Location = new Point(52, 189);
+            panelSearch.Name = "panelSearch";
+            panelSearch.Size = new Size(814, 90);
+            panelSearch.TabIndex = 1;
             // 
             // btnSearch
             // 
+            btnSearch.Font = new Font("Segoe UI Semibold", 14.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
             btnSearch.Location = new Point(624, 27);
             btnSearch.Name = "btnSearch";
-            btnSearch.Size = new Size(75, 23);
+            btnSearch.Size = new Size(135, 34);
             btnSearch.TabIndex = 4;
             btnSearch.Text = "Search";
             btnSearch.UseVisualStyleBackColor = true;
             // 
             // txtSearch
             // 
+            txtSearch.Font = new Font("Segoe UI Semibold", 14.25F, FontStyle.Bold | FontStyle.Italic, GraphicsUnit.Point, 0);
             txtSearch.Location = new Point(220, 28);
             txtSearch.Name = "txtSearch";
-            txtSearch.Size = new Size(241, 23);
+            txtSearch.Size = new Size(241, 33);
             txtSearch.TabIndex = 3;
             // 
             // lbSearch
             // 
             lbSearch.AutoSize = true;
+            lbSearch.Font = new Font("Segoe UI Semibold", 14.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
             lbSearch.Location = new Point(35, 36);
             lbSearch.Name = "lbSearch";
-            lbSearch.Size = new Size(77, 15);
+            lbSearch.Size = new Size(127, 25);
             lbSearch.TabIndex = 2;
             lbSearch.Text = "Search Player";
             // 
-            // panel4
+            // panelOptionBtn
             // 
-            panel4.Controls.Add(btnDelete);
-            panel4.Controls.Add(btnUpdate);
-            panel4.Controls.Add(btnAdd);
-            panel4.Location = new Point(52, 478);
-            panel4.Name = "panel4";
-            panel4.Size = new Size(814, 90);
-            panel4.TabIndex = 2;
+            panelOptionBtn.Controls.Add(btnDelete);
+            panelOptionBtn.Controls.Add(btnUpdate);
+            panelOptionBtn.Controls.Add(btnAdd);
+            panelOptionBtn.Location = new Point(52, 478);
+            panelOptionBtn.Name = "panelOptionBtn";
+            panelOptionBtn.Size = new Size(814, 90);
+            panelOptionBtn.TabIndex = 2;
             // 
             // btnDelete
             // 
@@ -151,26 +157,26 @@
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1062, 617);
             Controls.Add(dgvPlayers);
-            Controls.Add(panel4);
-            Controls.Add(panel2);
-            Controls.Add(panel1);
+            Controls.Add(panelOptionBtn);
+            Controls.Add(panelSearch);
+            Controls.Add(panelHeader);
             Name = "PlayerListForm";
             Text = "Form1";
-            panel1.ResumeLayout(false);
-            panel1.PerformLayout();
-            panel2.ResumeLayout(false);
-            panel2.PerformLayout();
-            panel4.ResumeLayout(false);
+            panelHeader.ResumeLayout(false);
+            panelHeader.PerformLayout();
+            panelSearch.ResumeLayout(false);
+            panelSearch.PerformLayout();
+            panelOptionBtn.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)dgvPlayers).EndInit();
             ResumeLayout(false);
         }
 
         #endregion
 
-        private Panel panel1;
+        private Panel panelHeader;
         private Label lbTitle;
-        private Panel panel2;
-        private Panel panel4;
+        private Panel panelSearch;
+        private Panel panelOptionBtn;
         private Button btnSearch;
         private TextBox txtSearch;
         private Label lbSearch;

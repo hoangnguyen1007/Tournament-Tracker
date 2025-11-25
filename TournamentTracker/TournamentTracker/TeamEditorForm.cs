@@ -75,5 +75,10 @@ namespace TeamListForm
             this.DialogResult = DialogResult.OK; // Báo "OK" để form chính biết
             this.Close();
         }
+
+        private void btnCancel_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
     }
 }
