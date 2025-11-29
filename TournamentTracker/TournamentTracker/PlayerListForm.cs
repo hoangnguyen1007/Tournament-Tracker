@@ -39,6 +39,19 @@ namespace TeamListForm
             dgvPlayers.Columns["PlayerName"].HeaderText = "PLAYER NAME";
             dgvPlayers.Columns["Age"].HeaderText = "AGE";
             dgvPlayers.Columns["Position"].HeaderText = "POSITION";
+            if (dgvPlayers.Rows.Count > 0)
+            {
+                // Highlight dòng đầu tiên
+                dgvPlayers.Rows[0].Selected = true;
+
+                // Gán CurrentCell vào ô nhìn thấy được (để CurrentRow có giá trị)
+                // Cột 0 là ID bị ẩn, nên gán vào cột 1 (TEAMNAME)
+                if (dgvPlayers.Columns.Count > 1 && dgvPlayers.Rows[0].Cells[1].Visible)
+                    dgvPlayers.CurrentCell = dgvPlayers.Rows[0].Cells[1];
+            }
+            else
+                // Nếu không có dữ liệu thì mới set null
+                dgvPlayers.CurrentCell = null;
         }
 
         // BUTTON OPTIONS (PlayersEditorForm)
@@ -46,9 +59,7 @@ namespace TeamListForm
         {
             var editor = new PlayerEditorForm(_teamId);
             if (editor.ShowDialog() == DialogResult.OK)
-            {
                 LoadPlayers(txtSearch.Text.Trim());
-            }
         }
         private void btnUpdate_Click(object sender, EventArgs e)
         {
@@ -63,7 +74,8 @@ namespace TeamListForm
             else
             {
                 MessageBox.Show("Vui lòng chọn một cầu thủ để sửa!", "Thông báo",
-                    MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBoxButtons.OK,
+                MessageBoxIcon.Information);
             }
         }
         private void btnDelete_Click(object sender, EventArgs e)
@@ -80,13 +92,16 @@ namespace TeamListForm
                 {
                     DatabaseHelper.DeletePlayer(player);
                     LoadPlayers(txtSearch.Text.Trim());
-                    MessageBox.Show("Xóa thành công!", "Thành công", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    MessageBox.Show("Xóa thành công!", "Thành công",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Information);
                 }
             }
             else
             {
                 MessageBox.Show("Vui lòng chọn cầu thủ để xóa!", "Thông báo",
-                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Warning);
             }
         }
 
@@ -98,6 +113,16 @@ namespace TeamListForm
         private void btnSearch_Click(object sender, EventArgs e)
         {
             LoadPlayers(txtSearch.Text.Trim());
+        }
+
+        private void dgvPlayers_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
+        }
+
+        private void btnCloseForm_Click(object sender, EventArgs e)
+        {
+            this.Close();
         }
 
         protected override CreateParams CreateParams

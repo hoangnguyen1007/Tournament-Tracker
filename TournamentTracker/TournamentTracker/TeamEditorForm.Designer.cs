@@ -40,7 +40,7 @@
             // label1
             // 
             label1.AutoSize = true;
-            label1.Font = new Font("Segoe UI Semibold", 18F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label1.Font = new Font("Segoe UI Semibold", 24F, FontStyle.Bold, GraphicsUnit.Pixel);
             label1.Location = new Point(126, 136);
             label1.Margin = new Padding(2, 0, 2, 0);
             label1.Name = "label1";
@@ -51,7 +51,7 @@
             // label2
             // 
             label2.AutoSize = true;
-            label2.Font = new Font("Segoe UI Semibold", 18F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label2.Font = new Font("Segoe UI Semibold", 24F, FontStyle.Bold, GraphicsUnit.Pixel, 0);
             label2.Location = new Point(126, 185);
             label2.Margin = new Padding(2, 0, 2, 0);
             label2.Name = "label2";
@@ -62,33 +62,33 @@
             // txtCoach
             // 
             txtCoach.BackColor = Color.FromArgb(35, 38, 39);
-            txtCoach.Font = new Font("Segoe UI Semibold", 14.25F, FontStyle.Bold | FontStyle.Italic, GraphicsUnit.Point, 0);
+            txtCoach.Font = new Font("Segoe UI Semibold", 18F, FontStyle.Bold | FontStyle.Italic, GraphicsUnit.Pixel, 0);
             txtCoach.ForeColor = Color.DarkGray;
             txtCoach.Location = new Point(319, 188);
             txtCoach.Margin = new Padding(2);
             txtCoach.Name = "txtCoach";
-            txtCoach.Size = new Size(301, 33);
+            txtCoach.Size = new Size(301, 32);
             txtCoach.TabIndex = 4;
             // 
             // txtTeamName
             // 
             txtTeamName.BackColor = Color.FromArgb(35, 38, 39);
-            txtTeamName.Font = new Font("Segoe UI Semibold", 14.25F, FontStyle.Bold | FontStyle.Italic, GraphicsUnit.Point, 0);
+            txtTeamName.Font = new Font("Segoe UI Semibold", 18F, FontStyle.Bold | FontStyle.Italic, GraphicsUnit.Pixel, 0);
             txtTeamName.ForeColor = Color.DarkGray;
             txtTeamName.Location = new Point(319, 139);
             txtTeamName.Margin = new Padding(2);
             txtTeamName.Name = "txtTeamName";
-            txtTeamName.Size = new Size(301, 33);
+            txtTeamName.Size = new Size(301, 32);
             txtTeamName.TabIndex = 6;
             // 
             // btnOption
             // 
             btnOption.BackColor = Color.FromArgb(35, 38, 39);
-            btnOption.Font = new Font("Segoe UI Semibold", 18F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            btnOption.Font = new Font("Segoe UI Semibold", 24F, FontStyle.Bold, GraphicsUnit.Pixel, 0);
             btnOption.Location = new Point(126, 246);
             btnOption.Margin = new Padding(2);
             btnOption.Name = "btnOption";
-            btnOption.Size = new Size(121, 38);
+            btnOption.Size = new Size(118, 49);
             btnOption.TabIndex = 7;
             btnOption.Text = "Save";
             btnOption.UseVisualStyleBackColor = false;
@@ -97,11 +97,11 @@
             // btnCancel
             // 
             btnCancel.BackColor = Color.FromArgb(35, 38, 39);
-            btnCancel.Font = new Font("Segoe UI Semibold", 18F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            btnCancel.Font = new Font("Segoe UI Semibold", 24F, FontStyle.Bold, GraphicsUnit.Pixel, 0);
             btnCancel.Location = new Point(498, 246);
             btnCancel.Margin = new Padding(2);
             btnCancel.Name = "btnCancel";
-            btnCancel.Size = new Size(122, 38);
+            btnCancel.Size = new Size(122, 49);
             btnCancel.TabIndex = 8;
             btnCancel.Text = "Cancel";
             btnCancel.UseVisualStyleBackColor = false;

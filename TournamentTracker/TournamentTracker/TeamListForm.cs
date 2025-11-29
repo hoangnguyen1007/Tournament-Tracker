@@ -36,8 +36,19 @@ namespace TeamListForm
             // Bonus: chặn luôn sự kiện bắt đầu sửa
             dgvTeams.CellBeginEdit += (s, e) => e.Cancel = true;
 
-            // Nếu vẫn còn "nhấp nháy con trỏ" thì thêm dòng này
-            dgvTeams.CurrentCell = null;
+            if (dgvTeams.Rows.Count > 0)
+            {
+                // Highlight dòng đầu tiên
+                dgvTeams.Rows[0].Selected = true;
+
+                // Gán CurrentCell vào ô nhìn thấy được (để CurrentRow có giá trị)
+                // Cột 0 là ID bị ẩn, nên gán vào cột 1 (TEAMNAME)
+                if (dgvTeams.Columns.Count > 1 && dgvTeams.Rows[0].Cells[1].Visible)
+                    dgvTeams.CurrentCell = dgvTeams.Rows[0].Cells[1];
+            }
+            else
+                // Nếu không có dữ liệu thì mới set null
+                dgvTeams.CurrentCell = null;
         }
         // PANEL OPTION CRUD NÈ 
         private void btnAdd_Click(object sender, EventArgs e)

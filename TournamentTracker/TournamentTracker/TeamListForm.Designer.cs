@@ -29,9 +29,9 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(TeamListForm));
-            DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle3 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle7 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle8 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle9 = new DataGridViewCellStyle();
             Header = new Label();
             labelSearch = new Label();
             txtSearch = new TextBox();
@@ -52,18 +52,18 @@
             // Header
             // 
             Header.BackColor = Color.Transparent;
-            Header.Font = new Font("Segoe UI", 36F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            Header.Font = new Font("Segoe UI", 39.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
             Header.ForeColor = Color.FromArgb(40, 156, 56);
             Header.Location = new Point(195, 26);
             Header.Name = "Header";
-            Header.Size = new Size(456, 65);
+            Header.Size = new Size(620, 65);
             Header.TabIndex = 0;
             Header.Text = "Tournament Teams";
             // 
             // labelSearch
             // 
             labelSearch.AutoSize = true;
-            labelSearch.Font = new Font("Segoe UI Semibold", 18F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            labelSearch.Font = new Font("Segoe UI Semibold", 24F, FontStyle.Bold, GraphicsUnit.Pixel, 0);
             labelSearch.ForeColor = Color.FromArgb(40, 156, 56);
             labelSearch.Location = new Point(33, 27);
             labelSearch.Name = "labelSearch";
@@ -74,11 +74,11 @@
             // txtSearch
             // 
             txtSearch.BackColor = Color.FromArgb(35, 38, 39);
-            txtSearch.Font = new Font("Segoe UI Semibold", 14.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            txtSearch.Font = new Font("Segoe UI", 24F, FontStyle.Italic, GraphicsUnit.Pixel, 0);
             txtSearch.ForeColor = Color.DarkGray;
             txtSearch.Location = new Point(294, 30);
             txtSearch.Name = "txtSearch";
-            txtSearch.Size = new Size(345, 33);
+            txtSearch.Size = new Size(382, 39);
             txtSearch.TabIndex = 2;
             // 
             // btnSearch
@@ -88,10 +88,10 @@
             btnSearch.FlatAppearance.MouseDownBackColor = Color.DimGray;
             btnSearch.FlatAppearance.MouseOverBackColor = Color.Transparent;
             btnSearch.FlatStyle = FlatStyle.Flat;
-            btnSearch.Font = new Font("Segoe UI Semibold", 14.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            btnSearch.Font = new Font("Segoe UI Semibold", 14.25F, FontStyle.Bold, GraphicsUnit.Pixel, 0);
             btnSearch.ForeColor = Color.Transparent;
             btnSearch.Image = (Image)resources.GetObject("btnSearch.Image");
-            btnSearch.Location = new Point(787, 17);
+            btnSearch.Location = new Point(795, 19);
             btnSearch.Name = "btnSearch";
             btnSearch.Size = new Size(59, 56);
             btnSearch.TabIndex = 3;
@@ -124,7 +124,7 @@
             // btnViewPlayers
             // 
             btnViewPlayers.BackColor = Color.FromArgb(35, 38, 39);
-            btnViewPlayers.Font = new Font("Segoe UI Semibold", 14.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            btnViewPlayers.Font = new Font("Segoe UI Semibold", 18F, FontStyle.Bold, GraphicsUnit.Pixel);
             btnViewPlayers.ForeColor = Color.FromArgb(40, 156, 56);
             btnViewPlayers.Location = new Point(759, 35);
             btnViewPlayers.Name = "btnViewPlayers";
@@ -137,7 +137,7 @@
             // btnRemove
             // 
             btnRemove.BackColor = Color.FromArgb(35, 38, 39);
-            btnRemove.Font = new Font("Segoe UI Semibold", 14.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            btnRemove.Font = new Font("Segoe UI Semibold", 18F, FontStyle.Bold, GraphicsUnit.Pixel);
             btnRemove.ForeColor = Color.FromArgb(40, 156, 56);
             btnRemove.Location = new Point(524, 35);
             btnRemove.Name = "btnRemove";
@@ -150,7 +150,7 @@
             // btnUpdate
             // 
             btnUpdate.BackColor = Color.FromArgb(35, 38, 39);
-            btnUpdate.Font = new Font("Segoe UI Semibold", 14.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            btnUpdate.Font = new Font("Segoe UI Semibold", 18F, FontStyle.Bold, GraphicsUnit.Pixel);
             btnUpdate.ForeColor = Color.FromArgb(40, 156, 56);
             btnUpdate.Location = new Point(274, 35);
             btnUpdate.Name = "btnUpdate";
@@ -163,7 +163,7 @@
             // btnAdd
             // 
             btnAdd.BackColor = Color.FromArgb(35, 38, 39);
-            btnAdd.Font = new Font("Segoe UI Semibold", 14.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            btnAdd.Font = new Font("Segoe UI Semibold", 18F, FontStyle.Bold, GraphicsUnit.Pixel);
             btnAdd.ForeColor = Color.FromArgb(40, 156, 56);
             btnAdd.Location = new Point(33, 35);
             btnAdd.Name = "btnAdd";
@@ -182,37 +182,37 @@
             dgvTeams.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             dgvTeams.BackgroundColor = Color.FromArgb(35, 38, 39);
             dgvTeams.BorderStyle = BorderStyle.Fixed3D;
-            dataGridViewCellStyle1.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle1.BackColor = Color.FromArgb(35, 38, 39);
-            dataGridViewCellStyle1.Font = new Font("Segoe UI", 18F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            dataGridViewCellStyle1.ForeColor = Color.FromArgb(40, 156, 56);
-            dataGridViewCellStyle1.SelectionBackColor = Color.FromArgb(35, 38, 39);
-            dataGridViewCellStyle1.SelectionForeColor = Color.FromArgb(35, 38, 39);
-            dataGridViewCellStyle1.WrapMode = DataGridViewTriState.True;
-            dgvTeams.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle7.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle7.BackColor = Color.FromArgb(35, 38, 39);
+            dataGridViewCellStyle7.Font = new Font("Segoe UI", 24F, FontStyle.Bold, GraphicsUnit.Pixel);
+            dataGridViewCellStyle7.ForeColor = Color.FromArgb(40, 156, 56);
+            dataGridViewCellStyle7.SelectionBackColor = Color.FromArgb(35, 38, 39);
+            dataGridViewCellStyle7.SelectionForeColor = Color.FromArgb(35, 38, 39);
+            dataGridViewCellStyle7.WrapMode = DataGridViewTriState.True;
+            dgvTeams.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle7;
             dgvTeams.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle2.BackColor = Color.FromArgb(35, 38, 39);
-            dataGridViewCellStyle2.Font = new Font("Segoe UI Semibold", 14F, FontStyle.Bold);
-            dataGridViewCellStyle2.ForeColor = Color.DarkGray;
-            dataGridViewCellStyle2.SelectionBackColor = Color.FromArgb(40, 156, 56);
-            dataGridViewCellStyle2.SelectionForeColor = Color.FromArgb(35, 38, 39);
-            dataGridViewCellStyle2.WrapMode = DataGridViewTriState.False;
-            dgvTeams.DefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle8.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle8.BackColor = Color.FromArgb(35, 38, 39);
+            dataGridViewCellStyle8.Font = new Font("Segoe UI Semibold", 18F, FontStyle.Bold, GraphicsUnit.Pixel);
+            dataGridViewCellStyle8.ForeColor = Color.DarkGray;
+            dataGridViewCellStyle8.SelectionBackColor = Color.FromArgb(40, 156, 56);
+            dataGridViewCellStyle8.SelectionForeColor = Color.FromArgb(35, 38, 39);
+            dataGridViewCellStyle8.WrapMode = DataGridViewTriState.False;
+            dgvTeams.DefaultCellStyle = dataGridViewCellStyle8;
             dgvTeams.EditMode = DataGridViewEditMode.EditProgrammatically;
             dgvTeams.EnableHeadersVisualStyles = false;
             dgvTeams.GridColor = Color.DarkGray;
             dgvTeams.Location = new Point(195, 231);
             dgvTeams.Name = "dgvTeams";
             dgvTeams.ReadOnly = true;
-            dataGridViewCellStyle3.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle3.BackColor = Color.FromArgb(35, 38, 39);
-            dataGridViewCellStyle3.Font = new Font("Segoe UI Semibold", 18F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            dataGridViewCellStyle3.ForeColor = Color.FromArgb(40, 156, 56);
-            dataGridViewCellStyle3.SelectionBackColor = Color.FromArgb(40, 156, 56);
-            dataGridViewCellStyle3.SelectionForeColor = Color.FromArgb(35, 38, 39);
-            dataGridViewCellStyle3.WrapMode = DataGridViewTriState.True;
-            dgvTeams.RowHeadersDefaultCellStyle = dataGridViewCellStyle3;
+            dataGridViewCellStyle9.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle9.BackColor = Color.FromArgb(35, 38, 39);
+            dataGridViewCellStyle9.Font = new Font("Segoe UI Semibold", 18F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            dataGridViewCellStyle9.ForeColor = Color.FromArgb(40, 156, 56);
+            dataGridViewCellStyle9.SelectionBackColor = Color.FromArgb(40, 156, 56);
+            dataGridViewCellStyle9.SelectionForeColor = Color.FromArgb(35, 38, 39);
+            dataGridViewCellStyle9.WrapMode = DataGridViewTriState.True;
+            dgvTeams.RowHeadersDefaultCellStyle = dataGridViewCellStyle9;
             dgvTeams.RowHeadersVisible = false;
             dgvTeams.RowTemplate.Height = 42;
             dgvTeams.SelectionMode = DataGridViewSelectionMode.FullRowSelect;

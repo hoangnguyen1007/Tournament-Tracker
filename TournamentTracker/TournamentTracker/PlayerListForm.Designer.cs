@@ -43,6 +43,7 @@
             btnUpdate = new Button();
             btnAdd = new Button();
             dgvPlayers = new DataGridView();
+            btnCloseForm = new Button();
             panelHeader.SuspendLayout();
             panelSearch.SuspendLayout();
             panelOptionBtn.SuspendLayout();
@@ -61,11 +62,11 @@
             // lblTitle
             // 
             lblTitle.AutoSize = true;
-            lblTitle.Font = new Font("Segoe UI", 24F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            lblTitle.Font = new Font("Segoe UI", 36F, FontStyle.Bold, GraphicsUnit.Pixel, 0);
             lblTitle.ForeColor = Color.FromArgb(40, 156, 56);
             lblTitle.Location = new Point(35, 12);
             lblTitle.Name = "lblTitle";
-            lblTitle.Size = new Size(474, 45);
+            lblTitle.Size = new Size(523, 48);
             lblTitle.TabIndex = 1;
             lblTitle.Text = "DANH SÁCH CẦU THỦ CỦA ...";
             // 
@@ -84,7 +85,7 @@
             // btnSearch
             // 
             btnSearch.BackColor = Color.FromArgb(35, 38, 39);
-            btnSearch.Font = new Font("Segoe UI Semibold", 18F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            btnSearch.Font = new Font("Segoe UI Semibold", 24F, FontStyle.Bold, GraphicsUnit.Pixel, 0);
             btnSearch.Location = new Point(679, 22);
             btnSearch.Name = "btnSearch";
             btnSearch.Size = new Size(135, 47);
@@ -96,7 +97,7 @@
             // txtSearch
             // 
             txtSearch.BackColor = Color.FromArgb(35, 38, 39);
-            txtSearch.Font = new Font("Segoe UI", 18F, FontStyle.Italic, GraphicsUnit.Point, 0);
+            txtSearch.Font = new Font("Segoe UI", 24F, FontStyle.Italic, GraphicsUnit.Pixel, 0);
             txtSearch.ForeColor = Color.DarkGray;
             txtSearch.Location = new Point(250, 26);
             txtSearch.Name = "txtSearch";
@@ -106,7 +107,7 @@
             // lbSearch
             // 
             lbSearch.AutoSize = true;
-            lbSearch.Font = new Font("Segoe UI Semibold", 18F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            lbSearch.Font = new Font("Segoe UI Semibold", 24F, FontStyle.Bold, GraphicsUnit.Pixel, 0);
             lbSearch.Location = new Point(35, 29);
             lbSearch.Name = "lbSearch";
             lbSearch.Size = new Size(161, 32);
@@ -128,8 +129,8 @@
             // btnDelete
             // 
             btnDelete.BackColor = Color.FromArgb(35, 38, 39);
-            btnDelete.Font = new Font("Segoe UI Semibold", 18F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            btnDelete.Location = new Point(624, 27);
+            btnDelete.Font = new Font("Segoe UI Semibold", 24F, FontStyle.Bold, GraphicsUnit.Pixel, 0);
+            btnDelete.Location = new Point(679, 27);
             btnDelete.Name = "btnDelete";
             btnDelete.Size = new Size(135, 41);
             btnDelete.TabIndex = 2;
@@ -140,8 +141,8 @@
             // btnUpdate
             // 
             btnUpdate.BackColor = Color.FromArgb(35, 38, 39);
-            btnUpdate.Font = new Font("Segoe UI Semibold", 18F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            btnUpdate.Location = new Point(342, 27);
+            btnUpdate.Font = new Font("Segoe UI Semibold", 24F, FontStyle.Bold, GraphicsUnit.Pixel, 0);
+            btnUpdate.Location = new Point(372, 27);
             btnUpdate.Name = "btnUpdate";
             btnUpdate.Size = new Size(133, 41);
             btnUpdate.TabIndex = 1;
@@ -152,7 +153,7 @@
             // btnAdd
             // 
             btnAdd.BackColor = Color.FromArgb(35, 38, 39);
-            btnAdd.Font = new Font("Segoe UI Semibold", 18F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            btnAdd.Font = new Font("Segoe UI Semibold", 24F, FontStyle.Bold, GraphicsUnit.Pixel, 0);
             btnAdd.Location = new Point(35, 27);
             btnAdd.Name = "btnAdd";
             btnAdd.Size = new Size(115, 41);
@@ -180,7 +181,7 @@
             dgvPlayers.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle2.BackColor = Color.FromArgb(35, 38, 39);
-            dataGridViewCellStyle2.Font = new Font("Segoe UI Semibold", 14.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            dataGridViewCellStyle2.Font = new Font("Segoe UI Semibold", 18F, FontStyle.Bold, GraphicsUnit.Pixel);
             dataGridViewCellStyle2.ForeColor = Color.DarkGray;
             dataGridViewCellStyle2.SelectionBackColor = Color.FromArgb(40, 156, 56);
             dataGridViewCellStyle2.SelectionForeColor = Color.FromArgb(35, 38, 39);
@@ -193,7 +194,7 @@
             dgvPlayers.ReadOnly = true;
             dataGridViewCellStyle3.Alignment = DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle3.BackColor = Color.FromArgb(35, 38, 39);
-            dataGridViewCellStyle3.Font = new Font("Segoe UI", 18F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            dataGridViewCellStyle3.Font = new Font("Segoe UI", 24F, FontStyle.Bold, GraphicsUnit.Pixel);
             dataGridViewCellStyle3.ForeColor = Color.FromArgb(40, 156, 56);
             dataGridViewCellStyle3.SelectionBackColor = Color.FromArgb(35, 38, 39);
             dataGridViewCellStyle3.SelectionForeColor = Color.FromArgb(40, 156, 56);
@@ -205,6 +206,23 @@
             dgvPlayers.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             dgvPlayers.Size = new Size(814, 389);
             dgvPlayers.TabIndex = 3;
+            dgvPlayers.CellContentClick += dgvPlayers_CellContentClick;
+            // 
+            // btnCloseForm
+            // 
+            btnCloseForm.BackColor = Color.Transparent;
+            btnCloseForm.BackgroundImage = (Image)resources.GetObject("btnCloseForm.BackgroundImage");
+            btnCloseForm.FlatAppearance.BorderSize = 0;
+            btnCloseForm.FlatAppearance.MouseDownBackColor = Color.DimGray;
+            btnCloseForm.FlatAppearance.MouseOverBackColor = Color.Transparent;
+            btnCloseForm.FlatStyle = FlatStyle.Flat;
+            btnCloseForm.ForeColor = Color.Transparent;
+            btnCloseForm.Location = new Point(1217, 2);
+            btnCloseForm.Name = "btnCloseForm";
+            btnCloseForm.Size = new Size(65, 65);
+            btnCloseForm.TabIndex = 13;
+            btnCloseForm.UseVisualStyleBackColor = false;
+            btnCloseForm.Click += btnCloseForm_Click;
             // 
             // PlayerListForm
             // 
@@ -212,12 +230,15 @@
             BackgroundImage = (Image)resources.GetObject("$this.BackgroundImage");
             BackgroundImageLayout = ImageLayout.Stretch;
             ClientSize = new Size(1284, 781);
+            Controls.Add(btnCloseForm);
             Controls.Add(dgvPlayers);
             Controls.Add(panelOptionBtn);
             Controls.Add(panelSearch);
             Controls.Add(panelHeader);
             Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Pixel);
+            FormBorderStyle = FormBorderStyle.None;
             Name = "PlayerListForm";
+            StartPosition = FormStartPosition.CenterScreen;
             Text = "Form1";
             panelHeader.ResumeLayout(false);
             panelHeader.PerformLayout();
@@ -241,5 +262,6 @@
         private Button btnUpdate;
         private Button btnAdd;
         private DataGridView dgvPlayers;
+        private Button btnCloseForm;
     }
 }
