@@ -172,7 +172,7 @@
             dgvPlayers.BackgroundColor = Color.FromArgb(35, 38, 39);
             dataGridViewCellStyle1.Alignment = DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle1.BackColor = Color.FromArgb(35, 38, 39);
-            dataGridViewCellStyle1.Font = new Font("Segoe UI", 18F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            dataGridViewCellStyle1.Font = new Font("Segoe UI", 22F, FontStyle.Bold, GraphicsUnit.Pixel);
             dataGridViewCellStyle1.ForeColor = Color.FromArgb(40, 156, 56);
             dataGridViewCellStyle1.SelectionBackColor = Color.FromArgb(35, 38, 39);
             dataGridViewCellStyle1.SelectionForeColor = Color.FromArgb(40, 156, 56);
@@ -212,14 +212,15 @@
             // 
             btnCloseForm.BackColor = Color.Transparent;
             btnCloseForm.BackgroundImage = (Image)resources.GetObject("btnCloseForm.BackgroundImage");
+            btnCloseForm.BackgroundImageLayout = ImageLayout.Stretch;
             btnCloseForm.FlatAppearance.BorderSize = 0;
             btnCloseForm.FlatAppearance.MouseDownBackColor = Color.DimGray;
             btnCloseForm.FlatAppearance.MouseOverBackColor = Color.Transparent;
             btnCloseForm.FlatStyle = FlatStyle.Flat;
             btnCloseForm.ForeColor = Color.Transparent;
-            btnCloseForm.Location = new Point(1217, 2);
+            btnCloseForm.Location = new Point(1212, 2);
             btnCloseForm.Name = "btnCloseForm";
-            btnCloseForm.Size = new Size(65, 65);
+            btnCloseForm.Size = new Size(60, 60);
             btnCloseForm.TabIndex = 13;
             btnCloseForm.UseVisualStyleBackColor = false;
             btnCloseForm.Click += btnCloseForm_Click;
@@ -230,11 +231,11 @@
             BackgroundImage = (Image)resources.GetObject("$this.BackgroundImage");
             BackgroundImageLayout = ImageLayout.Stretch;
             ClientSize = new Size(1284, 781);
-            Controls.Add(btnCloseForm);
             Controls.Add(dgvPlayers);
             Controls.Add(panelOptionBtn);
             Controls.Add(panelSearch);
             Controls.Add(panelHeader);
+            Controls.Add(btnCloseForm);
             Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Pixel);
             FormBorderStyle = FormBorderStyle.None;
             Name = "PlayerListForm";

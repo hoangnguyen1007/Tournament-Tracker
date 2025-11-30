@@ -9,12 +9,10 @@ namespace TeamListForm
     public class Player
     {
         public int ID { get; set; }
-        public string PlayerName { get; set; }
-        public string Position { get; set; }
+        public string? PlayerName { get; set; }
+        public string? Position { get; set; }
         public int Age { get; set; }
         public int? TeamID { get; set; } // nullable nếu đội có thể null
-
-        // Dùng để hiển thị đẹp trong DataGridView
-        public override string ToString() => $"{PlayerName} - {Position} - Tuổi {Age}";
+        public int Number { get; set; }
     }
 }

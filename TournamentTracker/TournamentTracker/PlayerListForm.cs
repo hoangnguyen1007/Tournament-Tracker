@@ -125,6 +125,11 @@ namespace TeamListForm
             this.Close();
         }
 
+        private void btnMinimize_Click(object sender, EventArgs e)
+        {
+            this.WindowState = FormWindowState.Minimized;
+        }
+
         protected override CreateParams CreateParams
         {
             get

@@ -39,6 +39,8 @@
             lbAge = new Label();
             panelOption = new Panel();
             panelEditPlayer = new Panel();
+            txtNumber = new TextBox();
+            lbNumber = new Label();
             panelOption.SuspendLayout();
             panelEditPlayer.SuspendLayout();
             SuspendLayout();
@@ -85,7 +87,7 @@
             txtPosition.BackColor = Color.FromArgb(35, 38, 39);
             txtPosition.Font = new Font("Segoe UI Semibold", 18F, FontStyle.Bold | FontStyle.Italic, GraphicsUnit.Pixel, 0);
             txtPosition.ForeColor = Color.FromArgb(40, 156, 56);
-            txtPosition.Location = new Point(230, 86);
+            txtPosition.Location = new Point(230, 72);
             txtPosition.Margin = new Padding(3, 2, 3, 2);
             txtPosition.Name = "txtPosition";
             txtPosition.Size = new Size(323, 32);
@@ -96,7 +98,7 @@
             lbPosition.AutoSize = true;
             lbPosition.BackColor = Color.FromArgb(35, 38, 39);
             lbPosition.Font = new Font("Segoe UI Semibold", 24F, FontStyle.Bold, GraphicsUnit.Pixel, 0);
-            lbPosition.Location = new Point(39, 88);
+            lbPosition.Location = new Point(39, 74);
             lbPosition.Name = "lbPosition";
             lbPosition.Size = new Size(100, 32);
             lbPosition.TabIndex = 10;
@@ -119,7 +121,7 @@
             txtAge.BackColor = Color.FromArgb(35, 38, 39);
             txtAge.Font = new Font("Segoe UI Semibold", 18F, FontStyle.Bold | FontStyle.Italic, GraphicsUnit.Pixel, 0);
             txtAge.ForeColor = Color.FromArgb(40, 156, 56);
-            txtAge.Location = new Point(230, 158);
+            txtAge.Location = new Point(230, 121);
             txtAge.Margin = new Padding(3, 2, 3, 2);
             txtAge.Name = "txtAge";
             txtAge.Size = new Size(323, 32);
@@ -130,7 +132,7 @@
             lbAge.AutoSize = true;
             lbAge.BackColor = Color.FromArgb(35, 38, 39);
             lbAge.Font = new Font("Segoe UI Semibold", 24F, FontStyle.Bold, GraphicsUnit.Pixel, 0);
-            lbAge.Location = new Point(39, 159);
+            lbAge.Location = new Point(39, 122);
             lbAge.Name = "lbAge";
             lbAge.Size = new Size(57, 32);
             lbAge.TabIndex = 15;
@@ -151,6 +153,8 @@
             // panelEditPlayer
             // 
             panelEditPlayer.BackColor = Color.Transparent;
+            panelEditPlayer.Controls.Add(txtNumber);
+            panelEditPlayer.Controls.Add(lbNumber);
             panelEditPlayer.Controls.Add(txtPosition);
             panelEditPlayer.Controls.Add(lbPlayerName);
             panelEditPlayer.Controls.Add(txtAge);
@@ -163,6 +167,28 @@
             panelEditPlayer.Name = "panelEditPlayer";
             panelEditPlayer.Size = new Size(601, 218);
             panelEditPlayer.TabIndex = 20;
+            // 
+            // txtNumber
+            // 
+            txtNumber.BackColor = Color.FromArgb(35, 38, 39);
+            txtNumber.Font = new Font("Segoe UI Semibold", 18F, FontStyle.Bold | FontStyle.Italic, GraphicsUnit.Pixel, 0);
+            txtNumber.ForeColor = Color.FromArgb(40, 156, 56);
+            txtNumber.Location = new Point(230, 170);
+            txtNumber.Margin = new Padding(3, 2, 3, 2);
+            txtNumber.Name = "txtNumber";
+            txtNumber.Size = new Size(323, 32);
+            txtNumber.TabIndex = 20;
+            // 
+            // lbNumber
+            // 
+            lbNumber.AutoSize = true;
+            lbNumber.BackColor = Color.FromArgb(35, 38, 39);
+            lbNumber.Font = new Font("Segoe UI Semibold", 24F, FontStyle.Bold, GraphicsUnit.Pixel, 0);
+            lbNumber.Location = new Point(39, 171);
+            lbNumber.Name = "lbNumber";
+            lbNumber.Size = new Size(103, 32);
+            lbNumber.TabIndex = 19;
+            lbNumber.Text = "Number";
             // 
             // PlayerEditorForm
             // 
@@ -197,5 +223,7 @@
         private Label lbAge;
         private Panel panelOption;
         private Panel panelEditPlayer;
+        private TextBox txtNumber;
+        private Label lbNumber;
     }
 }

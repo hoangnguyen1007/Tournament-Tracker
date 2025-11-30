@@ -29,9 +29,9 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(TeamListForm));
-            DataGridViewCellStyle dataGridViewCellStyle7 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle8 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle9 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle16 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle17 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle18 = new DataGridViewCellStyle();
             Header = new Label();
             labelSearch = new Label();
             txtSearch = new TextBox();
@@ -44,6 +44,7 @@
             btnAdd = new Button();
             dgvTeams = new DataGridView();
             btnCloseForm = new Button();
+            btnMinimize = new Button();
             panelSearch.SuspendLayout();
             panelOption.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dgvTeams).BeginInit();
@@ -182,37 +183,37 @@
             dgvTeams.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             dgvTeams.BackgroundColor = Color.FromArgb(35, 38, 39);
             dgvTeams.BorderStyle = BorderStyle.Fixed3D;
-            dataGridViewCellStyle7.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle7.BackColor = Color.FromArgb(35, 38, 39);
-            dataGridViewCellStyle7.Font = new Font("Segoe UI", 24F, FontStyle.Bold, GraphicsUnit.Pixel);
-            dataGridViewCellStyle7.ForeColor = Color.FromArgb(40, 156, 56);
-            dataGridViewCellStyle7.SelectionBackColor = Color.FromArgb(35, 38, 39);
-            dataGridViewCellStyle7.SelectionForeColor = Color.FromArgb(35, 38, 39);
-            dataGridViewCellStyle7.WrapMode = DataGridViewTriState.True;
-            dgvTeams.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle7;
+            dataGridViewCellStyle16.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle16.BackColor = Color.FromArgb(35, 38, 39);
+            dataGridViewCellStyle16.Font = new Font("Segoe UI", 24F, FontStyle.Bold, GraphicsUnit.Pixel);
+            dataGridViewCellStyle16.ForeColor = Color.FromArgb(40, 156, 56);
+            dataGridViewCellStyle16.SelectionBackColor = Color.FromArgb(35, 38, 39);
+            dataGridViewCellStyle16.SelectionForeColor = Color.FromArgb(35, 38, 39);
+            dataGridViewCellStyle16.WrapMode = DataGridViewTriState.True;
+            dgvTeams.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle16;
             dgvTeams.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridViewCellStyle8.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle8.BackColor = Color.FromArgb(35, 38, 39);
-            dataGridViewCellStyle8.Font = new Font("Segoe UI Semibold", 18F, FontStyle.Bold, GraphicsUnit.Pixel);
-            dataGridViewCellStyle8.ForeColor = Color.DarkGray;
-            dataGridViewCellStyle8.SelectionBackColor = Color.FromArgb(40, 156, 56);
-            dataGridViewCellStyle8.SelectionForeColor = Color.FromArgb(35, 38, 39);
-            dataGridViewCellStyle8.WrapMode = DataGridViewTriState.False;
-            dgvTeams.DefaultCellStyle = dataGridViewCellStyle8;
+            dataGridViewCellStyle17.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle17.BackColor = Color.FromArgb(35, 38, 39);
+            dataGridViewCellStyle17.Font = new Font("Segoe UI Semibold", 18F, FontStyle.Bold, GraphicsUnit.Pixel);
+            dataGridViewCellStyle17.ForeColor = Color.DarkGray;
+            dataGridViewCellStyle17.SelectionBackColor = Color.FromArgb(40, 156, 56);
+            dataGridViewCellStyle17.SelectionForeColor = Color.FromArgb(35, 38, 39);
+            dataGridViewCellStyle17.WrapMode = DataGridViewTriState.False;
+            dgvTeams.DefaultCellStyle = dataGridViewCellStyle17;
             dgvTeams.EditMode = DataGridViewEditMode.EditProgrammatically;
             dgvTeams.EnableHeadersVisualStyles = false;
             dgvTeams.GridColor = Color.DarkGray;
             dgvTeams.Location = new Point(195, 231);
             dgvTeams.Name = "dgvTeams";
             dgvTeams.ReadOnly = true;
-            dataGridViewCellStyle9.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle9.BackColor = Color.FromArgb(35, 38, 39);
-            dataGridViewCellStyle9.Font = new Font("Segoe UI Semibold", 18F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            dataGridViewCellStyle9.ForeColor = Color.FromArgb(40, 156, 56);
-            dataGridViewCellStyle9.SelectionBackColor = Color.FromArgb(40, 156, 56);
-            dataGridViewCellStyle9.SelectionForeColor = Color.FromArgb(35, 38, 39);
-            dataGridViewCellStyle9.WrapMode = DataGridViewTriState.True;
-            dgvTeams.RowHeadersDefaultCellStyle = dataGridViewCellStyle9;
+            dataGridViewCellStyle18.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle18.BackColor = Color.FromArgb(35, 38, 39);
+            dataGridViewCellStyle18.Font = new Font("Segoe UI Semibold", 18F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            dataGridViewCellStyle18.ForeColor = Color.FromArgb(40, 156, 56);
+            dataGridViewCellStyle18.SelectionBackColor = Color.FromArgb(40, 156, 56);
+            dataGridViewCellStyle18.SelectionForeColor = Color.FromArgb(35, 38, 39);
+            dataGridViewCellStyle18.WrapMode = DataGridViewTriState.True;
+            dgvTeams.RowHeadersDefaultCellStyle = dataGridViewCellStyle18;
             dgvTeams.RowHeadersVisible = false;
             dgvTeams.RowTemplate.Height = 42;
             dgvTeams.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
@@ -223,17 +224,35 @@
             // 
             btnCloseForm.BackColor = Color.Transparent;
             btnCloseForm.BackgroundImage = (Image)resources.GetObject("btnCloseForm.BackgroundImage");
+            btnCloseForm.BackgroundImageLayout = ImageLayout.Stretch;
             btnCloseForm.FlatAppearance.BorderSize = 0;
             btnCloseForm.FlatAppearance.MouseDownBackColor = Color.DimGray;
             btnCloseForm.FlatAppearance.MouseOverBackColor = Color.Transparent;
             btnCloseForm.FlatStyle = FlatStyle.Flat;
             btnCloseForm.ForeColor = Color.Transparent;
-            btnCloseForm.Location = new Point(1218, -2);
+            btnCloseForm.Location = new Point(1226, 1);
             btnCloseForm.Name = "btnCloseForm";
-            btnCloseForm.Size = new Size(65, 65);
+            btnCloseForm.Size = new Size(60, 60);
             btnCloseForm.TabIndex = 12;
             btnCloseForm.UseVisualStyleBackColor = false;
             btnCloseForm.Click += btnCloseForm_Click;
+            // 
+            // btnMinimize
+            // 
+            btnMinimize.BackColor = Color.Transparent;
+            btnMinimize.BackgroundImage = (Image)resources.GetObject("btnMinimize.BackgroundImage");
+            btnMinimize.BackgroundImageLayout = ImageLayout.Stretch;
+            btnMinimize.FlatAppearance.BorderSize = 0;
+            btnMinimize.FlatAppearance.MouseDownBackColor = Color.DimGray;
+            btnMinimize.FlatAppearance.MouseOverBackColor = Color.Transparent;
+            btnMinimize.FlatStyle = FlatStyle.Flat;
+            btnMinimize.ForeColor = Color.Transparent;
+            btnMinimize.Location = new Point(1175, 1);
+            btnMinimize.Name = "btnMinimize";
+            btnMinimize.Size = new Size(60, 60);
+            btnMinimize.TabIndex = 13;
+            btnMinimize.UseVisualStyleBackColor = false;
+            btnMinimize.Click += btnMinimize_Click;
             // 
             // TeamListForm
             // 
@@ -242,6 +261,7 @@
             BackgroundImage = (Image)resources.GetObject("$this.BackgroundImage");
             BackgroundImageLayout = ImageLayout.Stretch;
             ClientSize = new Size(1284, 781);
+            Controls.Add(btnMinimize);
             Controls.Add(btnCloseForm);
             Controls.Add(dgvTeams);
             Controls.Add(panelOption);
@@ -275,5 +295,6 @@
         private Button btnAdd;
         private Button btnViewPlayers;
         private Button btnCloseForm;
+        private Button btnMinimize;
     }
 }
