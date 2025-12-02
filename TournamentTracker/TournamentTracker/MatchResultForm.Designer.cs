@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MatchResultForm));
             HGLabel = new Label();
             AGLabel = new Label();
             vsLabel = new Label();
@@ -172,6 +173,7 @@
             // 
             MatchInfoLabel.Anchor = AnchorStyles.Top;
             MatchInfoLabel.AutoSize = true;
+            MatchInfoLabel.BackColor = Color.Transparent;
             MatchInfoLabel.Font = new Font("Segoe UI", 14F, FontStyle.Bold);
             MatchInfoLabel.ForeColor = Color.Silver;
             MatchInfoLabel.Location = new Point(177, 10);
@@ -214,6 +216,7 @@
             AcceptButton = saveMatchButton;
             AutoScaleMode = AutoScaleMode.None;
             BackColor = Color.FromArgb(25, 25, 25);
+            BackgroundImage = (Image)resources.GetObject("$this.BackgroundImage");
             BackgroundImageLayout = ImageLayout.Stretch;
             CancelButton = closeButton;
             ClientSize = new Size(580, 360);

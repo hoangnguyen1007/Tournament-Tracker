@@ -28,14 +28,13 @@
         /// </summary>
         private void InitializeComponent()
         {
-            DataGridViewCellStyle dataGridViewCellStyle7 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle9 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle8 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle10 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle12 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle11 = new DataGridViewCellStyle();
-            headerPanel = new Panel();
-            titleLabel = new Label();
+            DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle3 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle4 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle6 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle5 = new DataGridViewCellStyle();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MatchesScheduleForm));
             matchesLabel = new Label();
             choiceRoundComboBox = new ComboBox();
             matchesDataGridView = new DataGridView();
@@ -55,33 +54,10 @@
             colGD = new DataGridViewTextBoxColumn();
             colPTS = new DataGridViewTextBoxColumn();
             standingsLabel = new Label();
-            headerPanel.SuspendLayout();
+            titleLabel = new Label();
             ((System.ComponentModel.ISupportInitialize)matchesDataGridView).BeginInit();
             ((System.ComponentModel.ISupportInitialize)standingsDataGridView).BeginInit();
             SuspendLayout();
-            // 
-            // headerPanel
-            // 
-            headerPanel.BackColor = Color.FromArgb(25, 25, 25);
-            headerPanel.Controls.Add(titleLabel);
-            headerPanel.Dock = DockStyle.Top;
-            headerPanel.Location = new Point(0, 0);
-            headerPanel.Margin = new Padding(3, 4, 3, 4);
-            headerPanel.Name = "headerPanel";
-            headerPanel.Size = new Size(1282, 73);
-            headerPanel.TabIndex = 0;
-            // 
-            // titleLabel
-            // 
-            titleLabel.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-            titleLabel.AutoSize = true;
-            titleLabel.Font = new Font("Segoe UI", 24F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            titleLabel.ForeColor = Color.FromArgb(0, 180, 80);
-            titleLabel.Location = new Point(23, 10);
-            titleLabel.Name = "titleLabel";
-            titleLabel.Size = new Size(371, 54);
-            titleLabel.TabIndex = 0;
-            titleLabel.Text = "🏆 TOURNAMENT";
             // 
             // matchesLabel
             // 
@@ -117,24 +93,24 @@
             matchesDataGridView.BorderStyle = BorderStyle.None;
             matchesDataGridView.CellBorderStyle = DataGridViewCellBorderStyle.SingleHorizontal;
             matchesDataGridView.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.None;
-            dataGridViewCellStyle7.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle7.BackColor = Color.Black;
-            dataGridViewCellStyle7.Font = new Font("Segoe UI", 7.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            dataGridViewCellStyle7.ForeColor = Color.White;
-            dataGridViewCellStyle7.SelectionBackColor = Color.Black;
-            dataGridViewCellStyle7.SelectionForeColor = SystemColors.HighlightText;
-            dataGridViewCellStyle7.WrapMode = DataGridViewTriState.True;
-            matchesDataGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle7;
+            dataGridViewCellStyle1.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle1.BackColor = Color.Black;
+            dataGridViewCellStyle1.Font = new Font("Segoe UI", 7.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            dataGridViewCellStyle1.ForeColor = Color.White;
+            dataGridViewCellStyle1.SelectionBackColor = Color.Black;
+            dataGridViewCellStyle1.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle1.WrapMode = DataGridViewTriState.True;
+            matchesDataGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             matchesDataGridView.ColumnHeadersHeight = 50;
             matchesDataGridView.Columns.AddRange(new DataGridViewColumn[] { colHome, colScore, colAway });
-            dataGridViewCellStyle9.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle9.BackColor = Color.FromArgb(45, 48, 53);
-            dataGridViewCellStyle9.Font = new Font("Microsoft Sans Serif", 7.8F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            dataGridViewCellStyle9.ForeColor = Color.White;
-            dataGridViewCellStyle9.SelectionBackColor = SystemColors.Highlight;
-            dataGridViewCellStyle9.SelectionForeColor = SystemColors.HighlightText;
-            dataGridViewCellStyle9.WrapMode = DataGridViewTriState.False;
-            matchesDataGridView.DefaultCellStyle = dataGridViewCellStyle9;
+            dataGridViewCellStyle3.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle3.BackColor = Color.FromArgb(45, 48, 53);
+            dataGridViewCellStyle3.Font = new Font("Microsoft Sans Serif", 7.8F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            dataGridViewCellStyle3.ForeColor = Color.White;
+            dataGridViewCellStyle3.SelectionBackColor = SystemColors.Highlight;
+            dataGridViewCellStyle3.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle3.WrapMode = DataGridViewTriState.False;
+            matchesDataGridView.DefaultCellStyle = dataGridViewCellStyle3;
             matchesDataGridView.EnableHeadersVisualStyles = false;
             matchesDataGridView.GridColor = SystemColors.GrayText;
             matchesDataGridView.Location = new Point(44, 161);
@@ -161,8 +137,8 @@
             // 
             colScore.AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
             colScore.DataPropertyName = "ScoreDisplay";
-            dataGridViewCellStyle8.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            colScore.DefaultCellStyle = dataGridViewCellStyle8;
+            dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            colScore.DefaultCellStyle = dataGridViewCellStyle2;
             colScore.FillWeight = 128.3422F;
             colScore.HeaderText = "SCORE";
             colScore.MinimumWidth = 80;
@@ -204,24 +180,24 @@
             standingsDataGridView.BorderStyle = BorderStyle.None;
             standingsDataGridView.CellBorderStyle = DataGridViewCellBorderStyle.SingleHorizontal;
             standingsDataGridView.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.None;
-            dataGridViewCellStyle10.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle10.BackColor = Color.Black;
-            dataGridViewCellStyle10.Font = new Font("Microsoft Sans Serif", 7.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            dataGridViewCellStyle10.ForeColor = Color.White;
-            dataGridViewCellStyle10.SelectionBackColor = Color.Black;
-            dataGridViewCellStyle10.SelectionForeColor = SystemColors.HighlightText;
-            dataGridViewCellStyle10.WrapMode = DataGridViewTriState.True;
-            standingsDataGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle10;
+            dataGridViewCellStyle4.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle4.BackColor = Color.Black;
+            dataGridViewCellStyle4.Font = new Font("Microsoft Sans Serif", 7.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            dataGridViewCellStyle4.ForeColor = Color.White;
+            dataGridViewCellStyle4.SelectionBackColor = Color.Black;
+            dataGridViewCellStyle4.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle4.WrapMode = DataGridViewTriState.True;
+            standingsDataGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle4;
             standingsDataGridView.ColumnHeadersHeight = 50;
             standingsDataGridView.Columns.AddRange(new DataGridViewColumn[] { colSTT, colTeam, colP, colW, colD, colL, colGF, colGA, colGD, colPTS });
-            dataGridViewCellStyle12.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle12.BackColor = Color.FromArgb(45, 48, 53);
-            dataGridViewCellStyle12.Font = new Font("Microsoft Sans Serif", 7.8F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            dataGridViewCellStyle12.ForeColor = Color.White;
-            dataGridViewCellStyle12.SelectionBackColor = SystemColors.Highlight;
-            dataGridViewCellStyle12.SelectionForeColor = SystemColors.HighlightText;
-            dataGridViewCellStyle12.WrapMode = DataGridViewTriState.False;
-            standingsDataGridView.DefaultCellStyle = dataGridViewCellStyle12;
+            dataGridViewCellStyle6.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle6.BackColor = Color.FromArgb(45, 48, 53);
+            dataGridViewCellStyle6.Font = new Font("Microsoft Sans Serif", 7.8F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            dataGridViewCellStyle6.ForeColor = Color.White;
+            dataGridViewCellStyle6.SelectionBackColor = SystemColors.Highlight;
+            dataGridViewCellStyle6.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle6.WrapMode = DataGridViewTriState.False;
+            standingsDataGridView.DefaultCellStyle = dataGridViewCellStyle6;
             standingsDataGridView.EnableHeadersVisualStyles = false;
             standingsDataGridView.GridColor = SystemColors.GrayText;
             standingsDataGridView.Location = new Point(654, 161);
@@ -237,11 +213,11 @@
             // colSTT
             // 
             colSTT.DataPropertyName = "Rank";
-            dataGridViewCellStyle11.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle11.BackColor = Color.Black;
-            dataGridViewCellStyle11.ForeColor = Color.White;
-            dataGridViewCellStyle11.SelectionBackColor = Color.Black;
-            colSTT.DefaultCellStyle = dataGridViewCellStyle11;
+            dataGridViewCellStyle5.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle5.BackColor = Color.Black;
+            dataGridViewCellStyle5.ForeColor = Color.White;
+            dataGridViewCellStyle5.SelectionBackColor = Color.Black;
+            colSTT.DefaultCellStyle = dataGridViewCellStyle5;
             colSTT.HeaderText = "#";
             colSTT.MinimumWidth = 30;
             colSTT.Name = "colSTT";
@@ -348,20 +324,34 @@
             standingsLabel.TabIndex = 6;
             standingsLabel.Text = "STANDINGS";
             // 
+            // titleLabel
+            // 
+            titleLabel.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            titleLabel.AutoSize = true;
+            titleLabel.BackColor = Color.Transparent;
+            titleLabel.Font = new Font("Segoe UI", 24F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            titleLabel.ForeColor = Color.FromArgb(0, 180, 80);
+            titleLabel.Location = new Point(23, 30);
+            titleLabel.Name = "titleLabel";
+            titleLabel.Size = new Size(371, 54);
+            titleLabel.TabIndex = 0;
+            titleLabel.Text = "🏆 TOURNAMENT";
+            // 
             // MatchesScheduleForm
             // 
             AutoScaleMode = AutoScaleMode.None;
             AutoScroll = true;
             BackColor = Color.FromArgb(32, 33, 36);
+            BackgroundImage = (Image)resources.GetObject("$this.BackgroundImage");
             BackgroundImageLayout = ImageLayout.Stretch;
             ClientSize = new Size(1282, 773);
+            Controls.Add(titleLabel);
             Controls.Add(standingsLabel);
             Controls.Add(standingsDataGridView);
             Controls.Add(updateButton);
             Controls.Add(matchesDataGridView);
             Controls.Add(choiceRoundComboBox);
             Controls.Add(matchesLabel);
-            Controls.Add(headerPanel);
             DoubleBuffered = true;
             FormBorderStyle = FormBorderStyle.FixedSingle;
             Margin = new Padding(4, 5, 4, 5);
@@ -369,8 +359,6 @@
             Name = "MatchesScheduleForm";
             Text = "Tournament Tracker";
             Load += MatchesScheduleForm_Load;
-            headerPanel.ResumeLayout(false);
-            headerPanel.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)matchesDataGridView).EndInit();
             ((System.ComponentModel.ISupportInitialize)standingsDataGridView).EndInit();
             ResumeLayout(false);
@@ -379,9 +367,6 @@
         }
 
         #endregion
-
-        private System.Windows.Forms.Panel headerPanel;
-        private System.Windows.Forms.Label titleLabel;
         private System.Windows.Forms.Label matchesLabel;
         private System.Windows.Forms.ComboBox choiceRoundComboBox;
         private System.Windows.Forms.DataGridView matchesDataGridView;
@@ -401,6 +386,7 @@
         private DataGridViewTextBoxColumn colGA;
         private DataGridViewTextBoxColumn colGD;
         private DataGridViewTextBoxColumn colPTS;
+        private Label titleLabel;
     }
 }
 

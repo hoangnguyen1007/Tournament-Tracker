@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(TeamListForm));
             DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle3 = new DataGridViewCellStyle();
@@ -42,6 +43,7 @@
             btnUpdate = new Button();
             btnAdd = new Button();
             dgvTeams = new DataGridView();
+            btnCloseForm = new Button();
             panelSearch.SuspendLayout();
             panelOption.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dgvTeams).BeginInit();
@@ -49,10 +51,10 @@
             // 
             // Header
             // 
-            Header.AutoSize = true;
+            Header.BackColor = Color.Transparent;
             Header.Font = new Font("Segoe UI", 36F, FontStyle.Bold, GraphicsUnit.Point, 0);
             Header.ForeColor = Color.FromArgb(40, 156, 56);
-            Header.Location = new Point(333, 41);
+            Header.Location = new Point(195, 26);
             Header.Name = "Header";
             Header.Size = new Size(456, 65);
             Header.TabIndex = 0;
@@ -63,49 +65,58 @@
             labelSearch.AutoSize = true;
             labelSearch.Font = new Font("Segoe UI Semibold", 18F, FontStyle.Bold, GraphicsUnit.Point, 0);
             labelSearch.ForeColor = Color.FromArgb(40, 156, 56);
-            labelSearch.Location = new Point(33, 31);
+            labelSearch.Location = new Point(33, 27);
             labelSearch.Name = "labelSearch";
-            labelSearch.Size = new Size(87, 32);
+            labelSearch.Size = new Size(152, 32);
             labelSearch.TabIndex = 1;
-            labelSearch.Text = "Search";
+            labelSearch.Text = "Search Team";
             // 
             // txtSearch
             // 
-            txtSearch.Font = new Font("Segoe UI", 14.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            txtSearch.BackColor = Color.FromArgb(35, 38, 39);
+            txtSearch.Font = new Font("Segoe UI Semibold", 14.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            txtSearch.ForeColor = Color.DarkGray;
             txtSearch.Location = new Point(294, 30);
             txtSearch.Name = "txtSearch";
-            txtSearch.Size = new Size(341, 33);
+            txtSearch.Size = new Size(345, 33);
             txtSearch.TabIndex = 2;
             // 
             // btnSearch
             // 
+            btnSearch.BackColor = Color.Transparent;
+            btnSearch.FlatAppearance.BorderSize = 0;
+            btnSearch.FlatAppearance.MouseDownBackColor = Color.DimGray;
+            btnSearch.FlatAppearance.MouseOverBackColor = Color.Transparent;
+            btnSearch.FlatStyle = FlatStyle.Flat;
             btnSearch.Font = new Font("Segoe UI Semibold", 14.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            btnSearch.ForeColor = Color.FromArgb(40, 156, 56);
-            btnSearch.Location = new Point(738, 29);
+            btnSearch.ForeColor = Color.Transparent;
+            btnSearch.Image = (Image)resources.GetObject("btnSearch.Image");
+            btnSearch.Location = new Point(787, 17);
             btnSearch.Name = "btnSearch";
-            btnSearch.Size = new Size(117, 33);
+            btnSearch.Size = new Size(59, 56);
             btnSearch.TabIndex = 3;
-            btnSearch.Text = "Search";
-            btnSearch.UseVisualStyleBackColor = true;
+            btnSearch.UseVisualStyleBackColor = false;
             btnSearch.Click += SearchBtn_Click;
             // 
             // panelSearch
             // 
+            panelSearch.BackColor = Color.Transparent;
             panelSearch.Controls.Add(labelSearch);
             panelSearch.Controls.Add(txtSearch);
             panelSearch.Controls.Add(btnSearch);
-            panelSearch.Location = new Point(135, 109);
+            panelSearch.Location = new Point(195, 109);
             panelSearch.Name = "panelSearch";
             panelSearch.Size = new Size(889, 86);
             panelSearch.TabIndex = 9;
             // 
             // panelOption
             // 
+            panelOption.BackColor = Color.Transparent;
             panelOption.Controls.Add(btnViewPlayers);
             panelOption.Controls.Add(btnRemove);
             panelOption.Controls.Add(btnUpdate);
             panelOption.Controls.Add(btnAdd);
-            panelOption.Location = new Point(135, 482);
+            panelOption.Location = new Point(195, 669);
             panelOption.Name = "panelOption";
             panelOption.Size = new Size(889, 100);
             panelOption.TabIndex = 10;
@@ -151,6 +162,7 @@
             // 
             // btnAdd
             // 
+            btnAdd.BackColor = Color.FromArgb(35, 38, 39);
             btnAdd.Font = new Font("Segoe UI Semibold", 14.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
             btnAdd.ForeColor = Color.FromArgb(40, 156, 56);
             btnAdd.Location = new Point(33, 35);
@@ -167,7 +179,9 @@
             dgvTeams.AllowUserToDeleteRows = false;
             dgvTeams.AllowUserToResizeColumns = false;
             dgvTeams.AllowUserToResizeRows = false;
+            dgvTeams.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             dgvTeams.BackgroundColor = Color.FromArgb(35, 38, 39);
+            dgvTeams.BorderStyle = BorderStyle.Fixed3D;
             dataGridViewCellStyle1.Alignment = DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle1.BackColor = Color.FromArgb(35, 38, 39);
             dataGridViewCellStyle1.Font = new Font("Segoe UI", 18F, FontStyle.Bold, GraphicsUnit.Point, 0);
@@ -179,16 +193,18 @@
             dgvTeams.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle2.BackColor = Color.FromArgb(35, 38, 39);
-            dataGridViewCellStyle2.Font = new Font("Segoe UI Semibold", 18F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            dataGridViewCellStyle2.Font = new Font("Segoe UI Semibold", 14F, FontStyle.Bold);
             dataGridViewCellStyle2.ForeColor = Color.DarkGray;
             dataGridViewCellStyle2.SelectionBackColor = Color.FromArgb(40, 156, 56);
             dataGridViewCellStyle2.SelectionForeColor = Color.FromArgb(35, 38, 39);
             dataGridViewCellStyle2.WrapMode = DataGridViewTriState.False;
             dgvTeams.DefaultCellStyle = dataGridViewCellStyle2;
+            dgvTeams.EditMode = DataGridViewEditMode.EditProgrammatically;
             dgvTeams.EnableHeadersVisualStyles = false;
             dgvTeams.GridColor = Color.DarkGray;
-            dgvTeams.Location = new Point(135, 217);
+            dgvTeams.Location = new Point(195, 231);
             dgvTeams.Name = "dgvTeams";
+            dgvTeams.ReadOnly = true;
             dataGridViewCellStyle3.Alignment = DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle3.BackColor = Color.FromArgb(35, 38, 39);
             dataGridViewCellStyle3.Font = new Font("Segoe UI Semibold", 18F, FontStyle.Bold, GraphicsUnit.Point, 0);
@@ -197,28 +213,52 @@
             dataGridViewCellStyle3.SelectionForeColor = Color.FromArgb(35, 38, 39);
             dataGridViewCellStyle3.WrapMode = DataGridViewTriState.True;
             dgvTeams.RowHeadersDefaultCellStyle = dataGridViewCellStyle3;
-            dgvTeams.Size = new Size(889, 237);
+            dgvTeams.RowHeadersVisible = false;
+            dgvTeams.RowTemplate.Height = 42;
+            dgvTeams.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+            dgvTeams.Size = new Size(889, 416);
             dgvTeams.TabIndex = 11;
+            // 
+            // btnCloseForm
+            // 
+            btnCloseForm.BackColor = Color.Transparent;
+            btnCloseForm.BackgroundImage = (Image)resources.GetObject("btnCloseForm.BackgroundImage");
+            btnCloseForm.FlatAppearance.BorderSize = 0;
+            btnCloseForm.FlatAppearance.MouseDownBackColor = Color.DimGray;
+            btnCloseForm.FlatAppearance.MouseOverBackColor = Color.Transparent;
+            btnCloseForm.FlatStyle = FlatStyle.Flat;
+            btnCloseForm.ForeColor = Color.Transparent;
+            btnCloseForm.Location = new Point(1218, -2);
+            btnCloseForm.Name = "btnCloseForm";
+            btnCloseForm.Size = new Size(65, 65);
+            btnCloseForm.TabIndex = 12;
+            btnCloseForm.UseVisualStyleBackColor = false;
+            btnCloseForm.Click += btnCloseForm_Click;
             // 
             // TeamListForm
             // 
-            AutoScaleDimensions = new SizeF(7F, 15F);
-            AutoScaleMode = AutoScaleMode.Font;
+            AutoScaleMode = AutoScaleMode.None;
             BackColor = Color.FromArgb(35, 38, 39);
-            ClientSize = new Size(1143, 637);
+            BackgroundImage = (Image)resources.GetObject("$this.BackgroundImage");
+            BackgroundImageLayout = ImageLayout.Stretch;
+            ClientSize = new Size(1284, 781);
+            Controls.Add(btnCloseForm);
             Controls.Add(dgvTeams);
             Controls.Add(panelOption);
             Controls.Add(panelSearch);
             Controls.Add(Header);
+            Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Pixel);
             ForeColor = Color.DarkGray;
+            FormBorderStyle = FormBorderStyle.None;
+            MaximizeBox = false;
             Name = "TeamListForm";
+            StartPosition = FormStartPosition.CenterScreen;
             Text = "TeamListForm";
             panelSearch.ResumeLayout(false);
             panelSearch.PerformLayout();
             panelOption.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)dgvTeams).EndInit();
             ResumeLayout(false);
-            PerformLayout();
         }
 
         #endregion
@@ -234,5 +274,6 @@
         private Button btnUpdate;
         private Button btnAdd;
         private Button btnViewPlayers;
+        private Button btnCloseForm;
     }
 }
