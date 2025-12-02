@@ -49,9 +49,10 @@
             // 
             // HGLabel
             // 
+            HGLabel.BackColor = Color.Transparent;
             HGLabel.Font = new Font("Segoe UI", 26F, FontStyle.Bold, GraphicsUnit.Pixel, 0);
             HGLabel.ForeColor = Color.Gold;
-            HGLabel.Location = new Point(46, 17);
+            HGLabel.Location = new Point(50, 17);
             HGLabel.Name = "HGLabel";
             HGLabel.Size = new Size(200, 40);
             HGLabel.TabIndex = 0;
@@ -60,9 +61,10 @@
             // 
             // AGLabel
             // 
+            AGLabel.BackColor = Color.Transparent;
             AGLabel.Font = new Font("Segoe UI", 26F, FontStyle.Bold, GraphicsUnit.Pixel, 0);
             AGLabel.ForeColor = Color.Gold;
-            AGLabel.Location = new Point(325, 17);
+            AGLabel.Location = new Point(324, 17);
             AGLabel.Name = "AGLabel";
             AGLabel.Size = new Size(200, 40);
             AGLabel.TabIndex = 1;
@@ -72,9 +74,9 @@
             // vsLabel
             // 
             vsLabel.AutoSize = true;
-            vsLabel.Font = new Font("Segoe UI", 30F, FontStyle.Bold | FontStyle.Italic, GraphicsUnit.Point, 0);
+            vsLabel.Font = new Font("Segoe UI", 50F, FontStyle.Bold | FontStyle.Italic, GraphicsUnit.Pixel, 0);
             vsLabel.ForeColor = Color.FromArgb(64, 64, 64);
-            vsLabel.Location = new Point(238, 58);
+            vsLabel.Location = new Point(246, 58);
             vsLabel.Name = "vsLabel";
             vsLabel.Size = new Size(89, 67);
             vsLabel.TabIndex = 2;
@@ -146,9 +148,9 @@
             // label1
             // 
             label1.AutoSize = true;
-            label1.Font = new Font("Segoe UI", 8F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label1.Font = new Font("Segoe UI", 13.4F, FontStyle.Bold, GraphicsUnit.Pixel, 0);
             label1.ForeColor = Color.FromArgb(64, 64, 64);
-            label1.Location = new Point(244, 125);
+            label1.Location = new Point(252, 125);
             label1.Name = "label1";
             label1.Size = new Size(76, 19);
             label1.TabIndex = 8;
@@ -186,12 +188,12 @@
             // panel1
             // 
             panel1.BackColor = Color.FromArgb(32, 33, 36);
+            panel1.Controls.Add(AGLabel);
             panel1.Controls.Add(awayLabel);
             panel1.Controls.Add(finishedCheckBox);
             panel1.Controls.Add(awayNumericUpDown);
             panel1.Controls.Add(HGLabel);
             panel1.Controls.Add(label1);
-            panel1.Controls.Add(AGLabel);
             panel1.Controls.Add(vsLabel);
             panel1.Controls.Add(homeLabel);
             panel1.Controls.Add(homeNumericUpDown);
