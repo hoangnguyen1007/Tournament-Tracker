@@ -50,7 +50,54 @@ namespace TourApp
         }
         private void Home_Load(object sender, EventArgs e)
         {
+            LoadTournamentStats();
             LoadDashboard();
+            LoadHeroTournament();
+        }
+        private void LoadTournamentStats()
+        {
+            DatabaseHelper repo = new DatabaseHelper();
+            DataRow stats = repo.GetTournamentStats();
+            int total = 0;
+            int active = 0;
+            int upcoming = 0;
+
+            if (stats != null)
+            {
+                total = stats.IsNull("TotalTournaments") ? 0 : Convert.ToInt32(stats["TotalTournaments"]);
+                active = stats.IsNull("StartedOrFinishedTournaments") ? 0 : Convert.ToInt32(stats["StartedOrFinishedTournaments"]);
+                upcoming = stats.IsNull("UpcomingTournaments") ? 0 : Convert.ToInt32(stats["UpcomingTournaments"]);
+            }
+            lblTotal.Text = $"Total: {total}";
+            lblActive.Text = $"Active: {active}";
+            lblUpcoming.Text = $"Upcoming: {upcoming}";
+        }
+        private void LoadHeroTournament()
+        {
+            DatabaseHelper db = new DatabaseHelper();
+            DataRow hero = db.GetHeroTournament();
+
+            if (hero == null)
+            {
+                heroTitleLabel.Text = "No tournaments yet";
+                heroSubLabel.Text = "Create your first tournament";
+                heroInfoLabel.Text = "";
+
+                viewDetailsBtn.Visible = false;
+                manageBtn.Visible = false;
+                return;
+            }
+            viewDetailsBtn.Visible = true;
+            manageBtn.Visible = true;
+
+            heroTitleLabel.Text = hero["NAME"].ToString();
+            heroSubLabel.Text = $"{hero["SPORT"]} • {hero["TEAM_COUNT"]} teams";
+
+            DateTime startDate = Convert.ToDateTime(hero["STARTDATE"]);
+
+            heroInfoLabel.Text = startDate >= DateTime.Today
+                ? "Starts on " + startDate.ToString("dd MMM yyyy")
+                : "Started on " + startDate.ToString("dd MMM yyyy");
         }
         public void LoadDashboard()
         {
@@ -102,6 +149,8 @@ namespace TourApp
             if (createForm.ShowDialog() == DialogResult.OK)
             {
                 LoadDashboard();
+                LoadHeroTournament();
+                LoadTournamentStats();
             }
         }
 
@@ -114,7 +163,7 @@ namespace TourApp
             ToolStripItem item = (ToolStripItem)sender;
             ContextMenuStrip menu = (ContextMenuStrip)item.Owner;
 
- 
+
             Control sourceControl = menu.SourceControl;
 
             while (sourceControl != null && !(sourceControl is TournamentCard))
@@ -136,6 +185,8 @@ namespace TourApp
                     {
                         MessageBox.Show("Đã xóa!");
                         LoadDashboard(); // Load lại
+                        LoadHeroTournament();
+                        LoadTournamentStats();
                     }
                 }
             }
@@ -156,6 +207,8 @@ namespace TourApp
             if (createForm.ShowDialog() == DialogResult.OK)
             {
                 LoadDashboard();
+                LoadHeroTournament();
+                LoadTournamentStats();
             }
         }
 
@@ -165,7 +218,14 @@ namespace TourApp
             if (createForm.ShowDialog() == DialogResult.OK)
             {
                 LoadDashboard();
+                LoadHeroTournament();
+                LoadTournamentStats();
             }
+        }
+
+        private void panel2_Paint(object sender, PaintEventArgs e)
+        {
+
         }
     }
 }

@@ -104,15 +104,15 @@
             // 
             panel1.BackColor = Color.LawnGreen;
             panel1.Dock = DockStyle.Right;
-            panel1.Location = new Point(375, 48);
+            panel1.Location = new Point(370, 48);
             panel1.Name = "panel1";
-            panel1.Size = new Size(5, 172);
+            panel1.Size = new Size(10, 172);
             panel1.TabIndex = 5;
             // 
             // TournamentCard
             // 
             AutoScaleMode = AutoScaleMode.None;
-            BackColor = Color.FromArgb(47, 49, 54);
+            BackColor = Color.FromArgb(45, 45, 45);
             Controls.Add(panel1);
             Controls.Add(lblPrize);
             Controls.Add(lblStartDate);

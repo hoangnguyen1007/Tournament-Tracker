@@ -32,7 +32,7 @@ namespace TeamListForm
             lblTitle.Text = name;
             lblSport.Text = sport;
             lblParticipants.Text = "👥"+ participant + " Teams";
-            lblPrize.Text = string.IsNullOrEmpty(prize) ? "No Prize" : "💰" + prize + " VND";
+            lblPrize.Text = string.IsNullOrEmpty(prize) ? "No Prize" : "💰" + string.Format("{0:N0} VND", decimal.Parse(prize));
             if (!string.IsNullOrEmpty(posterPath) && System.IO.File.Exists(posterPath))
             {
                 //pbPoster.Image = Image.FromFile(posterPath);

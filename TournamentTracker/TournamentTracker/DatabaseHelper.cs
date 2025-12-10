@@ -14,7 +14,7 @@ namespace TeamListForm
     internal class DatabaseHelper
     {
         private static string connectionString =
-            @"Data Source=localhost;Integrated Security=True;Persist Security Info=False;Pooling=False;MultipleActiveResultSets=False;Encrypt=False;TrustServerCertificate=True;Application Name=""SQL Server Management Studio"";Command Timeout=30";
+            @"Data Source=localhost;Initial Catalog=TournamentTracker;Integrated Security=True;Persist Security Info=False;Pooling=False;MultipleActiveResultSets=False;Encrypt=False;TrustServerCertificate=True;Command Timeout=30";
 
         // TEAMS
         public static List<Team> GetTeams(string search = "")
@@ -250,10 +250,26 @@ namespace TeamListForm
                 try
                 {
                     conn.Open();
+
+                    // --- BƯỚC 1: FIX LỖI THIẾU CỘT (TỰ ĐỘNG SỬA DB) ---
+                    string fixSql = @"
+                IF COL_LENGTH('dbo.Tournaments', 'SPORT') IS NULL
+                    ALTER TABLE dbo.Tournaments ADD SPORT NVARCHAR(50) NULL;
+                
+                IF COL_LENGTH('dbo.Tournaments', 'TEAM_COUNT') IS NULL
+                    ALTER TABLE dbo.Tournaments ADD TEAM_COUNT INT DEFAULT 0;
+            ";
+                    using (SqlCommand fixCmd = new SqlCommand(fixSql, conn))
+                    {
+                        fixCmd.ExecuteNonQuery();
+                    }
+                    // ----------------------------------------------------
+
+                    // BƯỚC 2: THÊM DỮ LIỆU NHƯ BÌNH THƯỜNG
                     string query = @"INSERT INTO Tournaments 
-                               (NAME, LOCATION, STARTDATE, PRIZE, POSTERPATH, SPORT, TEAM_COUNT) 
-                               VALUES 
-                               (@name, @location, @startDate, @prize, @posterPath, @sport, @teamCount)";
+                           (NAME, LOCATION, STARTDATE, PRIZE, POSTERPATH, SPORT, TEAM_COUNT) 
+                           VALUES 
+                           (@name, @location, @startDate, @prize, @posterPath, @sport, @teamCount)";
 
                     SqlCommand cmd = new SqlCommand(query, conn);
 
@@ -270,7 +286,8 @@ namespace TeamListForm
                 }
                 catch (Exception ex)
                 {
-                    System.Diagnostics.Debug.WriteLine("Lỗi Database: " + ex.Message);
+                    // Hiện lỗi chi tiết để debug
+                    System.Windows.Forms.MessageBox.Show("Lỗi Database: " + ex.Message);
                     return false;
                 }
             }
@@ -311,6 +328,51 @@ namespace TeamListForm
                 {
                     return false; 
                 }
+            }
+        }
+        public DataRow GetHeroTournament()
+        {
+            using (SqlConnection conn = new SqlConnection(connectionString))
+            {
+                conn.Open();
+
+                string sql = @"
+            SELECT TOP 1 *
+            FROM Tournaments
+            ORDER BY STARTDATE ASC";
+
+                SqlDataAdapter da = new SqlDataAdapter(sql, conn);
+                DataTable dt = new DataTable();
+                da.Fill(dt);
+
+                if (dt.Rows.Count > 0)
+                    return dt.Rows[0];
+
+                return null;
+            }
+        }
+        public DataRow GetTournamentStats()
+        {
+            DataTable dt = new DataTable();
+            using (SqlConnection conn = new SqlConnection(connectionString))
+            {
+                conn.Open();
+                string query = @"
+            SELECT
+
+    COUNT(ID) AS TotalTournaments,
+    
+ 
+    SUM(CASE WHEN STARTDATE > GETDATE() THEN 1 ELSE 0 END) AS UpcomingTournaments,
+    
+   
+    SUM(CASE WHEN STARTDATE <= GETDATE() THEN 1 ELSE 0 END) AS StartedOrFinishedTournaments
+FROM Tournaments;";
+                SqlCommand cmd = new SqlCommand(query, conn);
+                SqlDataAdapter adapter = new SqlDataAdapter(cmd);
+                adapter.Fill(dt);
+
+                return dt.Rows.Count > 0 ? dt.Rows[0] : null; 
             }
         }
     }
