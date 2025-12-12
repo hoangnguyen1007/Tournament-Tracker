@@ -320,7 +320,7 @@
             manageBtn.FlatStyle = FlatStyle.Flat;
             manageBtn.Font = new Font("Segoe UI", 20F, FontStyle.Regular, GraphicsUnit.Pixel);
             manageBtn.ForeColor = Color.FromArgb(209, 213, 219);
-            manageBtn.Location = new Point(374, 243);
+            manageBtn.Location = new Point(363, 243);
             manageBtn.Name = "manageBtn";
             manageBtn.Size = new Size(142, 46);
             manageBtn.TabIndex = 5;
@@ -334,7 +334,7 @@
             viewDetailsBtn.FlatStyle = FlatStyle.Flat;
             viewDetailsBtn.Font = new Font("Segoe UI", 20F, FontStyle.Regular, GraphicsUnit.Pixel);
             viewDetailsBtn.ForeColor = Color.FromArgb(15, 23, 42);
-            viewDetailsBtn.Location = new Point(74, 247);
+            viewDetailsBtn.Location = new Point(61, 251);
             viewDetailsBtn.Name = "viewDetailsBtn";
             viewDetailsBtn.Size = new Size(147, 38);
             viewDetailsBtn.TabIndex = 4;
