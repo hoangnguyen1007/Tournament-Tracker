@@ -13,11 +13,16 @@ namespace TeamListForm
 {
     public partial class MatchesScheduleForm : Form
     {
+        private int _tournamentId;
         public MatchesScheduleForm()
         {
             InitializeComponent();
         }
-
+        public MatchesScheduleForm(int id)
+        {
+            InitializeComponent();
+            _tournamentId = id; // Lưu ID lại để dùng load lịch thi đấu
+        }
         private void updateButton_Click(object sender, EventArgs e)
         {
             // Kiểm tra chọn dòng

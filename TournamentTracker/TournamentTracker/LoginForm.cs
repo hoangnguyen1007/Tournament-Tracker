@@ -1,4 +1,5 @@
 ﻿using TeamListForm;
+using TeamListForm.Properties;
 namespace TourApp
 {
     public partial class LoginForm : Form
@@ -78,6 +79,17 @@ namespace TourApp
         private DatabaseHelper db = new DatabaseHelper();
         private void resBtn_Click(object sender, EventArgs e)
         {
+            string user = res_usnTextBox.Text.Trim(); 
+            if (user.Length < 3)
+            {
+                MessageBox.Show("username too short!");
+                return;
+            }
+            if (user.Length > 20)
+            {
+                MessageBox.Show("username too long!");
+                return;
+            }
             if (res_usnTextBox.Text == "")
             {
                 MessageBox.Show("Please enter username!");
@@ -124,6 +136,8 @@ namespace TourApp
             }
             if (db.Login(usnTextBox.Text, passTextBox.Text))
             {
+                TeamListForm.Properties.Settings.Default.SavedUserId = UserSession.CurrentUserId;
+                TeamListForm.Properties.Settings.Default.Save();
                 Home homeform = new Home();
                 homeform.Show();
                 this.Hide();
