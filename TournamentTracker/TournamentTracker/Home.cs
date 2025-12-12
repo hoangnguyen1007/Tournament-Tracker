@@ -343,8 +343,16 @@ namespace TourApp
 
         private void viewDetailsBtn_Click(object sender, EventArgs e)
         {
-            MatchesScheduleForm matchesScheduleForm = new MatchesScheduleForm();
-            matchesScheduleForm.ShowDialog();
+            // Kiểm tra xem đã load được Hero Tournament chưa (ID khác -1)
+            if (_currentHeroId != -1)
+            {
+                // Gọi hàm mở form chi tiết với ID của Hero Tournament
+                OpenTournamentDetail(_currentHeroId);
+            }
+            else
+            {
+                MessageBox.Show("Chưa có giải đấu nổi bật để xem!");
+            }
         }
 
         private void manageBtn_Click(object sender, EventArgs e)
