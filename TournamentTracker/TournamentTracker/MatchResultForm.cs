@@ -10,7 +10,7 @@ using System.Windows.Forms;
 
 namespace TeamListForm
 {
-    public partial class MatchResultForm : Form
+    public partial class MatchResultForm : System.Windows.Forms.Form
     {
         // Biến lưu trữ trận đấu đang sửa
         private Match _match;

@@ -13,7 +13,7 @@ using TeamListForm;
 
 namespace TourApp
 {
-    public partial class CreaTourForm : Form
+    public partial class CreaTourForm : System.Windows.Forms.Form
     {
         public CreaTourForm()
         {

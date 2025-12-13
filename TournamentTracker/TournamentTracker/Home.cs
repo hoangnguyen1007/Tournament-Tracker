@@ -10,7 +10,7 @@ using System.Windows.Forms;
 using TeamListForm;
 namespace TourApp
 {
-    public partial class Home : Form
+    public partial class Home : System.Windows.Forms.Form
     {
         private bool _isViewingMyTournaments = true;
         private int _currentHeroId = -1;

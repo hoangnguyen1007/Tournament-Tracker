@@ -5,7 +5,7 @@ using System.Drawing;
 
 namespace TeamListForm
 {
-    public partial class TeamListForm : Form
+    public partial class TeamListForm : System.Windows.Forms.Form
     {
         private static string connectionString = @"Data Source=DESKTOP-LOJ3INE\SQLEXPRESS;Initial Catalog=TournamentTracker;Integrated Security=True;TrustServerCertificate=True;";
         public TeamListForm()
