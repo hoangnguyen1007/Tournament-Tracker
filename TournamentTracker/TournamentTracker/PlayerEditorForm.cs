@@ -11,7 +11,7 @@ using static System.Net.Mime.MediaTypeNames;
 
 namespace TeamListForm
 {
-    public partial class PlayerEditorForm : Form
+    public partial class PlayerEditorForm : System.Windows.Forms.Form
     {
         private readonly int _teamId;
         private Player? _player;

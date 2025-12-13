@@ -56,6 +56,7 @@
             colPTS = new DataGridViewTextBoxColumn();
             standingsLabel = new Label();
             titleLabel = new Label();
+            InforButton = new Button();
             ((System.ComponentModel.ISupportInitialize)matchesDataGridView).BeginInit();
             ((System.ComponentModel.ISupportInitialize)standingsDataGridView).BeginInit();
             SuspendLayout();
@@ -358,6 +359,7 @@
             BackgroundImage = (Image)resources.GetObject("$this.BackgroundImage");
             BackgroundImageLayout = ImageLayout.Stretch;
             ClientSize = new Size(1282, 773);
+            Controls.Add(InforButton);
             Controls.Add(titleLabel);
             Controls.Add(standingsLabel);
             Controls.Add(standingsDataGridView);
@@ -402,6 +404,7 @@
         private DataGridViewTextBoxColumn colHome;
         private DataGridViewTextBoxColumn colScore;
         private DataGridViewTextBoxColumn colAway;
+        private Button InforButton;
     }
 }
 

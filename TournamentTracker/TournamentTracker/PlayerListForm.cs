@@ -10,7 +10,7 @@ using System.Windows.Forms;
 
 namespace TeamListForm
 {
-    public partial class PlayerListForm : Form
+    public partial class PlayerListForm : System.Windows.Forms.Form
     {
         private int _teamId;
         private string _teamName;

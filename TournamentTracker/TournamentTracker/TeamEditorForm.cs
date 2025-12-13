@@ -16,7 +16,7 @@ namespace TeamListForm
         Update,  // Sửa
         Delete   // Xóa (chỉ hiển thị thông tin + hỏi xác nhận)
     }
-    public partial class TeamEditorForm : Form
+    public partial class TeamEditorForm : System.Windows.Forms.Form
     {
         private Team _team;
         private EditorMode _mode;
