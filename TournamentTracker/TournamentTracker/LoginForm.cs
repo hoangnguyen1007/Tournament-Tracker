@@ -1,7 +1,7 @@
 ﻿using TeamListForm;
 namespace TourApp
 {
-    public partial class LoginForm : Form
+    public partial class LoginForm : System.Windows.Forms.Form
     {
         private void Enter_Is_Tab_KeyDown(object sender, KeyEventArgs e)
         {
