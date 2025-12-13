@@ -245,6 +245,7 @@ namespace TeamListForm
                 return match > 0; // true nếu tồn tại, false nếu không
             }
         }
+
         //Tournaments database
         public bool AddTournament(string name, string location, DateTime? startDate, string prize, string posterPath, string sport, int teamCount)
         {
@@ -375,7 +376,106 @@ FROM Tournaments;";
                 SqlDataAdapter adapter = new SqlDataAdapter(cmd);
                 adapter.Fill(dt);
 
-                return dt.Rows.Count > 0 ? dt.Rows[0] : null; 
+                return dt.Rows.Count > 0 ? dt.Rows[0] : null;
+            }
+        }
+
+        //MATCHES
+
+        // 1. Lấy danh sách các vòng đấu (để đổ vào ComboBox)
+        public static List<string> GetRounds()
+        {
+            var rounds = new List<string>();
+            string sql = "SELECT DISTINCT Round FROM Matches ORDER BY Round";
+
+            using (SqlConnection conn = new SqlConnection(connectionString))
+            using (SqlCommand cmd = new SqlCommand(sql, conn))
+            {
+                conn.Open();
+                using (SqlDataReader reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        // Tạo chuỗi hiển thị "Round 1", "Round 2"...
+                        rounds.Add("Round " + reader.GetInt32("Round").ToString());
+                    }
+                }
+            }
+            return rounds;
+        }
+
+        // 2. Lấy danh sách trận đấu (Có hỗ trợ lọc theo vòng)
+        public static DataTable GetMatchesTable(string roundFilter = "")
+        {
+            DataTable dt = new DataTable();
+            
+            // Câu lệnh SQL kết nối 3 bảng: Matches, Teams (Chủ nhà), Teams (Khách)
+            string sql = @"
+                SELECT 
+                    m.ID AS MatchID,
+                    m.Round,
+                    t1.TEAMNAME AS HomeTeamName,
+                    t2.TEAMNAME AS AwayTeamName,
+                    m.HomeScore,
+                    m.AwayScore,
+                    m.HomeTeamID,
+                    m.AwayTeamID
+                FROM Matches m
+                JOIN Teams t1 ON m.HomeTeamID = t1.ID
+                JOIN Teams t2 ON m.AwayTeamID = t2.ID";
+
+            // Nếu có lọc theo vòng (VD: "Round 1" -> Lấy số 1)
+            if (!string.IsNullOrEmpty(roundFilter))
+            {
+                sql += " WHERE m.Round = @RoundNum";
+            }
+
+            using (SqlConnection conn = new SqlConnection(connectionString))
+            using (SqlCommand cmd = new SqlCommand(sql, conn))
+            {
+                if (!string.IsNullOrEmpty(roundFilter))
+                {
+                    // Cắt chuỗi "Round 1" lấy số 1
+                    string roundNum = roundFilter.Replace("Round ", "").Trim();
+                    cmd.Parameters.AddWithValue("@RoundNum", int.Parse(roundNum));
+                }
+
+                conn.Open();
+                SqlDataAdapter adapter = new SqlDataAdapter(cmd);
+                adapter.Fill(dt);
+            }
+
+            // Thêm cột hiển thị tỷ số (ScoreDisplay) cho đẹp
+            dt.Columns.Add("ScoreDisplay", typeof(string));
+            foreach (DataRow row in dt.Rows)
+            {
+                if (row["HomeScore"] == DBNull.Value || row["AwayScore"] == DBNull.Value)
+                {
+                    row["ScoreDisplay"] = "vs";
+                }
+                else
+                {
+                    row["ScoreDisplay"] = $"{row["HomeScore"]} - {row["AwayScore"]}";
+                }
+            }
+
+            return dt;
+        }
+
+        // Cập nhật kết quả trận đấu
+        public static void UpdateMatchResult(int matchId, int homeScore, int awayScore)
+        {
+            string sql = "UPDATE Matches SET HomeScore = @h, AwayScore = @a WHERE ID = @id";
+
+            using (SqlConnection conn = new SqlConnection(connectionString))
+            using (SqlCommand cmd = new SqlCommand(sql, conn))
+            {
+                cmd.Parameters.AddWithValue("@h", homeScore);
+                cmd.Parameters.AddWithValue("@a", awayScore);
+                cmd.Parameters.AddWithValue("@id", matchId);
+
+                conn.Open();
+                cmd.ExecuteNonQuery();
             }
         }
     }
