@@ -10,11 +10,18 @@ using System.Windows.Forms;
 
 namespace TeamListForm
 {
-    public partial class MatchResultForm : Form
+    public partial class MatchesScheduleForm : Form
     {
-        public MatchResultForm()
+        public MatchesScheduleForm()
         {
             InitializeComponent();
         }
+
+        private void updateButton_Click(object sender, EventArgs e)
+        {
+            MatchResultForm match_result = new MatchResultForm();
+            match_result.ShowDialog();
+        }
+
     }
 }
