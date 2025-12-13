@@ -12,6 +12,8 @@ namespace TourApp
 {
     public partial class Home : System.Windows.Forms.Form
     {
+        private bool _isViewingMyTournaments = true;
+        private int _currentHeroId = -1;
         protected override CreateParams CreateParams
         {
             get
@@ -40,6 +42,13 @@ namespace TourApp
 
         private void logOutToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            UserSession.Logout();
+
+            // 2. --- THÊM MỚI: Xóa trong Ổ cứng ---
+            TeamListForm.Properties.Settings.Default.SavedUserId = -1; // Reset về -1
+            TeamListForm.Properties.Settings.Default.Save();
+            // ------------------------------------
+
             LoginForm homeform = new LoginForm();
             this.Hide();
             homeform.Show();
@@ -50,66 +59,133 @@ namespace TourApp
         }
         private void Home_Load(object sender, EventArgs e)
         {
-            LoadTournamentStats();
-            LoadDashboard();
-            LoadHeroTournament();
+            LoadTournamentStats(true);
+            LoadDashboard(true);
+            LoadHeroTournament(true);
         }
-        private void LoadTournamentStats()
+        private void LoadTournamentStats(bool viewMineOnly)
         {
             DatabaseHelper repo = new DatabaseHelper();
-            DataRow stats = repo.GetTournamentStats();
+
+            // Truyền userId và chế độ xem vào
+            DataRow stats = repo.GetTournamentStats(UserSession.CurrentUserId, viewMineOnly);
+
             int total = 0;
-            int active = 0;
-            int upcoming = 0;
+            int active = 0; // Đã bắt đầu/Kết thúc
+            int upcoming = 0; // Sắp tới
 
             if (stats != null)
             {
                 total = stats.IsNull("TotalTournaments") ? 0 : Convert.ToInt32(stats["TotalTournaments"]);
+
+                // Lưu ý: Logic Active/Upcoming của bạn ở SQL đang là:
+                // Upcoming: StartDate > Now
+                // Active/Finished: StartDate <= Now
                 active = stats.IsNull("StartedOrFinishedTournaments") ? 0 : Convert.ToInt32(stats["StartedOrFinishedTournaments"]);
                 upcoming = stats.IsNull("UpcomingTournaments") ? 0 : Convert.ToInt32(stats["UpcomingTournaments"]);
             }
+
+            // Cập nhật Label
             lblTotal.Text = $"Total: {total}";
             lblActive.Text = $"Active: {active}";
             lblUpcoming.Text = $"Upcoming: {upcoming}";
+
+            // [GỢI Ý UX] Đổi màu hoặc tiêu đề để người dùng hiểu họ đang xem stats của ai
+            if (viewMineOnly)
+            {
+                // Ví dụ: Đổi màu chữ sang màu Xanh (My Stats)
+                lblTotal.ForeColor = Color.LightGreen;
+            }
+            else
+            {
+                // Ví dụ: Đổi màu chữ sang màu Cam (Community Stats)
+                lblTotal.ForeColor = Color.Orange;
+            }
         }
-        private void LoadHeroTournament()
+        private void LoadHeroTournament(bool viewMineOnly)
         {
             DatabaseHelper db = new DatabaseHelper();
-            DataRow hero = db.GetHeroTournament();
+
+            // Gọi hàm mới bên DatabaseHelper với ID người dùng hiện tại
+            DataRow hero = db.GetHeroTournament(UserSession.CurrentUserId, viewMineOnly);
+
+            // Reset ID Hero
+            _currentHeroId = -1;
 
             if (hero == null)
             {
-                heroTitleLabel.Text = "No tournaments yet";
-                heroSubLabel.Text = "Create your first tournament";
+                // Xử lý Empty State (Giữ nguyên logic cũ của bạn nhưng sửa text cho hợp lý)
+                heroTitleLabel.Text = viewMineOnly ? "No upcoming tournaments" : "No public tournaments found";
+                heroSubLabel.Text = viewMineOnly ? "Create your first tournament" : "Check back later";
                 heroInfoLabel.Text = "";
 
                 viewDetailsBtn.Visible = false;
                 manageBtn.Visible = false;
                 return;
             }
+
+            // --- CÓ DỮ LIỆU ---
+            _currentHeroId = Convert.ToInt32(hero["ID"]);
             viewDetailsBtn.Visible = true;
-            manageBtn.Visible = true;
+
+            // --- LOGIC PHÂN QUYỀN NÚT MANAGE (QUAN TRỌNG) ---
+            // Chỉ hiện nút Manage nếu User hiện tại là chủ nhân giải đấu này
+            int creatorId = hero["CreatedBy"] != DBNull.Value ? Convert.ToInt32(hero["CreatedBy"]) : 0;
+
+            if (creatorId == UserSession.CurrentUserId)
+            {
+                manageBtn.Visible = true; // Là chủ -> Được sửa
+            }
+            else
+            {
+                manageBtn.Visible = false; // Là khách -> Ẩn nút sửa
+            }
+            // ------------------------------------------------
 
             heroTitleLabel.Text = hero["NAME"].ToString();
             heroSubLabel.Text = $"{hero["SPORT"]} • {hero["TEAM_COUNT"]} teams";
 
             DateTime startDate = Convert.ToDateTime(hero["STARTDATE"]);
-
-            heroInfoLabel.Text = startDate >= DateTime.Today
-                ? "Starts on " + startDate.ToString("dd MMM yyyy")
-                : "Started on " + startDate.ToString("dd MMM yyyy");
+            heroInfoLabel.Text = "Starts on " + startDate.ToString("dd MMM yyyy");
         }
-        public void LoadDashboard()
+        public void LoadDashboard(bool viewMineOnly)
         {
+            _isViewingMyTournaments = viewMineOnly; // Lưu trạng thái
             flowPanelCards.Controls.Clear();
+
             DatabaseHelper repo = new DatabaseHelper();
-            DataTable dt = repo.GetAllTournaments();
+            DataTable dt;
+
+            // --- QUYẾT ĐỊNH LẤY DỮ LIỆU NÀO ---
+            if (viewMineOnly)
+            {
+                // Chế độ 1: Chỉ lấy giải của tôi
+                dt = repo.GetMyTournaments(UserSession.CurrentUserId);
+                // Đổi tiêu đề cho người dùng biết (nếu bạn có label tiêu đề danh sách)
+                // lblListTitle.Text = "My Tournaments"; 
+            }
+            else
+            {
+                // Chế độ 2: Lấy giải người khác (Find)
+                dt = repo.GetOtherTournaments(UserSession.CurrentUserId);
+                // lblListTitle.Text = "Public Tournaments";
+            }
+            // -----------------------------------
+
             if (dt.Rows.Count == 0)
             {
+                // Nếu là xem của mình mà trống -> Hiện "Tạo giải đầu tiên đi"
+                // Nếu là Find mà trống -> Hiện "Không tìm thấy giải nào"
                 pnlEmptyState.Visible = true;
                 pnlEmptyState.BringToFront();
-
                 flowPanelCards.Visible = false;
+
+                // Cập nhật text empty state cho hợp ngữ cảnh
+                if (viewMineOnly)
+                    heroSubLabel.Text = "Create your first tournament";
+                else
+                    heroSubLabel.Text = "No public tournaments found";
+
                 return;
             }
 
@@ -120,6 +196,8 @@ namespace TourApp
             foreach (DataRow row in dt.Rows)
             {
                 TournamentCard card = new TournamentCard();
+
+                // ... (Code map dữ liệu cũ giữ nguyên) ...
                 int id = Convert.ToInt32(row["ID"]);
                 string name = row["NAME"].ToString();
                 string sport = row["SPORT"].ToString();
@@ -128,14 +206,44 @@ namespace TourApp
                 DateTime startDate = Convert.ToDateTime(row["STARTDATE"]);
                 string date = startDate.ToString("dd MMM yyyy");
                 string participant = row["TEAM_COUNT"].ToString();
+
                 card.SetData(id, name, sport, date, prize, participant, path);
                 card.Margin = new Padding(15);
-                card.Click += Card_Click;
-                flowPanelCards.Controls.Add(card);
+                card.OnSelect += Card_Selected_Handler;
+
+                // --- XỬ LÝ QUYỀN (QUAN TRỌNG) ---
+                if (viewMineOnly)
+                {
+                    // Nếu đang xem list của mình -> Chắc chắn là chủ -> Hiện nút Manage
+                    card.EnableOwnerMode(true);
+                }
+                else
+                {
+                    // Nếu đang xem list người khác -> Chắc chắn là khách -> Ẩn nút Manage
+                    card.EnableOwnerMode(false);
+                }
+
                 card.ContextMenuStrip = contextMenuStrip1;
+                flowPanelCards.Controls.Add(card);
             }
         }
-
+        private void Card_Selected_Handler(object sender, int tournamentId)
+        {
+            OpenTournamentDetail(tournamentId);
+        }
+        private void ViewDetailsBtn_Click(object sender, EventArgs e)
+        {
+            if (_currentHeroId != -1)
+            {
+                OpenTournamentDetail(_currentHeroId);
+            }
+        }
+        private void OpenTournamentDetail(int id)
+        {
+            // BẠN CẦN SỬA CONSTRUCTOR CỦA MatchesScheduleForm ĐỂ NHẬN ID
+            MatchesScheduleForm matchesScheduleForm = new MatchesScheduleForm(id);
+            matchesScheduleForm.ShowDialog();
+        }
         private void Card_Click(object sender, EventArgs e)
         {
             TournamentCard card = (TournamentCard)sender;
@@ -148,9 +256,9 @@ namespace TourApp
             CreaTourForm createForm = new CreaTourForm();
             if (createForm.ShowDialog() == DialogResult.OK)
             {
-                LoadDashboard();
-                LoadHeroTournament();
-                LoadTournamentStats();
+                LoadDashboard(true);
+                LoadHeroTournament(true);
+                LoadTournamentStats(true);
             }
         }
 
@@ -184,9 +292,9 @@ namespace TourApp
                     if (repo.DeleteTournament(tournamentId))
                     {
                         MessageBox.Show("Đã xóa!");
-                        LoadDashboard(); // Load lại
-                        LoadHeroTournament();
-                        LoadTournamentStats();
+                        LoadDashboard(true);
+                        LoadHeroTournament(true);
+                        LoadTournamentStats(true);
                     }
                 }
             }
@@ -206,9 +314,9 @@ namespace TourApp
             CreaTourForm createForm = new CreaTourForm();
             if (createForm.ShowDialog() == DialogResult.OK)
             {
-                LoadDashboard();
-                LoadHeroTournament();
-                LoadTournamentStats();
+                LoadDashboard(true);
+                LoadHeroTournament(true);
+                LoadTournamentStats(true);
             }
         }
 
@@ -217,9 +325,9 @@ namespace TourApp
             CreaTourForm createForm = new CreaTourForm();
             if (createForm.ShowDialog() == DialogResult.OK)
             {
-                LoadDashboard();
-                LoadHeroTournament();
-                LoadTournamentStats();
+                LoadDashboard(true);
+                LoadHeroTournament(true);
+                LoadTournamentStats(true);
             }
         }
 
@@ -231,6 +339,27 @@ namespace TourApp
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Application.Exit();
+        }
+
+        private void viewDetailsBtn_Click(object sender, EventArgs e)
+        {
+            MatchesScheduleForm matchesScheduleForm = new MatchesScheduleForm();
+            matchesScheduleForm.ShowDialog();
+        }
+
+        private void manageBtn_Click(object sender, EventArgs e)
+        {
+            TeamListForm.TeamListForm teamlist = new TeamListForm.TeamListForm();
+            teamlist.ShowDialog();
+        }
+
+        private void findBtn_Click(object sender, EventArgs e)
+        { 
+        }
+
+        private void Account_Opening(object sender, CancelEventArgs e)
+        {
+
         }
     }
 }

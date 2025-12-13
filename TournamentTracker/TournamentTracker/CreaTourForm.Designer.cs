@@ -82,6 +82,7 @@
             // LogOutBtn
             // 
             LogOutBtn.BackColor = Color.Transparent;
+            LogOutBtn.Cursor = Cursors.Hand;
             LogOutBtn.FlatAppearance.BorderSize = 0;
             LogOutBtn.FlatAppearance.MouseDownBackColor = Color.Gray;
             LogOutBtn.FlatAppearance.MouseOverBackColor = Color.FromArgb(55, 55, 55);
@@ -89,7 +90,7 @@
             LogOutBtn.Font = new Font("Segoe UI", 18F, FontStyle.Bold, GraphicsUnit.Pixel);
             LogOutBtn.ForeColor = SystemColors.ActiveCaptionText;
             LogOutBtn.Image = (Image)resources.GetObject("LogOutBtn.Image");
-            LogOutBtn.Location = new Point(673, 12);
+            LogOutBtn.Location = new Point(685, 12);
             LogOutBtn.Name = "LogOutBtn";
             LogOutBtn.Size = new Size(30, 30);
             LogOutBtn.TabIndex = 3;
@@ -98,6 +99,7 @@
             // 
             // sfindBtn
             // 
+            sfindBtn.Cursor = Cursors.Hand;
             sfindBtn.FlatAppearance.BorderSize = 0;
             sfindBtn.FlatStyle = FlatStyle.Flat;
             sfindBtn.Font = new Font("Segoe UI", 18F, FontStyle.Regular, GraphicsUnit.Pixel);

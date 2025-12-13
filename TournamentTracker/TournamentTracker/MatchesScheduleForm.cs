@@ -70,7 +70,11 @@ namespace TeamListForm
             matchesDataGridView.AutoGenerateColumns = false;
             matchesDataGridView.DataSource = dt;
         }
-
+        public MatchesScheduleForm(int id)
+        {
+            InitializeComponent();
+            _tournamentId = id; // Lưu ID lại để dùng load lịch thi đấu
+        }
         private void updateButton_Click(object sender, EventArgs e)
         {
             if (matchesDataGridView.CurrentRow == null)
