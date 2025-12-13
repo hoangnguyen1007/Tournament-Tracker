@@ -14,7 +14,7 @@ namespace TeamListForm
     public partial class PlayerEditorForm : Form
     {
         private readonly int _teamId;
-        private Player _player;
+        private Player? _player;
         private readonly bool _isEdit;
 
         // THÊM MỚI
@@ -45,6 +45,7 @@ namespace TeamListForm
             txtPlayerName.Text = _player.PlayerName;
             txtPosition.Text = _player.Position;
             txtAge.Text = _player.Age.ToString();
+            txtNumber.Text = _player.Number.ToString();
         }
 
         private void btnSave_Click(object sender, EventArgs e)
@@ -68,13 +69,19 @@ namespace TeamListForm
                 MessageBox.Show("Tuổi phải là số nguyên!");
                 return;
             }
-
+            if (!int.TryParse(txtNumber.Text.Trim(), out int number))
+            {
+                MessageBox.Show("Số áo phải là số nguyên!", "Lỗi nhập liệu");
+                txtNumber.Focus();
+                return;
+            }
             if (_isEdit)
             {
                 // Gán lại giá trị cho object Player
                 _player.PlayerName = name;
                 _player.Position = pos;
                 _player.Age = age;
+                _player.Number = number;
 
                 // Gọi hàm UPDATE trong DataHelper
                 DatabaseHelper.UpdatePlayer(_player);
@@ -86,7 +93,8 @@ namespace TeamListForm
                     PlayerName = name,
                     Position = pos,
                     Age = age,
-                    TeamID = _teamId
+                    TeamID = _teamId,
+                    Number = number 
                 };
 
                 // Gọi hàm INSERT trong DataHelper

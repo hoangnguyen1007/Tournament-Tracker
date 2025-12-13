@@ -13,17 +13,8 @@ namespace TeamListForm
 {
     internal class DatabaseHelper
     {
-        private static string connectionString =
-            @"Data Source=.\SQLEXPRESS;
-  Initial Catalog=TournamentTracker;
-  Integrated Security=True;
-  Persist Security Info=False;
-  Pooling=False;
-  MultipleActiveResultSets=False;
-  Encrypt=False;
-  TrustServerCertificate=True;
-  Application Name=""SQL Server Management Studio"";
-  Command Timeout=30";
+        private static string connectionString = "";
+;            
 
         // TEAMS
         public static List<Team> GetTeams(string search = "")
@@ -119,6 +110,7 @@ namespace TeamListForm
             p.POSITION,
             p.AGE,
             p.IDTEAM,
+            p.NUMBER,
             t.TEAMNAME
         FROM Players p
         LEFT JOIN Teams t ON p.IDTEAM = t.ID
@@ -143,6 +135,7 @@ namespace TeamListForm
                             Position = reader["POSITION"]?.ToString().Trim() ?? "",
                             Age = reader.IsDBNull("AGE") ? 0 : reader.GetInt32("AGE"),
                             TeamID = reader.IsDBNull("IDTEAM") ? (int?)null : reader.GetInt32("IDTEAM"),
+                            Number = reader["Number"] != DBNull.Value ? (int)reader["Number"] : 0
                         });
                     }
                 }
@@ -158,6 +151,7 @@ namespace TeamListForm
             cmd.Parameters.AddWithValue("@Age", player.Age);
             cmd.Parameters.AddWithValue("@Pos", player.Position);
             cmd.Parameters.AddWithValue("@TeamID", player.TeamID);
+            cmd.Parameters.AddWithValue("@Number", player.Number);
             conn.Open();
             cmd.ExecuteNonQuery();
         }
@@ -171,6 +165,7 @@ namespace TeamListForm
             cmd.Parameters.AddWithValue("@Age", player.Age);
             cmd.Parameters.AddWithValue("@Pos", player.Position);
             cmd.Parameters.AddWithValue("@ID", player.ID);
+            cmd.Parameters.AddWithValue("@Number", player.Number);
             conn.Open();
             cmd.ExecuteNonQuery();
         }

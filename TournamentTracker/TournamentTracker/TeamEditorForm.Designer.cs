@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(TeamEditorForm));
             label1 = new Label();
             label2 = new Label();
             txtCoach = new TextBox();
@@ -39,8 +40,9 @@
             // label1
             // 
             label1.AutoSize = true;
-            label1.Font = new Font("Segoe UI Semibold", 18F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label1.Location = new Point(89, 150);
+            label1.Font = new Font("Segoe UI Semibold", 24F, FontStyle.Bold, GraphicsUnit.Pixel);
+            label1.Location = new Point(126, 136);
+            label1.Margin = new Padding(2, 0, 2, 0);
             label1.Name = "label1";
             label1.Size = new Size(144, 32);
             label1.TabIndex = 0;
@@ -49,64 +51,82 @@
             // label2
             // 
             label2.AutoSize = true;
-            label2.Font = new Font("Segoe UI Semibold", 18F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label2.Location = new Point(89, 211);
+            label2.Font = new Font("Segoe UI Semibold", 24F, FontStyle.Bold, GraphicsUnit.Pixel, 0);
+            label2.Location = new Point(126, 185);
+            label2.Margin = new Padding(2, 0, 2, 0);
             label2.Name = "label2";
             label2.Size = new Size(81, 32);
-            label2.TabIndex = 1;
+            label2.TabIndex = 0;
             label2.Text = "Coach";
             // 
             // txtCoach
             // 
-            txtCoach.Font = new Font("Segoe UI", 14.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            txtCoach.Location = new Point(289, 210);
+            txtCoach.BackColor = Color.FromArgb(35, 38, 39);
+            txtCoach.Font = new Font("Segoe UI Semibold", 18F, FontStyle.Bold | FontStyle.Italic, GraphicsUnit.Pixel, 0);
+            txtCoach.ForeColor = Color.DarkGray;
+            txtCoach.Location = new Point(319, 188);
+            txtCoach.Margin = new Padding(2);
             txtCoach.Name = "txtCoach";
-            txtCoach.Size = new Size(420, 33);
-            txtCoach.TabIndex = 4;
+            txtCoach.Size = new Size(301, 32);
+            txtCoach.TabIndex = 2;
             // 
             // txtTeamName
             // 
-            txtTeamName.Font = new Font("Segoe UI", 14.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            txtTeamName.Location = new Point(289, 149);
+            txtTeamName.BackColor = Color.FromArgb(35, 38, 39);
+            txtTeamName.Font = new Font("Segoe UI Semibold", 18F, FontStyle.Bold | FontStyle.Italic, GraphicsUnit.Pixel, 0);
+            txtTeamName.ForeColor = Color.DarkGray;
+            txtTeamName.Location = new Point(319, 139);
+            txtTeamName.Margin = new Padding(2);
             txtTeamName.Name = "txtTeamName";
-            txtTeamName.Size = new Size(420, 33);
-            txtTeamName.TabIndex = 6;
+            txtTeamName.Size = new Size(301, 32);
+            txtTeamName.TabIndex = 1;
             // 
             // btnOption
             // 
-            btnOption.Font = new Font("Segoe UI Semibold", 18F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            btnOption.Location = new Point(132, 387);
+            btnOption.BackColor = Color.FromArgb(35, 38, 39);
+            btnOption.Font = new Font("Segoe UI Semibold", 24F, FontStyle.Bold, GraphicsUnit.Pixel, 0);
+            btnOption.Location = new Point(126, 246);
+            btnOption.Margin = new Padding(2);
             btnOption.Name = "btnOption";
-            btnOption.Size = new Size(112, 47);
-            btnOption.TabIndex = 7;
+            btnOption.Size = new Size(118, 49);
+            btnOption.TabIndex = 3;
             btnOption.Text = "Save";
-            btnOption.UseVisualStyleBackColor = true;
+            btnOption.UseVisualStyleBackColor = false;
             btnOption.Click += btnOption_Click;
             // 
             // btnCancel
             // 
-            btnCancel.Font = new Font("Segoe UI Semibold", 18F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            btnCancel.Location = new Point(597, 387);
+            btnCancel.BackColor = Color.FromArgb(35, 38, 39);
+            btnCancel.Font = new Font("Segoe UI Semibold", 24F, FontStyle.Bold, GraphicsUnit.Pixel, 0);
+            btnCancel.Location = new Point(498, 246);
+            btnCancel.Margin = new Padding(2);
             btnCancel.Name = "btnCancel";
-            btnCancel.Size = new Size(112, 47);
-            btnCancel.TabIndex = 8;
+            btnCancel.Size = new Size(122, 49);
+            btnCancel.TabIndex = 4;
             btnCancel.Text = "Cancel";
-            btnCancel.UseVisualStyleBackColor = true;
+            btnCancel.UseVisualStyleBackColor = false;
+            btnCancel.Click += btnCancel_Click;
             // 
             // TeamEditorForm
             // 
-            AutoScaleDimensions = new SizeF(7F, 15F);
-            AutoScaleMode = AutoScaleMode.Font;
+            AutoScaleMode = AutoScaleMode.None;
             BackColor = Color.FromArgb(35, 38, 39);
-            ClientSize = new Size(923, 512);
+            BackgroundImage = (Image)resources.GetObject("$this.BackgroundImage");
+            BackgroundImageLayout = ImageLayout.Stretch;
+            ClientSize = new Size(750, 400);
             Controls.Add(btnCancel);
             Controls.Add(btnOption);
             Controls.Add(txtTeamName);
             Controls.Add(txtCoach);
             Controls.Add(label2);
             Controls.Add(label1);
+            Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Pixel);
             ForeColor = Color.FromArgb(40, 156, 56);
+            FormBorderStyle = FormBorderStyle.None;
+            Icon = (Icon)resources.GetObject("$this.Icon");
+            Margin = new Padding(2);
             Name = "TeamEditorForm";
+            StartPosition = FormStartPosition.CenterScreen;
             Text = "Form2";
             ResumeLayout(false);
             PerformLayout();

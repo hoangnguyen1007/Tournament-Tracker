@@ -11,12 +11,24 @@ namespace TeamListForm
         public TeamListForm()
         {
             InitializeComponent();
+            this.DoubleBuffered = true;
             LoadTeams(); // Load lần đầu
         }
 
         private void SearchBtn_Click(object sender, EventArgs e)
         {
             LoadTeams(txtSearch.Text.Trim());
+        }
+        private void txtSearch_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                LoadTeams(txtSearch.Text.Trim());
+
+                // tắt tiếng "Ting" của Windows
+                e.SuppressKeyPress = true;
+                e.Handled = true;
+            }
         }
         private void LoadTeams(string search = "")
         {
@@ -32,22 +44,22 @@ namespace TeamListForm
             if (dgvTeams.Columns["TEAMNAME"] != null) dgvTeams.Columns["TEAMNAME"].HeaderText = "TEAM";
             if (dgvTeams.Columns["COACH"] != null) dgvTeams.Columns["COACH"].HeaderText = "COACH";
 
-            // Chỉnh row height (kiếm ko ra trong bảng prop :< )
-            dgvTeams.RowTemplate.Height = 42;
-            // Tự động co giãn
-            dgvTeams.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
-            // CHẶN CHẾT – KHÔNG THỂ SỬA 
-            dgvTeams.ReadOnly = true;
-            dgvTeams.AllowUserToAddRows = false;
-            dgvTeams.AllowUserToDeleteRows = false;
-            dgvTeams.EditMode = DataGridViewEditMode.EditProgrammatically; // QUAN TRỌNG NHẤT!
-            dgvTeams.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-
             // Bonus: chặn luôn sự kiện bắt đầu sửa
             dgvTeams.CellBeginEdit += (s, e) => e.Cancel = true;
 
-            // Nếu vẫn còn "nhấp nháy con trỏ" thì thêm dòng này
-            dgvTeams.CurrentCell = null;
+            if (dgvTeams.Rows.Count > 0)
+            {
+                // Highlight dòng đầu tiên
+                dgvTeams.Rows[0].Selected = true;
+
+                // Gán CurrentCell vào ô nhìn thấy được (để CurrentRow có giá trị)
+                // Cột 0 là ID bị ẩn, nên gán vào cột 1 (TEAMNAME)
+                if (dgvTeams.Columns.Count > 1 && dgvTeams.Rows[0].Cells[1].Visible)
+                    dgvTeams.CurrentCell = dgvTeams.Rows[0].Cells[1];
+            }
+            else
+                // Nếu không có dữ liệu thì mới set null
+                dgvTeams.CurrentCell = null;
         }
         // PANEL OPTION CRUD NÈ 
         private void btnAdd_Click(object sender, EventArgs e)
@@ -120,6 +132,16 @@ namespace TeamListForm
             }
             var playerForm = new PlayerListForm(selectedTeam.ID, selectedTeam.TEAMNAME);
             playerForm.ShowDialog();
+        }
+
+        private void btnCloseForm_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
+
+        private void btnMinimize_Click(object sender, EventArgs e)
+        {
+            this.WindowState = FormWindowState.Minimized;
         }
     }
 }
