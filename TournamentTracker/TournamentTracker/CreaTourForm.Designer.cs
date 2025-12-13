@@ -73,10 +73,9 @@
             label1.AutoSize = true;
             label1.Font = new Font("Segoe UI", 32F, FontStyle.Bold, GraphicsUnit.Pixel);
             label1.ForeColor = Color.LimeGreen;
-            label1.Location = new Point(8, 5);
-            label1.Margin = new Padding(2, 0, 2, 0);
+            label1.Location = new Point(12, 9);
             label1.Name = "label1";
-            label1.Size = new Size(203, 30);
+            label1.Size = new Size(298, 45);
             label1.TabIndex = 2;
             label1.Text = "🏆 TOURNAMENT";
             // 
@@ -90,10 +89,9 @@
             LogOutBtn.Font = new Font("Segoe UI", 18F, FontStyle.Bold, GraphicsUnit.Pixel);
             LogOutBtn.ForeColor = SystemColors.ActiveCaptionText;
             LogOutBtn.Image = (Image)resources.GetObject("LogOutBtn.Image");
-            LogOutBtn.Location = new Point(471, 7);
-            LogOutBtn.Margin = new Padding(2, 2, 2, 2);
+            LogOutBtn.Location = new Point(673, 12);
             LogOutBtn.Name = "LogOutBtn";
-            LogOutBtn.Size = new Size(21, 18);
+            LogOutBtn.Size = new Size(30, 30);
             LogOutBtn.TabIndex = 3;
             LogOutBtn.UseVisualStyleBackColor = false;
             LogOutBtn.Click += LogOutBtn_Click;
@@ -105,10 +103,9 @@
             sfindBtn.Font = new Font("Segoe UI", 18F, FontStyle.Regular, GraphicsUnit.Pixel);
             sfindBtn.ForeColor = Color.Transparent;
             sfindBtn.Image = (Image)resources.GetObject("sfindBtn.Image");
-            sfindBtn.Location = new Point(425, 7);
-            sfindBtn.Margin = new Padding(2, 2, 2, 2);
+            sfindBtn.Location = new Point(607, 12);
             sfindBtn.Name = "sfindBtn";
-            sfindBtn.Size = new Size(21, 18);
+            sfindBtn.Size = new Size(30, 30);
             sfindBtn.TabIndex = 5;
             sfindBtn.UseVisualStyleBackColor = true;
             // 
@@ -120,14 +117,12 @@
             panel1.Controls.Add(label1);
             panel1.Dock = DockStyle.Top;
             panel1.Location = new Point(0, 0);
-            panel1.Margin = new Padding(2, 2, 2, 2);
             panel1.Name = "panel1";
-            panel1.Size = new Size(516, 36);
+            panel1.Size = new Size(737, 60);
             panel1.TabIndex = 1;
             // 
             // sportCbox
             // 
-            sportCbox.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             sportCbox.BackColor = Color.FromArgb(64, 64, 64);
             sportCbox.FlatStyle = FlatStyle.Flat;
             sportCbox.Font = new Font("Segoe UI", 20F, FontStyle.Regular, GraphicsUnit.Pixel);
@@ -135,10 +130,9 @@
             sportCbox.FormattingEnabled = true;
             sportCbox.IntegralHeight = false;
             sportCbox.Items.AddRange(new object[] { "Athletics", "Badminton", "Baseball", "Basketball", "Boxing", "Cycling", "Football", "Golf", "Handball", "Hockey", "Judo", "Karate", "Rowing", "Rugby", "Swimming", "Table Tennis", "Taekwondo", "Tennis", "Volleyball" });
-            sportCbox.Location = new Point(20, 113);
-            sportCbox.Margin = new Padding(2, 2, 2, 2);
+            sportCbox.Location = new Point(29, 188);
             sportCbox.Name = "sportCbox";
-            sportCbox.Size = new Size(199, 25);
+            sportCbox.Size = new Size(282, 36);
             sportCbox.TabIndex = 3;
             // 
             // label2
@@ -146,39 +140,33 @@
             label2.AutoSize = true;
             label2.Font = new Font("Segoe UI", 22F, FontStyle.Bold, GraphicsUnit.Pixel);
             label2.ForeColor = SystemColors.ButtonHighlight;
-            label2.Location = new Point(90, 93);
-            label2.Margin = new Padding(2, 0, 2, 0);
+            label2.Location = new Point(129, 155);
             label2.Name = "label2";
-            label2.Size = new Size(47, 20);
+            label2.Size = new Size(71, 30);
             label2.TabIndex = 4;
             label2.Text = "Sport";
-            label2.TextAlign = ContentAlignment.MiddleLeft;
             // 
             // label3
             // 
             label3.AutoSize = true;
             label3.Font = new Font("Segoe UI", 22F, FontStyle.Bold, GraphicsUnit.Pixel);
             label3.ForeColor = SystemColors.ButtonHighlight;
-            label3.Location = new Point(225, 47);
-            label3.Margin = new Padding(2, 0, 2, 0);
+            label3.Location = new Point(321, 78);
             label3.Name = "label3";
-            label3.Size = new Size(51, 20);
+            label3.Size = new Size(74, 30);
             label3.TabIndex = 5;
             label3.Text = "Name";
-            label3.TextAlign = ContentAlignment.MiddleLeft;
             label3.Click += label3_Click;
             // 
             // nameTextBox
             // 
-            nameTextBox.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             nameTextBox.BackColor = Color.FromArgb(64, 64, 64);
             nameTextBox.Font = new Font("Segoe UI", 20F, FontStyle.Regular, GraphicsUnit.Pixel);
             nameTextBox.ForeColor = SystemColors.Info;
-            nameTextBox.Location = new Point(150, 67);
-            nameTextBox.Margin = new Padding(2, 2, 2, 2);
+            nameTextBox.Location = new Point(214, 111);
             nameTextBox.Name = "nameTextBox";
             nameTextBox.PlaceholderText = "Tournament name";
-            nameTextBox.Size = new Size(204, 25);
+            nameTextBox.Size = new Size(289, 34);
             nameTextBox.TabIndex = 7;
             // 
             // label4
@@ -186,24 +174,21 @@
             label4.AutoSize = true;
             label4.Font = new Font("Segoe UI", 22F, FontStyle.Bold, GraphicsUnit.Pixel);
             label4.ForeColor = SystemColors.ButtonHighlight;
-            label4.Location = new Point(307, 93);
-            label4.Margin = new Padding(2, 0, 2, 0);
+            label4.Location = new Point(438, 155);
             label4.Name = "label4";
-            label4.Size = new Size(173, 20);
+            label4.Size = new Size(256, 30);
             label4.TabIndex = 8;
             label4.Text = "Number of Participants";
-            label4.TextAlign = ContentAlignment.MiddleLeft;
             // 
             // numPar
             // 
-            numPar.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             numPar.BackColor = Color.FromArgb(64, 64, 64);
             numPar.BorderStyle = BorderStyle.FixedSingle;
             numPar.Font = new Font("Segoe UI", 20F, FontStyle.Regular, GraphicsUnit.Pixel);
             numPar.ForeColor = SystemColors.Info;
-            numPar.Location = new Point(438, 189);
+            numPar.Location = new Point(438, 188);
             numPar.Name = "numPar";
-            numPar.Size = new Size(194, 25);
+            numPar.Size = new Size(277, 34);
             numPar.TabIndex = 9;
             numPar.ValueChanged += numPar_ValueChanged;
             // 
@@ -213,7 +198,7 @@
             panelSingle.Controls.Add(comboBox2);
             panelSingle.Location = new Point(303, 370);
             panelSingle.Name = "panelSingle";
-            panelSingle.Size = new Size(280, 49);
+            panelSingle.Size = new Size(400, 81);
             panelSingle.TabIndex = 10;
             // 
             // label8
@@ -221,25 +206,23 @@
             label8.AutoSize = true;
             label8.Font = new Font("Segoe UI", 16F, FontStyle.Regular, GraphicsUnit.Pixel);
             label8.ForeColor = SystemColors.Control;
-            label8.Location = new Point(25, 5);
-            label8.Margin = new Padding(2, 0, 2, 0);
+            label8.Location = new Point(36, 9);
             label8.Name = "label8";
-            label8.Size = new Size(54, 13);
+            label8.Size = new Size(73, 21);
             label8.TabIndex = 15;
             label8.Text = "Stage 1st";
             // 
             // comboBox2
             // 
-            comboBox2.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             comboBox2.BackColor = Color.FromArgb(64, 64, 64);
             comboBox2.FlatStyle = FlatStyle.Flat;
             comboBox2.Font = new Font("Segoe UI", 18F, FontStyle.Regular, GraphicsUnit.Pixel);
             comboBox2.ForeColor = SystemColors.Info;
             comboBox2.FormattingEnabled = true;
             comboBox2.Items.AddRange(new object[] { "Knockout Bracket", "Round-robin League" });
-            comboBox2.Location = new Point(36, 23);
+            comboBox2.Location = new Point(31, 22);
             comboBox2.Name = "comboBox2";
-            comboBox2.Size = new Size(243, 23);
+            comboBox2.Size = new Size(345, 33);
             comboBox2.TabIndex = 0;
             comboBox2.SelectedIndexChanged += comboBox2_SelectedIndexChanged;
             // 
@@ -251,7 +234,7 @@
             panelMulti.Controls.Add(comboBox3);
             panelMulti.Location = new Point(303, 466);
             panelMulti.Name = "panelMulti";
-            panelMulti.Size = new Size(280, 73);
+            panelMulti.Size = new Size(400, 122);
             panelMulti.TabIndex = 11;
             // 
             // label5
@@ -259,10 +242,9 @@
             label5.AutoSize = true;
             label5.Font = new Font("Segoe UI", 16F, FontStyle.Regular, GraphicsUnit.Pixel);
             label5.ForeColor = SystemColors.Control;
-            label5.Location = new Point(25, 32);
-            label5.Margin = new Padding(2, 0, 2, 0);
+            label5.Location = new Point(36, 54);
             label5.Name = "label5";
-            label5.Size = new Size(59, 13);
+            label5.Size = new Size(79, 21);
             label5.TabIndex = 15;
             label5.Text = "Stage 2nd";
             // 
@@ -271,42 +253,37 @@
             label6.AutoSize = true;
             label6.Font = new Font("Segoe UI", 16F, FontStyle.Regular, GraphicsUnit.Pixel);
             label6.ForeColor = SystemColors.Control;
-            label6.Location = new Point(25, 0);
-            label6.Margin = new Padding(2, 0, 2, 0);
+            label6.Location = new Point(36, 0);
             label6.Name = "label6";
-            label6.Size = new Size(54, 13);
+            label6.Size = new Size(73, 21);
             label6.TabIndex = 14;
             label6.Text = "Stage 1st";
             label6.Click += label6_Click;
             // 
             // comboBox4
             // 
-            comboBox4.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             comboBox4.BackColor = Color.FromArgb(64, 64, 64);
             comboBox4.FlatStyle = FlatStyle.Flat;
             comboBox4.Font = new Font("Segoe UI", 18F, FontStyle.Regular, GraphicsUnit.Pixel);
             comboBox4.ForeColor = SystemColors.Info;
             comboBox4.FormattingEnabled = true;
             comboBox4.Items.AddRange(new object[] { "Knockout Bracket", "Round-robin League" });
-            comboBox4.Location = new Point(22, 42);
-            comboBox4.Margin = new Padding(2, 2, 2, 2);
+            comboBox4.Location = new Point(32, 70);
             comboBox4.Name = "comboBox4";
-            comboBox4.Size = new Size(243, 23);
+            comboBox4.Size = new Size(345, 33);
             comboBox4.TabIndex = 1;
             // 
             // comboBox3
             // 
-            comboBox3.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             comboBox3.BackColor = Color.FromArgb(64, 64, 64);
             comboBox3.FlatStyle = FlatStyle.Flat;
             comboBox3.Font = new Font("Segoe UI", 18F, FontStyle.Regular, GraphicsUnit.Pixel);
             comboBox3.ForeColor = SystemColors.Info;
             comboBox3.FormattingEnabled = true;
             comboBox3.Items.AddRange(new object[] { "Knockout Bracket", "Round-robin League" });
-            comboBox3.Location = new Point(22, 11);
-            comboBox3.Margin = new Padding(2, 2, 2, 2);
+            comboBox3.Location = new Point(32, 18);
             comboBox3.Name = "comboBox3";
-            comboBox3.Size = new Size(243, 23);
+            comboBox3.Size = new Size(345, 33);
             comboBox3.TabIndex = 0;
             // 
             // singleRad
@@ -316,7 +293,7 @@
             singleRad.ForeColor = SystemColors.Info;
             singleRad.Location = new Point(60, 393);
             singleRad.Name = "singleRad";
-            singleRad.Size = new Size(92, 19);
+            singleRad.Size = new Size(140, 29);
             singleRad.TabIndex = 12;
             singleRad.TabStop = true;
             singleRad.Text = "Single stage";
@@ -330,7 +307,7 @@
             multiRad.ForeColor = SystemColors.Info;
             multiRad.Location = new Point(60, 498);
             multiRad.Name = "multiRad";
-            multiRad.Size = new Size(87, 19);
+            multiRad.Size = new Size(133, 29);
             multiRad.TabIndex = 13;
             multiRad.TabStop = true;
             multiRad.Text = "Multi stage";
@@ -344,14 +321,12 @@
             label7.ForeColor = SystemColors.ButtonHighlight;
             label7.Location = new Point(321, 324);
             label7.Name = "label7";
-            label7.Size = new Size(60, 20);
+            label7.Size = new Size(87, 30);
             label7.TabIndex = 14;
             label7.Text = "Format";
-            label7.TextAlign = ContentAlignment.MiddleLeft;
             // 
             // createBtn
             // 
-            createBtn.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             createBtn.BackColor = Color.FromArgb(52, 178, 51);
             createBtn.FlatAppearance.BorderSize = 0;
             createBtn.FlatStyle = FlatStyle.Flat;
@@ -359,7 +334,7 @@
             createBtn.ForeColor = Color.White;
             createBtn.Location = new Point(214, 614);
             createBtn.Name = "createBtn";
-            createBtn.Size = new Size(212, 36);
+            createBtn.Size = new Size(303, 60);
             createBtn.TabIndex = 15;
             createBtn.Text = "CREATE TOURNAMENT";
             createBtn.UseVisualStyleBackColor = false;
@@ -371,33 +346,30 @@
             Account.Items.AddRange(new ToolStripItem[] { myAccountToolStripMenuItem, settingsToolStripMenuItem, logOutToolStripMenuItem, exitToolStripMenuItem });
             Account.Name = "Account";
             Account.Size = new Size(177, 132);
-            Account.Opening += Account_Opening;
             // 
             // myAccountToolStripMenuItem
             // 
             myAccountToolStripMenuItem.Name = "myAccountToolStripMenuItem";
-            myAccountToolStripMenuItem.Size = new Size(137, 22);
+            myAccountToolStripMenuItem.Size = new Size(176, 32);
             myAccountToolStripMenuItem.Text = "My account";
             // 
             // settingsToolStripMenuItem
             // 
             settingsToolStripMenuItem.Name = "settingsToolStripMenuItem";
-            settingsToolStripMenuItem.Size = new Size(137, 22);
+            settingsToolStripMenuItem.Size = new Size(176, 32);
             settingsToolStripMenuItem.Text = "Settings";
             // 
             // logOutToolStripMenuItem
             // 
             logOutToolStripMenuItem.Name = "logOutToolStripMenuItem";
-            logOutToolStripMenuItem.Size = new Size(137, 22);
+            logOutToolStripMenuItem.Size = new Size(176, 32);
             logOutToolStripMenuItem.Text = "Log out";
-            logOutToolStripMenuItem.Click += logOutToolStripMenuItem_Click;
             // 
             // exitToolStripMenuItem
             // 
             exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            exitToolStripMenuItem.Size = new Size(137, 22);
+            exitToolStripMenuItem.Size = new Size(176, 32);
             exitToolStripMenuItem.Text = "Exit";
-            exitToolStripMenuItem.Click += exitToolStripMenuItem_Click;
             // 
             // label9
             // 
@@ -409,7 +381,6 @@
             label9.Size = new Size(65, 30);
             label9.TabIndex = 16;
             label9.Text = "Prize";
-            label9.TextAlign = ContentAlignment.MiddleLeft;
             // 
             // label10
             // 
@@ -421,11 +392,9 @@
             label10.Size = new Size(117, 30);
             label10.TabIndex = 17;
             label10.Text = "Start date";
-            label10.TextAlign = ContentAlignment.MiddleLeft;
             // 
             // startDate
             // 
-            startDate.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             startDate.CalendarMonthBackground = Color.Gray;
             startDate.Font = new Font("Segoe UI", 18F, FontStyle.Regular, GraphicsUnit.Pixel);
             startDate.Format = DateTimePickerFormat.Custom;
@@ -437,7 +406,6 @@
             // 
             // prizeTextBox
             // 
-            prizeTextBox.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             prizeTextBox.BackColor = Color.FromArgb(64, 64, 64);
             prizeTextBox.Font = new Font("Segoe UI", 20F, FontStyle.Regular, GraphicsUnit.Pixel);
             prizeTextBox.ForeColor = SystemColors.Info;
@@ -469,13 +437,11 @@
             Controls.Add(label2);
             Controls.Add(sportCbox);
             Controls.Add(panel1);
-            Font = new Font("Segoe UI", 18F, FontStyle.Regular, GraphicsUnit.Pixel);
             FormBorderStyle = FormBorderStyle.Fixed3D;
-            Icon = (Icon)resources.GetObject("$this.Icon");
             MaximizeBox = false;
             Name = "CreaTourForm";
             StartPosition = FormStartPosition.CenterScreen;
-            Text = "Create Tournament";
+            Text = "CreaTourForm";
             Load += CreaTourForm_Load;
             panel1.ResumeLayout(false);
             panel1.PerformLayout();
