@@ -1,4 +1,4 @@
-﻿namespace tournament_tracker
+﻿namespace TeamListForm
 {
     partial class MatchResultForm
     {
@@ -28,143 +28,147 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.HGLabel = new System.Windows.Forms.Label();
-            this.AGLabel = new System.Windows.Forms.Label();
-            this.vsLabel = new System.Windows.Forms.Label();
-            this.homeLabel = new System.Windows.Forms.Label();
-            this.awayLabel = new System.Windows.Forms.Label();
-            this.homeNumericUpDown = new System.Windows.Forms.NumericUpDown();
-            this.awayNumericUpDown = new System.Windows.Forms.NumericUpDown();
-            this.saveMatchButton = new System.Windows.Forms.Button();
-            this.label1 = new System.Windows.Forms.Label();
-            ((System.ComponentModel.ISupportInitialize)(this.homeNumericUpDown)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.awayNumericUpDown)).BeginInit();
-            this.SuspendLayout();
+            HGLabel = new Label();
+            AGLabel = new Label();
+            vsLabel = new Label();
+            homeLabel = new Label();
+            awayLabel = new Label();
+            homeNumericUpDown = new NumericUpDown();
+            awayNumericUpDown = new NumericUpDown();
+            saveMatchButton = new Button();
+            label1 = new Label();
+            ((System.ComponentModel.ISupportInitialize)homeNumericUpDown).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)awayNumericUpDown).BeginInit();
+            SuspendLayout();
             // 
             // HGLabel
             // 
-            this.HGLabel.AutoSize = true;
-            this.HGLabel.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.HGLabel.ForeColor = System.Drawing.Color.Gold;
-            this.HGLabel.Location = new System.Drawing.Point(29, 26);
-            this.HGLabel.Name = "HGLabel";
-            this.HGLabel.Size = new System.Drawing.Size(126, 25);
-            this.HGLabel.TabIndex = 0;
-            this.HGLabel.Text = "HOME TEAM";
+            HGLabel.AutoSize = true;
+            HGLabel.Font = new Font("Segoe UI", 11F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            HGLabel.ForeColor = Color.Gold;
+            HGLabel.Location = new Point(29, 26);
+            HGLabel.Name = "HGLabel";
+            HGLabel.Size = new Size(126, 25);
+            HGLabel.TabIndex = 0;
+            HGLabel.Text = "HOME TEAM";
             // 
             // AGLabel
             // 
-            this.AGLabel.AutoSize = true;
-            this.AGLabel.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.AGLabel.ForeColor = System.Drawing.Color.Gold;
-            this.AGLabel.Location = new System.Drawing.Point(283, 26);
-            this.AGLabel.Name = "AGLabel";
-            this.AGLabel.Size = new System.Drawing.Size(123, 25);
-            this.AGLabel.TabIndex = 1;
-            this.AGLabel.Text = "AWAY TEAM";
+            AGLabel.AutoSize = true;
+            AGLabel.Font = new Font("Segoe UI", 11F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            AGLabel.ForeColor = Color.Gold;
+            AGLabel.Location = new Point(283, 26);
+            AGLabel.Name = "AGLabel";
+            AGLabel.Size = new Size(123, 25);
+            AGLabel.TabIndex = 1;
+            AGLabel.Text = "AWAY TEAM";
             // 
             // vsLabel
             // 
-            this.vsLabel.AutoSize = true;
-            this.vsLabel.Font = new System.Drawing.Font("Segoe UI", 30F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.vsLabel.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.vsLabel.Location = new System.Drawing.Point(172, 26);
-            this.vsLabel.Name = "vsLabel";
-            this.vsLabel.Size = new System.Drawing.Size(89, 67);
-            this.vsLabel.TabIndex = 2;
-            this.vsLabel.Text = "VS";
+            vsLabel.AutoSize = true;
+            vsLabel.Font = new Font("Segoe UI", 30F, FontStyle.Bold | FontStyle.Italic, GraphicsUnit.Point, 0);
+            vsLabel.ForeColor = Color.FromArgb(64, 64, 64);
+            vsLabel.Location = new Point(172, 26);
+            vsLabel.Name = "vsLabel";
+            vsLabel.Size = new Size(89, 67);
+            vsLabel.TabIndex = 2;
+            vsLabel.Text = "VS";
             // 
             // homeLabel
             // 
-            this.homeLabel.AutoSize = true;
-            this.homeLabel.Font = new System.Drawing.Font("Segoe UI", 8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.homeLabel.ForeColor = System.Drawing.Color.Silver;
-            this.homeLabel.Location = new System.Drawing.Point(29, 69);
-            this.homeLabel.Name = "homeLabel";
-            this.homeLabel.Size = new System.Drawing.Size(71, 19);
-            this.homeLabel.TabIndex = 3;
-            this.homeLabel.Text = "HOME🛡️";
+            homeLabel.AutoSize = true;
+            homeLabel.Font = new Font("Segoe UI", 8F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            homeLabel.ForeColor = Color.Silver;
+            homeLabel.Location = new Point(29, 69);
+            homeLabel.Name = "homeLabel";
+            homeLabel.Size = new Size(71, 19);
+            homeLabel.TabIndex = 3;
+            homeLabel.Text = "HOME🛡️";
             // 
             // awayLabel
             // 
-            this.awayLabel.AutoSize = true;
-            this.awayLabel.Font = new System.Drawing.Font("Segoe UI", 8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.awayLabel.ForeColor = System.Drawing.Color.Silver;
-            this.awayLabel.Location = new System.Drawing.Point(283, 69);
-            this.awayLabel.Name = "awayLabel";
-            this.awayLabel.Size = new System.Drawing.Size(71, 19);
-            this.awayLabel.TabIndex = 4;
-            this.awayLabel.Text = "AWAY⚔️";
+            awayLabel.AutoSize = true;
+            awayLabel.Font = new Font("Segoe UI", 8F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            awayLabel.ForeColor = Color.Silver;
+            awayLabel.Location = new Point(283, 69);
+            awayLabel.Name = "awayLabel";
+            awayLabel.Size = new Size(71, 19);
+            awayLabel.TabIndex = 4;
+            awayLabel.Text = "AWAY⚔️";
             // 
             // homeNumericUpDown
             // 
-            this.homeNumericUpDown.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.homeNumericUpDown.Location = new System.Drawing.Point(29, 102);
-            this.homeNumericUpDown.Name = "homeNumericUpDown";
-            this.homeNumericUpDown.Size = new System.Drawing.Size(120, 38);
-            this.homeNumericUpDown.TabIndex = 5;
+            homeNumericUpDown.Font = new Font("Microsoft Sans Serif", 16F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            homeNumericUpDown.Location = new Point(29, 102);
+            homeNumericUpDown.Margin = new Padding(3, 4, 3, 4);
+            homeNumericUpDown.Name = "homeNumericUpDown";
+            homeNumericUpDown.Size = new Size(120, 38);
+            homeNumericUpDown.TabIndex = 5;
             // 
             // awayNumericUpDown
             // 
-            this.awayNumericUpDown.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.awayNumericUpDown.Location = new System.Drawing.Point(283, 102);
-            this.awayNumericUpDown.Name = "awayNumericUpDown";
-            this.awayNumericUpDown.Size = new System.Drawing.Size(120, 38);
-            this.awayNumericUpDown.TabIndex = 6;
+            awayNumericUpDown.Font = new Font("Microsoft Sans Serif", 16F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            awayNumericUpDown.Location = new Point(283, 102);
+            awayNumericUpDown.Margin = new Padding(3, 4, 3, 4);
+            awayNumericUpDown.Name = "awayNumericUpDown";
+            awayNumericUpDown.Size = new Size(120, 38);
+            awayNumericUpDown.TabIndex = 6;
             // 
             // saveMatchButton
             // 
-            this.saveMatchButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(180)))), ((int)(((byte)(80)))));
-            this.saveMatchButton.FlatAppearance.BorderColor = System.Drawing.Color.SpringGreen;
-            this.saveMatchButton.FlatAppearance.BorderSize = 0;
-            this.saveMatchButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.saveMatchButton.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.saveMatchButton.ForeColor = System.Drawing.Color.White;
-            this.saveMatchButton.Location = new System.Drawing.Point(70, 169);
-            this.saveMatchButton.Name = "saveMatchButton";
-            this.saveMatchButton.Size = new System.Drawing.Size(293, 61);
-            this.saveMatchButton.TabIndex = 7;
-            this.saveMatchButton.Text = "SAVE MATCH";
-            this.saveMatchButton.UseVisualStyleBackColor = false;
+            saveMatchButton.BackColor = Color.FromArgb(0, 180, 80);
+            saveMatchButton.FlatAppearance.BorderColor = Color.SpringGreen;
+            saveMatchButton.FlatAppearance.BorderSize = 0;
+            saveMatchButton.FlatStyle = FlatStyle.Flat;
+            saveMatchButton.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            saveMatchButton.ForeColor = Color.White;
+            saveMatchButton.Location = new Point(70, 169);
+            saveMatchButton.Margin = new Padding(3, 4, 3, 4);
+            saveMatchButton.Name = "saveMatchButton";
+            saveMatchButton.Size = new Size(293, 61);
+            saveMatchButton.TabIndex = 7;
+            saveMatchButton.Text = "SAVE MATCH";
+            saveMatchButton.UseVisualStyleBackColor = false;
             // 
             // label1
             // 
-            this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Segoe UI", 8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.label1.Location = new System.Drawing.Point(178, 93);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(76, 19);
-            this.label1.TabIndex = 8;
-            this.label1.Text = "FULL TIME";
+            label1.AutoSize = true;
+            label1.Font = new Font("Segoe UI", 8F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label1.ForeColor = Color.FromArgb(64, 64, 64);
+            label1.Location = new Point(178, 93);
+            label1.Name = "label1";
+            label1.Size = new Size(76, 19);
+            label1.TabIndex = 8;
+            label1.Text = "FULL TIME";
             // 
             // MatchResultForm
             // 
-            this.AcceptButton = this.saveMatchButton;
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(33)))), ((int)(((byte)(36)))));
-            this.ClientSize = new System.Drawing.Size(432, 253);
-            this.Controls.Add(this.label1);
-            this.Controls.Add(this.saveMatchButton);
-            this.Controls.Add(this.awayNumericUpDown);
-            this.Controls.Add(this.homeNumericUpDown);
-            this.Controls.Add(this.awayLabel);
-            this.Controls.Add(this.homeLabel);
-            this.Controls.Add(this.vsLabel);
-            this.Controls.Add(this.AGLabel);
-            this.Controls.Add(this.HGLabel);
-            this.ForeColor = System.Drawing.Color.White;
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
-            this.MaximizeBox = false;
-            this.MinimizeBox = false;
-            this.Name = "MatchResultForm";
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-            this.Text = "UPDATE SCORE";
-            ((System.ComponentModel.ISupportInitialize)(this.homeNumericUpDown)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.awayNumericUpDown)).EndInit();
-            this.ResumeLayout(false);
-            this.PerformLayout();
+            AcceptButton = saveMatchButton;
+            AutoScaleDimensions = new SizeF(8F, 20F);
+            AutoScaleMode = AutoScaleMode.Font;
+            BackColor = Color.FromArgb(32, 33, 36);
+            ClientSize = new Size(432, 253);
+            Controls.Add(label1);
+            Controls.Add(saveMatchButton);
+            Controls.Add(awayNumericUpDown);
+            Controls.Add(homeNumericUpDown);
+            Controls.Add(awayLabel);
+            Controls.Add(homeLabel);
+            Controls.Add(vsLabel);
+            Controls.Add(AGLabel);
+            Controls.Add(HGLabel);
+            ForeColor = Color.White;
+            FormBorderStyle = FormBorderStyle.FixedDialog;
+            Margin = new Padding(3, 4, 3, 4);
+            MaximizeBox = false;
+            MinimizeBox = false;
+            Name = "MatchResultForm";
+            StartPosition = FormStartPosition.CenterParent;
+            Text = "UPDATE SCORE";
+            ((System.ComponentModel.ISupportInitialize)homeNumericUpDown).EndInit();
+            ((System.ComponentModel.ISupportInitialize)awayNumericUpDown).EndInit();
+            ResumeLayout(false);
+            PerformLayout();
 
         }
 
