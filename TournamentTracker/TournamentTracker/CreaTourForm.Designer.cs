@@ -436,7 +436,7 @@
             // 
             // CreaTourForm
             // 
-            AutoScaleMode = AutoScaleMode.None;
+            AutoScaleMode = System.Windows.Forms.AutoScaleMode.None; 
             BackColor = Color.FromArgb(64, 64, 64);
             ClientSize = new Size(737, 691);
             Controls.Add(prizeTextBox);
