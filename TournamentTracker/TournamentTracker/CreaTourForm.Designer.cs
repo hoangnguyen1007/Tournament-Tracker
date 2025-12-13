@@ -456,6 +456,7 @@
             Controls.Add(label2);
             Controls.Add(sportCbox);
             Controls.Add(panel1);
+            Font = new Font("Segoe UI", 18F, FontStyle.Regular, GraphicsUnit.Pixel);
             FormBorderStyle = FormBorderStyle.Fixed3D;
             Icon = (Icon)resources.GetObject("$this.Icon");
             MaximizeBox = false;
