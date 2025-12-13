@@ -13,7 +13,17 @@ namespace TeamListForm
 {
     internal class DatabaseHelper
     {
-        private static string connectionString = "";
+        private static string connectionString =
+            @"Data Source=.\SQLEXPRESS;
+              Initial Catalog=TournamentTracker;
+              Integrated Security=True;
+              Persist Security Info=False;
+              Pooling=False;
+              MultipleActiveResultSets=False;
+              Encrypt=False;
+              TrustServerCertificate=True;
+              Application Name=""SQL Server Management Studio"";
+              Command Timeout=30";
 
         // TEAMS
         public static List<Team> GetTeams(string search = "")
@@ -441,7 +451,10 @@ FROM Tournaments;";
                     m.HomeScore,
                     m.AwayScore,
                     m.HomeTeamID,
-                    m.AwayTeamID
+                    m.AwayTeamID,
+                    m.MatchDate,
+                    m.Location,
+                    m.Status
                 FROM Matches m
                 JOIN Teams t1 ON m.HomeTeamID = t1.ID
                 JOIN Teams t2 ON m.AwayTeamID = t2.ID

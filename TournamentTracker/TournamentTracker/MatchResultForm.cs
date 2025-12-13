@@ -19,20 +19,29 @@ namespace TeamListForm
         {
             InitializeComponent();
 
-            _match = match; // Lưu lại để dùng
+            _match = match; // Lưu lại biến match để sử dụng khi bấm nút Save
 
+            // 1. Hiển thị thông tin tiêu đề (Vòng đấu - Mã trận)
             MatchInfoLabel.Text = $"Round {_match.Round} - Match {_match.MatchId}";
 
-            // Đổ dữ liệu lên giao diện
+            // 2. Hiển thị tên 2 đội bóng
             if (_match.HomeTeam != null)
                 HGLabel.Text = _match.HomeTeam.TEAMNAME;
 
             if (_match.AwayTeam != null)
                 AGLabel.Text = _match.AwayTeam.TEAMNAME;
 
-            // Đổ điểm số cũ lên ô nhập
+            // 3. Đổ điểm số hiện tại lên ô nhập
             homeNumericUpDown.Value = _match.HomeScore;
             awayNumericUpDown.Value = _match.AwayScore;
+
+            // 4. [MỚI - QUAN TRỌNG] Đổ trạng thái "Đã kết thúc" vào Checkbox
+            // Nếu _match.IsPlayed là true -> Checkbox sẽ được tích
+            finishedCheckBox.Checked = _match.IsPlayed;
+
+            // 5. [MỚI] Cập nhật trạng thái khóa/mở ô nhập ngay lập tức
+            // Gọi hàm sự kiện này để: Nếu Checkbox được tích -> Khóa ô nhập, ngược lại -> Mở ô nhập
+            finishedCheckBox_CheckedChanged(null, null);
         }
 
         private void saveMatchButton_Click(object sender, EventArgs e)

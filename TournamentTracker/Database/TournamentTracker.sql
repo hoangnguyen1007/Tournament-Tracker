@@ -1,165 +1,104 @@
-﻿-- 1. TẠO DATABASE
-IF NOT EXISTS (SELECT * FROM sys.databases WHERE name = 'TournamentTracker')
+﻿USE master;
+GO
+
+-- 1. XÓA DB CŨ NẾU TỒN TẠI (Để làm lại cho sạch sẽ, tránh lỗi cột cũ)
+IF EXISTS (SELECT name FROM sys.databases WHERE name = N'TournamentTracker')
 BEGIN
-    CREATE DATABASE [TournamentTracker];
+    ALTER DATABASE [TournamentTracker] SET SINGLE_USER WITH ROLLBACK IMMEDIATE;
+    DROP DATABASE [TournamentTracker];
 END
 GO
 
+CREATE DATABASE [TournamentTracker];
+GO
 USE [TournamentTracker];
 GO
 
 -- =============================================
--- PHẦN 1: (ACCOUNT, TEAMS, PLAYERS)
+-- PHẦN 1: ACCOUNT & TEAMS
 -- =============================================
 
 -- 2. Bảng ACCOUNT
-IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[Account]') AND type in (N'U'))
-BEGIN
-    CREATE TABLE [dbo].[Account](
-        [ID] [int] IDENTITY(1,1) NOT NULL,
-	[Username] [nvarchar](50) NOT NULL,
-	[PasswordHash] [nvarchar](255) NOT NULL,
-	[CreatedAt] [datetime] NULL,
-        PRIMARY KEY CLUSTERED ([ID] ASC)
-        );
-    END
-GO
-IF COL_LENGTH('dbo.Tournaments', 'CreatedBy') IS NULL
-BEGIN
-    ALTER TABLE [dbo].[Tournaments]
-    ADD [CreatedBy] INT NULL;
+CREATE TABLE [dbo].[Account](
+    [ID] [int] IDENTITY(1,1) PRIMARY KEY,
+    [Username] [nvarchar](50) NOT NULL UNIQUE,
+    [PasswordHash] [nvarchar](255) NOT NULL,
+    [CreatedAt] [datetime] DEFAULT GETDATE()
+);
 
-    ALTER TABLE [dbo].[Tournaments]
-    ADD CONSTRAINT FK_Tournaments_Account
-    FOREIGN KEY (CreatedBy) REFERENCES Account(ID);
-END
-GO
--- ================================================
+-- TẠO TÀI KHOẢN MẶC ĐỊNH (Admin / 123456)
+-- PasswordHash này là của "123456" (SHA256)
+INSERT INTO [dbo].[Account] ([Username], [PasswordHash])
+VALUES ('admin', '8D969EEF6ECAD3C29A3A629280E686CF0C3F5D5A86AFF3CA12020C923ADC6C92');
+
 -- 3. Bảng Teams 
-IF OBJECT_ID('[dbo].[Teams]', 'U') IS NULL
 CREATE TABLE [dbo].[Teams](
     [ID] INT IDENTITY(1,1) PRIMARY KEY,
     [TEAMNAME] NVARCHAR(100) NOT NULL,
     [COACH] NVARCHAR(100) NULL,
 );
-GO
 
 -- 4. Bảng Players 
-IF OBJECT_ID('[dbo].[Players]', 'U') IS NULL
 CREATE TABLE [dbo].[Players](
     [ID] INT IDENTITY(1,1) PRIMARY KEY,
     [IDTEAM] INT NOT NULL,
     [PLAYERNAME] NVARCHAR(100) NOT NULL,
-    [POSITION] NVARCHAR(50) NULL, -- GK, DF, MF, FW
+    [POSITION] NVARCHAR(50) NULL, 
     [AGE] INT NULL,
-    [NUMBER] INT NULL, -- Số áo đấu
+    [NUMBER] INT NULL,
+    FOREIGN KEY (IDTEAM) REFERENCES Teams(ID)
 );
-GO
-
-ALTER TABLE Players 
-ADD CONSTRAINT FK_Players_Teams 
-FOREIGN KEY (IDTEAM) REFERENCES Teams(ID);
--- =============================================
--- PHẦN 2: TỔ CHỨC GIẢI ĐẤU (TOURNAMENT & ENTRIES)
--- =============================================
-
--- 5. Bảng Tournaments (Quản lý thông tin giải đấu)
---IF OBJECT_ID('[dbo].[Tournaments]', 'U') IS NULL
---CREATE TABLE [dbo].[Tournaments](
-    IF NOT EXISTS (SELECT * FROM sys.objects 
-               WHERE object_id = OBJECT_ID(N'[dbo].[Tournaments]') 
-               AND type in (N'U'))
-BEGIN
-    CREATE TABLE [dbo].[Tournaments](
-        [ID] INT IDENTITY(1,1) PRIMARY KEY,
-        [NAME] NVARCHAR(100) NOT NULL,
-        [LOCATION] NVARCHAR(100) NULL,
-        [STARTDATE] DATE NULL,
-        [PRIZE] NVARCHAR(50) NULL,
-        [POSTERPATH] NVARCHAR(255) NULL  ,
-        [SPORT] NVARCHAR(50),   
-        [TEAM_COUNT] int
-    );
-    PRINT 'Created table Tournaments.';
-END
-GO
--- 6. Bảng TournamentEntries (Đăng ký Đội vào Giải)
--- Bảng này quan trọng: Giúp 1 đội có thể tham gia nhiều giải khác nhau
---IF OBJECT_ID('[dbo].[TournamentEntries]', 'U') IS NULL
---CREATE TABLE [dbo].[TournamentEntries](
-    
-
---);
---GO
 
 -- =============================================
--- PHẦN 3: TRẬN ĐẤU & SỰ KIỆN (CORE FEATURE)
+-- PHẦN 2: TOURNAMENTS
 -- =============================================
 
--- 7. Bảng Matches (Bảng TỔNG HỢP - Quan trọng nhất)
--- Chứa cả Lịch thi đấu và Kết quả
-IF OBJECT_ID('[dbo].[Matches]', 'U') IS NULL
+-- 5. Bảng Tournaments
+CREATE TABLE [dbo].[Tournaments](
+    [ID] INT IDENTITY(1,1) PRIMARY KEY,
+    [NAME] NVARCHAR(100) NOT NULL,
+    [LOCATION] NVARCHAR(100) NULL,
+    [STARTDATE] DATE NULL,
+    [PRIZE] NVARCHAR(50) NULL,
+    [POSTERPATH] NVARCHAR(255) NULL,
+    [SPORT] NVARCHAR(50),   
+    [TEAM_COUNT] int,
+    [CreatedBy] INT NULL, -- Liên kết với Account
+    FOREIGN KEY (CreatedBy) REFERENCES Account(ID)
+);
+
+-- =============================================
+-- PHẦN 3: MATCHES (Đã Fix cột TournamentID)
+-- =============================================
+
+-- 7. Bảng Matches
 CREATE TABLE [dbo].[Matches](
-    
-    -- 1. CÁC CỘT DỮ LIỆU
-    [ID] [int] IDENTITY(1,1) NOT NULL PRIMARY KEY,
-    [TournamentID] [int] NOT NULL,
+    [ID] [int] IDENTITY(1,1) PRIMARY KEY,
+    [TournamentID] [int] NOT NULL, -- Cột quan trọng vừa thêm
     [Round] [int] NOT NULL,
     [HomeTeamID] [int] NOT NULL,
     [AwayTeamID] [int] NOT NULL,
     [HomeScore] [int] NULL,
     [AwayScore] [int] NULL,
-
-    -- LỊCH THI ĐẤU
     [MatchDate] DATETIME NULL,
     [Location] NVARCHAR(100) NULL,
     [Status] INT DEFAULT 0,
-
-    -- KẾT QUẢ
     [WinnerID] INT NULL,
-
-    -- CẤU HÌNH THUẬT TOÁN
-    [RoundType] INT NOT NULL,   
+    [RoundType] INT NOT NULL DEFAULT 0,   
     [GroupName] NVARCHAR(10) NULL, 
-    
-    -- CẤU HÌNH CÂY KNOCKOUT
     [ParentMatchId] INT NULL,
 
-    -- 2. CÁC RÀNG BUỘC KHÓA NGOẠI (FOREIGN KEYS)
-
-    -- Liên kết HomeTeamID
-    CONSTRAINT FK_Matches_HomeTeam FOREIGN KEY (HomeTeamID) REFERENCES Teams(ID),
-
-    -- Liên kết AwayTeamID
-    CONSTRAINT FK_Matches_AwayTeam FOREIGN KEY (AwayTeamID) REFERENCES Teams(ID),
-
-    -- Liên kết WinnerID
-    CONSTRAINT FK_Matches_Winner FOREIGN KEY (WinnerID) REFERENCES Teams(ID),
-
-    -- Liên kết ParentMatchId
-    CONSTRAINT FK_Matches_ParentMatch FOREIGN KEY (ParentMatchId) REFERENCES Matches(ID),
-
-    -- Liên kết TournamentID
-    CONSTRAINT FK_Matches_Tournament FOREIGN KEY (TournamentID) REFERENCES Tournaments(ID)
+    FOREIGN KEY (HomeTeamID) REFERENCES Teams(ID),
+    FOREIGN KEY (AwayTeamID) REFERENCES Teams(ID),
+    FOREIGN KEY (WinnerID) REFERENCES Teams(ID),
+    FOREIGN KEY (ParentMatchId) REFERENCES Matches(ID),
+    FOREIGN KEY (TournamentID) REFERENCES Tournaments(ID)
 );
 GO
 
--- 8. Bảng MatchEvents (Sự kiện trận đấu - Để tính Vua phá lưới)
-    --IF OBJECT_ID('[dbo].[MatchEvents]', 'U') IS NULL
-    --CREATE TABLE [dbo].[MatchEvents](
-
-
-    --);
-    --GO
-
-
-
-
-
-
-
-
-
+-- =============================================
+-- PHẦN 4: DỮ LIỆU MẪU (SEED DATA)
+-- =============================================
 
 
 -- ============================================================
@@ -276,22 +215,22 @@ GO
 -- 2. DATA BẢNG MATCHES
 -- =============================================
 
--- KỊCH BẢN 1: CHAMPIONS CUP (TournamentID = 1)
+-- K?CH B?N 1: CHAMPIONS CUP (TournamentID = 1)
 INSERT INTO [dbo].[Matches] 
 ([TournamentID], [Round], [RoundType], [GroupName], [HomeTeamID], [AwayTeamID], [HomeScore], [AwayScore], [MatchDate], [Location], [Status], [WinnerID]) 
 VALUES
--- Round 1 (Tứ kết)
+-- Round 1 (T? k?t)
 (1, 1, 1, NULL, 1, 2, 3, 1, '2024-05-01 20:00:00', N'Santiago Bernabéu', 2, 1),
 (1, 1, 1, NULL, 6, 7, 2, 2, '2024-05-02 20:00:00', N'Allianz Arena', 2, 6),
 (1, 1, 1, NULL, 8, 4, 1, 2, '2024-05-03 20:00:00', N'Parc des Princes', 2, 4),
 (1, 1, 1, NULL, 5, 3, 4, 0, '2024-05-04 20:00:00', N'Anfield', 2, 5),
 
--- Round 2 (Bán kết)
+-- Round 2 (Bán k?t)
 (1, 2, 1, NULL, 1, 6, NULL, NULL, '2024-05-15 20:00:00', N'Wembley Stadium', 0, NULL),
 (1, 2, 1, NULL, 4, 5, NULL, NULL, '2024-05-16 20:00:00', N'Wembley Stadium', 0, NULL);
 
 
--- KỊCH BẢN 2: FRIENDLY ASIA TOUR (TournamentID = 3)
+-- K?CH B?N 2: FRIENDLY ASIA TOUR (TournamentID = 3)
 INSERT INTO [dbo].[Matches] 
 ([TournamentID], [Round], [RoundType], [GroupName], [HomeTeamID], [AwayTeamID], [HomeScore], [AwayScore], [MatchDate], [Location], [Status], [WinnerID]) 
 VALUES
