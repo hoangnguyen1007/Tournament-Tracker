@@ -82,6 +82,60 @@ namespace TeamListForm
                 cmd.ExecuteNonQuery();
             }
         }
+        public DataRow GetTournamentById(int id)
+        {
+            using (SqlConnection conn = new SqlConnection(connectionString))
+            {
+                conn.Open();
+                string query = "SELECT * FROM Tournaments WHERE ID = @id";
+                SqlCommand cmd = new SqlCommand(query, conn);
+                cmd.Parameters.AddWithValue("@id", id);
+
+                DataTable dt = new DataTable();
+                new SqlDataAdapter(cmd).Fill(dt);
+
+                if (dt.Rows.Count > 0) return dt.Rows[0];
+                return null;
+            }
+        }
+
+        // 2. Cập nhật giải đấu
+        public bool UpdateTournament(int id, string name, string location, DateTime startDate, string prize, string posterPath, string sport, int teamCount)
+        {
+            using (SqlConnection conn = new SqlConnection(connectionString))
+            {
+                try
+                {
+                    conn.Open();
+                    string query = @"UPDATE Tournaments 
+                             SET NAME = @name, 
+                                 LOCATION = @location, 
+                                 STARTDATE = @startDate, 
+                                 PRIZE = @prize, 
+                                 POSTERPATH = @posterPath, 
+                                 SPORT = @sport, 
+                                 TEAM_COUNT = @teamCount 
+                             WHERE ID = @id";
+
+                    SqlCommand cmd = new SqlCommand(query, conn);
+                    cmd.Parameters.AddWithValue("@id", id);
+                    cmd.Parameters.AddWithValue("@name", name);
+                    cmd.Parameters.AddWithValue("@location", string.IsNullOrEmpty(location) ? (object)DBNull.Value : location);
+                    cmd.Parameters.AddWithValue("@startDate", startDate);
+                    cmd.Parameters.AddWithValue("@prize", string.IsNullOrEmpty(prize) ? (object)DBNull.Value : prize);
+                    cmd.Parameters.AddWithValue("@posterPath", string.IsNullOrEmpty(posterPath) ? (object)DBNull.Value : posterPath);
+                    cmd.Parameters.AddWithValue("@sport", string.IsNullOrEmpty(sport) ? (object)DBNull.Value : sport);
+                    cmd.Parameters.AddWithValue("@teamCount", teamCount);
+
+                    return cmd.ExecuteNonQuery() > 0;
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Lỗi Update: " + ex.Message);
+                    return false;
+                }
+            }
+        }
         public static void UpdateTeam(Team team)
         {
             string sql = "UPDATE Teams SET TEAMNAME = @TEAMNAME, COACH = @COACH WHERE ID = @ID";
@@ -270,18 +324,19 @@ namespace TeamListForm
         }
 
         //Tournaments database
-        public bool AddTournament(string name, string location, DateTime? startDate, string prize, string posterPath, string sport, int teamCount)
+        public int AddTournament(string name, string location, DateTime? startDate, string prize, string posterPath, string sport, int teamCount)
         {
             using (SqlConnection conn = new SqlConnection(connectionString))
             {
                 try
                 {
                     conn.Open();
-                    // Thêm cột CreatedBy vào câu lệnh INSERT
+                    // Thêm: SELECT CAST(SCOPE_IDENTITY() AS INT) để lấy ID vừa tạo ngay lập tức
                     string query = @"INSERT INTO Tournaments 
-                   (NAME, LOCATION, STARTDATE, PRIZE, POSTERPATH, SPORT, TEAM_COUNT, CreatedBy) 
-                   VALUES 
-                   (@name, @location, @startDate, @prize, @posterPath, @sport, @teamCount, @createdBy)";
+               (NAME, LOCATION, STARTDATE, PRIZE, POSTERPATH, SPORT, TEAM_COUNT, CreatedBy) 
+               VALUES 
+               (@name, @location, @startDate, @prize, @posterPath, @sport, @teamCount, @createdBy);
+               SELECT CAST(SCOPE_IDENTITY() AS INT);";
 
                     SqlCommand cmd = new SqlCommand(query, conn);
 
@@ -292,16 +347,16 @@ namespace TeamListForm
                     cmd.Parameters.AddWithValue("@posterPath", string.IsNullOrEmpty(posterPath) ? (object)DBNull.Value : posterPath);
                     cmd.Parameters.AddWithValue("@sport", string.IsNullOrEmpty(sport) ? (object)DBNull.Value : sport);
                     cmd.Parameters.AddWithValue("@teamCount", teamCount);
-
-                    // --- LẤY ID TỪ SESSION ---
                     cmd.Parameters.AddWithValue("@createdBy", UserSession.CurrentUserId);
 
-                    return cmd.ExecuteNonQuery() > 0;
+                    // Dùng ExecuteScalar để lấy cái ID về
+                    var result = cmd.ExecuteScalar();
+                    return result != null ? Convert.ToInt32(result) : -1;
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show("Lỗi: " + ex.Message);
-                    return false;
+                    MessageBox.Show("Error: " + ex.Message);
+                    return -1; // Trả về -1 nếu lỗi
                 }
             }
         }

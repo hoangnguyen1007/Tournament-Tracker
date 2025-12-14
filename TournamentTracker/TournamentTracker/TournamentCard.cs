@@ -47,6 +47,7 @@ namespace TeamListForm
             this.Click += (s, e) => TriggerSelection();
             foreach (Control c in this.Controls)
             {
+                if (c == button1) continue;
                 c.Click += (s, e) => this.OnClick(e);
                 c.MouseEnter += (s, e) => this.OnMouseEnter(e);
                 c.MouseLeave += (s, e) => this.OnMouseLeave(e);
@@ -64,7 +65,7 @@ namespace TeamListForm
             lblStartDate.Text = startTime.ToString();
             lblTitle.Text = name;
             lblSport.Text = sport;
-            lblParticipants.Text = "👥"+ participant + " Teams";
+            lblParticipants.Text = "👥" + participant + " Teams";
             lblPrize.Text = string.IsNullOrEmpty(prize) ? "No Prize" : "💰" + string.Format("{0:N0} VND", decimal.Parse(prize));
             if (!string.IsNullOrEmpty(posterPath) && System.IO.File.Exists(posterPath))
             {
@@ -84,6 +85,14 @@ namespace TeamListForm
         private void lblStartDate_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            if (this.ContextMenuStrip != null)
+            {
+                this.ContextMenuStrip.Show(button1, new Point(0, button1.Height));
+            }
         }
     }
 }

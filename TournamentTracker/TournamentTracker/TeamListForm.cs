@@ -13,17 +13,9 @@ namespace TeamListForm
         {
             InitializeComponent();
             _tournamentId = tournamentId;
-
-            // --- THÊM DÒNG NÀY ---
-            LoadTeams(); // Gọi hàm tải dữ liệu ngay lập tức
-                         // ---------------------
+            LoadTeams(); 
         }
-        public TeamListForm()
-        {
-            InitializeComponent();
-            this.DoubleBuffered = true;
-            LoadTeams(); // Load lần đầu
-        }
+        
 
         private void SearchBtn_Click(object sender, EventArgs e)
         {

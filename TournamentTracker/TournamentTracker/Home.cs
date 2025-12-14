@@ -240,7 +240,7 @@ namespace TourApp
         }
         private void OpenTournamentDetail(int id)
         {
-            // BẠN CẦN SỬA CONSTRUCTOR CỦA MatchesScheduleForm ĐỂ NHẬN ID
+
             MatchesScheduleForm matchesScheduleForm = new MatchesScheduleForm(id);
             matchesScheduleForm.ShowDialog();
         }
@@ -323,11 +323,27 @@ namespace TourApp
         private void createBtn_Click(object sender, EventArgs e)
         {
             CreaTourForm createForm = new CreaTourForm();
+
             if (createForm.ShowDialog() == DialogResult.OK)
             {
                 LoadDashboard(true);
                 LoadHeroTournament(true);
                 LoadTournamentStats(true);
+                int newTourId = createForm.CreatedTournamentId;
+                if (newTourId != -1)
+                {
+                    DialogResult result = MessageBox.Show(
+                        "Tournament created successfully!\nDo you want to manage the team list now?",
+                        "Next Step",
+                        MessageBoxButtons.YesNo,
+                        MessageBoxIcon.Question);
+
+                    if (result == DialogResult.Yes)
+                    {
+                        TeamListForm.TeamListForm teamList = new TeamListForm.TeamListForm(newTourId);
+                        teamList.ShowDialog();
+                    }
+                }
             }
         }
 
@@ -343,10 +359,8 @@ namespace TourApp
 
         private void viewDetailsBtn_Click(object sender, EventArgs e)
         {
-            // Kiểm tra xem đã load được Hero Tournament chưa (ID khác -1)
             if (_currentHeroId != -1)
             {
-                // Gọi hàm mở form chi tiết với ID của Hero Tournament
                 OpenTournamentDetail(_currentHeroId);
             }
             else
@@ -357,17 +371,58 @@ namespace TourApp
 
         private void manageBtn_Click(object sender, EventArgs e)
         {
-            TeamListForm.TeamListForm teamlist = new TeamListForm.TeamListForm();
-            teamlist.ShowDialog();
+            if (_currentHeroId != -1)
+            {
+                TeamListForm.TeamListForm teamlist = new TeamListForm.TeamListForm(_currentHeroId);
+                teamlist.ShowDialog();
+                LoadHeroTournament(true);
+            }
+            else
+            {
+                MessageBox.Show("Vui lòng chọn giải đấu trước!");
+            }
         }
 
         private void findBtn_Click(object sender, EventArgs e)
-        { 
+        {
         }
 
         private void Account_Opening(object sender, CancelEventArgs e)
         {
 
+        }
+
+        private void deleteBtn_Click(object sender, EventArgs e)
+        {
+            ToolStripItem item = (ToolStripItem)sender;
+            ContextMenuStrip menu = (ContextMenuStrip)item.Owner;
+            Control sourceControl = menu.SourceControl;
+
+            while (sourceControl != null && !(sourceControl is TournamentCard))
+            {
+                sourceControl = sourceControl.Parent;
+            }
+
+            if (sourceControl is TournamentCard card)
+            {
+                int tournamentId = Convert.ToInt32(card.Tag);
+
+                // 2. Mở Form Sửa
+                CreaTourForm editForm = new CreaTourForm(tournamentId);
+
+                // Khi Form Sửa đóng lại và trả về OK
+                if (editForm.ShowDialog() == DialogResult.OK)
+                {
+                    LoadDashboard(true);
+                    LoadHeroTournament(true);
+                    LoadTournamentStats(true);
+                    if (MessageBox.Show("Tournament updated successfully!\nDo you want to manage the team list now ? ",  "Next Step", MessageBoxButtons.YesNo) == DialogResult.Yes)
+                    {
+                        TeamListForm.TeamListForm teamList = new TeamListForm.TeamListForm(tournamentId);
+                        teamList.ShowDialog();
+                    }
+                }
+            }
         }
     }
 }

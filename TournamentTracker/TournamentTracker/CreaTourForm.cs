@@ -13,8 +13,39 @@ using TeamListForm;
 
 namespace TourApp
 {
+
     public partial class CreaTourForm : System.Windows.Forms.Form
     {
+        private int? _tournamentId = null;
+        public int CreatedTournamentId { get; private set; } = -1;
+        public CreaTourForm(int? id = null)
+        {
+            InitializeComponent();
+            _tournamentId = id;
+
+            if (_tournamentId.HasValue)
+            {
+                this.Text = "Update Tournament";
+                createBtn.Text = "Save Changes"; 
+                LoadDataForEdit();
+            }
+        }
+        private void LoadDataForEdit()
+        {
+            DatabaseHelper db = new DatabaseHelper();
+            DataRow row = db.GetTournamentById(_tournamentId.Value);
+
+            if (row != null)
+            {
+                nameTextBox.Text = row["NAME"].ToString();
+                sportCbox.SelectedItem = row["SPORT"].ToString();
+                numPar.Minimum = 2;
+                numPar.Maximum = 257;
+                numPar.Value = Convert.ToInt32(row["TEAM_COUNT"]);
+                startDate.Value = Convert.ToDateTime(row["STARTDATE"]);
+                prizeTextBox.Text = row["PRIZE"].ToString();
+            }
+        }
         public CreaTourForm()
         {
             InitializeComponent();
@@ -72,7 +103,12 @@ namespace TourApp
                                 MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
-
+            if (numPar.Value >= 256)
+            {
+                MessageBox.Show("The maximum number of participants is 256.", "Invalid Input",
+                                MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
             // --- 2. GATHER DATA ---
             string name = nameTextBox.Text.Trim();
             string sport = sportCbox.SelectedItem.ToString();
@@ -88,23 +124,31 @@ namespace TourApp
 
             // --- 3. SAVE TO DATABASE ---
             DatabaseHelper db = new DatabaseHelper();
+            bool isSuccess = false;
 
-            bool isSuccess = db.AddTournament(name, location, date, prize, posterPath, sport, teamCount);
+            if (_tournamentId.HasValue) // Chế độ UPDATE
+            {
+                isSuccess = db.UpdateTournament(_tournamentId.Value, name, location, date, prize, posterPath, sport, teamCount); // Giữ nguyên
+                this.CreatedTournamentId = _tournamentId.Value; // Lưu lại ID cũ
+            }
+            else // Chế độ CREATE (QUAN TRỌNG)
+            {
+                // Gọi hàm mới trả về int
+                int newId = db.AddTournament(name, location, date, prize, posterPath, sport, teamCount);
+
+                if (newId != -1)
+                {
+                    isSuccess = true;
+                    this.CreatedTournamentId = newId; // <--- LƯU ID MỚI VÀO ĐÂY
+                }
+            }
 
             if (isSuccess)
             {
-                MessageBox.Show("Tournament created successfully!", "Success",
-                                MessageBoxButtons.OK, MessageBoxIcon.Information);
-
+                MessageBox.Show("Saved successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 this.DialogResult = DialogResult.OK;
                 this.Close();
-            }
-            else
-            {
-                // Thông báo lỗi chung (Generic error message)
-                MessageBox.Show("An error occurred while saving to the database. Please try again.", "Database Error",
-                                MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
+            }        
         }
 
         private void numPar_ValueChanged(object sender, EventArgs e)

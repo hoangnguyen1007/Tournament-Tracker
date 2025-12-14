@@ -28,23 +28,24 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(TournamentCard));
             lblTitle = new Label();
             lblSport = new Label();
             lblParticipants = new Label();
             lblStartDate = new Label();
             lblPrize = new Label();
             panel1 = new Panel();
+            button1 = new Button();
             SuspendLayout();
             // 
             // lblTitle
             // 
             lblTitle.BackColor = Color.Transparent;
-            lblTitle.Dock = DockStyle.Top;
             lblTitle.Font = new Font("Segoe UI", 32F, FontStyle.Bold, GraphicsUnit.Pixel);
             lblTitle.ForeColor = Color.White;
-            lblTitle.Location = new Point(0, 0);
+            lblTitle.Location = new Point(59, 0);
             lblTitle.Name = "lblTitle";
-            lblTitle.Size = new Size(380, 48);
+            lblTitle.Size = new Size(272, 48);
             lblTitle.TabIndex = 0;
             lblTitle.Text = "label1";
             lblTitle.TextAlign = ContentAlignment.MiddleCenter;
@@ -104,15 +105,30 @@
             // 
             panel1.BackColor = Color.LawnGreen;
             panel1.Dock = DockStyle.Right;
-            panel1.Location = new Point(370, 48);
+            panel1.Location = new Point(370, 0);
             panel1.Name = "panel1";
-            panel1.Size = new Size(10, 172);
+            panel1.Size = new Size(10, 220);
             panel1.TabIndex = 5;
+            // 
+            // button1
+            // 
+            button1.BackColor = Color.Transparent;
+            button1.BackgroundImage = (Image)resources.GetObject("button1.BackgroundImage");
+            button1.FlatAppearance.BorderSize = 0;
+            button1.FlatAppearance.MouseOverBackColor = Color.FromArgb(64, 64, 64);
+            button1.FlatStyle = FlatStyle.Flat;
+            button1.Location = new Point(328, 12);
+            button1.Name = "button1";
+            button1.Size = new Size(32, 32);
+            button1.TabIndex = 6;
+            button1.UseVisualStyleBackColor = false;
+            button1.Click += button1_Click;
             // 
             // TournamentCard
             // 
             AutoScaleMode = AutoScaleMode.None;
             BackColor = Color.FromArgb(45, 45, 45);
+            Controls.Add(button1);
             Controls.Add(panel1);
             Controls.Add(lblPrize);
             Controls.Add(lblStartDate);
@@ -132,5 +148,6 @@
         private Label lblStartDate;
         private Label lblPrize;
         private Panel panel1;
+        private Button button1;
     }
 }
