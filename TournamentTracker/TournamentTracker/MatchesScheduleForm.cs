@@ -111,7 +111,7 @@ namespace TeamListForm
         {
             // Lấy dữ liệu trận đấu CHỈ CỦA GIẢI NÀY
             DataTable dtMatches = DatabaseHelper.GetMatchesTable(_tournamentId, "");
-            var originalTeams = DatabaseHelper.GetTeams();
+            var originalTeams = DatabaseHelper.GetTeams(_tournamentId);
 
             var standingsList = new List<TeamStanding>();
 
@@ -179,6 +179,7 @@ namespace TeamListForm
 
     public class Match
     {
+        public int TournamentID { get; set; }
         public int MatchId { get; set; }
         public int Round { get; set; }
         public Team? HomeTeam { get; set; }

@@ -8,7 +8,8 @@ namespace TeamListForm
 {
     public class Team
     {
-        public int ID { get; set; }           // cột ID trong DB
+        public int ID { get; set; }
+        public int TournamentID { get; set; }
         public string TEAMNAME { get; set; } = "";  // cột TEAMNAME
         public string COACH { get; set; } = "";     // cột COACH
         // LOGOPATH bỏ qua

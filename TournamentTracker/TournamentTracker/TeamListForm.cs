@@ -7,7 +7,17 @@ namespace TeamListForm
 {
     public partial class TeamListForm : System.Windows.Forms.Form
     {
+        private int _tournamentId;
         private static string connectionString = @"Data Source=DESKTOP-LOJ3INE\SQLEXPRESS;Initial Catalog=TournamentTracker;Integrated Security=True;TrustServerCertificate=True;";
+        public TeamListForm(int tournamentId)
+        {
+            InitializeComponent();
+            _tournamentId = tournamentId;
+
+            // --- THÊM DÒNG NÀY ---
+            LoadTeams(); // Gọi hàm tải dữ liệu ngay lập tức
+                         // ---------------------
+        }
         public TeamListForm()
         {
             InitializeComponent();
@@ -32,7 +42,7 @@ namespace TeamListForm
         }
         private void LoadTeams(string search = "")
         {
-            var teams = DatabaseHelper.GetTeams(search);
+            var teams = DatabaseHelper.GetTeams(_tournamentId, txtSearch.Text.Trim());
 
             dgvTeams.DataSource = null;
             dgvTeams.DataSource = teams;
@@ -64,20 +74,28 @@ namespace TeamListForm
         // PANEL OPTION CRUD NÈ 
         private void btnAdd_Click(object sender, EventArgs e)
         {
-            var editor = new TeamEditorForm(EditorMode.Add);
+            TeamEditorForm editor = new TeamEditorForm(EditorMode.Add);
             if (editor.ShowDialog() == DialogResult.OK)
             {
-                var newTeam = (Team)editor.Tag;
-                // Check đã tồn tại chưa
-                if (!DatabaseHelper.CheckTeam(newTeam.TEAMNAME))
+                // Lấy team từ form con (nếu CreatedTeam null thì thử lấy từ Tag)
+                Team newTeam = editor.CreatedTeam ?? (editor.Tag as Team);
+
+                if (newTeam != null)
                 {
-                    MessageBox.Show("Tên đội đã tồn tại!", "Trùng", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    return;
+                    // 1. Kiểm tra trùng tên trong giải này
+                    if (DatabaseHelper.CheckTeam(newTeam.TEAMNAME, _tournamentId))
+                    {
+                        // 2. Thêm vào DB kèm ID Giải Đấu (Quan trọng!)
+                        DatabaseHelper.InsertTeam(newTeam, _tournamentId);
+
+                        // 3. Tải lại lưới
+                        LoadTeams();
+                    }
+                    else
+                    {
+                        MessageBox.Show("Tên đội đã tồn tại trong giải đấu này!");
+                    }
                 }
-                // Chưa tồn tại thì bắt đầu thêm vào
-                DatabaseHelper.InsertTeam(newTeam);
-                LoadTeams(txtSearch.Text.Trim()); // reload danh sách
-                MessageBox.Show("Thêm đội bóng thành công!", "Thành công", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
         }
 

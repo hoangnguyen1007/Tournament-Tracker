@@ -1,11 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace TeamListForm
@@ -14,20 +8,29 @@ namespace TeamListForm
     {
         Add,     // Thêm mới
         Update,  // Sửa
-        Delete   // Xóa (chỉ hiển thị thông tin + hỏi xác nhận)
+        Delete   // Xóa
     }
-    public partial class TeamEditorForm : System.Windows.Forms.Form
+
+    public partial class TeamEditorForm : Form
     {
         private Team _team;
         private EditorMode _mode;
+        public Team CreatedTeam { get; set; }
+
         public TeamEditorForm(EditorMode mode, Team team = null)
         {
             InitializeComponent();
             _mode = mode;
-            _team = team ?? new Team(); // nếu null thì tạo mới
+            _team = team ?? new Team(); // Nếu null thì tạo mới
 
             SetupForm();
         }
+
+        public TeamEditorForm()
+        {
+            InitializeComponent();
+        }
+
         private void SetupForm()
         {
             switch (_mode)
@@ -39,7 +42,7 @@ namespace TeamListForm
 
                 case EditorMode.Update:
                     this.Text = "Sửa thông tin đội bóng";
-                    btnOption.Text = "Save as";
+                    btnOption.Text = "Save";
                     txtTeamName.Text = _team.TEAMNAME;
                     txtCoach.Text = _team.COACH;
                     break;
@@ -58,21 +61,24 @@ namespace TeamListForm
 
         private void btnOption_Click(object sender, EventArgs e)
         {
+            // Validate dữ liệu
             if (string.IsNullOrWhiteSpace(txtTeamName.Text))
             {
                 MessageBox.Show("Nhập tên đội đi bro!", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
-            // Tạo team mới từ dữ liệu người dùng nhập
+            // Tạo object Team từ dữ liệu nhập vào
             var team = new Team
             {
                 TEAMNAME = txtTeamName.Text.Trim(),
                 COACH = txtCoach.Text.Trim()
             };
 
-            this.Tag = team;                     // Đưa dữ liệu về form chính
-            this.DialogResult = DialogResult.OK; // Báo "OK" để form chính biết
+            this.CreatedTeam = team; 
+            this.Tag = team;         
+
+            this.DialogResult = DialogResult.OK;
             this.Close();
         }
 

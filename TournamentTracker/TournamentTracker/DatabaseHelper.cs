@@ -16,15 +16,19 @@ namespace TeamListForm
         private static string connectionString = @"Data Source=localhost;Initial Catalog=TournamentTracker;Integrated Security=True;Persist Security Info=False;Pooling=False;MultipleActiveResultSets=False;Encrypt=False;TrustServerCertificate=True;Command Timeout=30";
 
         // TEAMS
-        public static List<Team> GetTeams(string search = "")
+        public static List<Team> GetTeams(int tournamentId, string search = "")
         {
             var teams = new List<Team>();
-            string sql = "SELECT ID, TEAMNAME, COACH FROM Teams"; // SELECT 
-            if (!string.IsNullOrWhiteSpace(search)) sql += " WHERE TEAMNAME LIKE @search";
-            // Kết nối DB
+
+            // Câu lệnh SQL thêm điều kiện: WHERE TournamentID = @tID
+            string sql = "SELECT ID, TEAMNAME, COACH, TournamentID FROM Teams WHERE TournamentID = @tID";
+
+            if (!string.IsNullOrWhiteSpace(search)) sql += " AND TEAMNAME LIKE @search";
+
             using (SqlConnection conn = new SqlConnection(connectionString))
             using (SqlCommand cmd = new SqlCommand(sql, conn))
             {
+                cmd.Parameters.AddWithValue("@tID", tournamentId); // <--- QUAN TRỌNG
                 if (!string.IsNullOrWhiteSpace(search)) cmd.Parameters.AddWithValue("@search", $"%{search}%");
 
                 conn.Open();
@@ -34,9 +38,11 @@ namespace TeamListForm
                     {
                         teams.Add(new Team
                         {
-                            ID = reader.GetInt32("ID"),
-                            TEAMNAME = reader.GetString("TEAMNAME"),
-                            COACH = reader.IsDBNull("COACH") ? "" : reader.GetString("COACH")
+                            ID = reader.GetInt32(reader.GetOrdinal("ID")),
+                            // Map thêm TournamentID
+                            TournamentID = reader.GetInt32(reader.GetOrdinal("TournamentID")),
+                            TEAMNAME = reader.GetString(reader.GetOrdinal("TEAMNAME")),
+                            COACH = reader.IsDBNull(reader.GetOrdinal("COACH")) ? "" : reader.GetString(reader.GetOrdinal("COACH"))
                         });
                     }
                 }
@@ -44,28 +50,33 @@ namespace TeamListForm
             return teams;
         }
         // CRUD FUNCTION
-        public static bool CheckTeam(string team) // Xem có tồn tại team này chưa ?
+        public static bool CheckTeam(string teamName, int tournamentId)
         {
-            string query = "SELECT COUNT(*) FROM Teams WHERE TEAMNAME=@TN";
+            // Thêm điều kiện AND TournamentID = @tID
+            string query = "SELECT COUNT(*) FROM Teams WHERE TEAMNAME=@TN AND TournamentID=@tID";
+
             using (SqlConnection conn = new SqlConnection(connectionString))
             using (SqlCommand cmd = new SqlCommand(query, conn))
             {
-                cmd.Parameters.AddWithValue("@TN", team);
+                cmd.Parameters.AddWithValue("@TN", teamName);
+                cmd.Parameters.AddWithValue("@tID", tournamentId); // <--- QUAN TRỌNG
+
                 conn.Open();
                 int count = (int)cmd.ExecuteScalar();
-                // nếu đã tồn tại TEAMNAME return false, ngược lại return true
-                return count == 0;
+                return count == 0; // True nếu chưa có (không trùng)
             }
         }
-        public static void InsertTeam(Team team)
+        public static void InsertTeam(Team team, int tournamentId)
         {
-            string sql = "INSERT INTO Teams (TEAMNAME, COACH) VALUES (@TEAMNAME, @COACH)";
+            // Thêm cột TournamentID vào câu lệnh INSERT
+            string sql = "INSERT INTO Teams (TEAMNAME, COACH, TournamentID) VALUES (@TEAMNAME, @COACH, @tID)";
 
             using (SqlConnection conn = new SqlConnection(connectionString))
             using (SqlCommand cmd = new SqlCommand(sql, conn))
             {
                 cmd.Parameters.AddWithValue("@TEAMNAME", team.TEAMNAME);
                 cmd.Parameters.AddWithValue("@COACH", string.IsNullOrWhiteSpace(team.COACH) ? (object)DBNull.Value : team.COACH);
+                cmd.Parameters.AddWithValue("@tID", tournamentId); 
 
                 conn.Open();
                 cmd.ExecuteNonQuery();
