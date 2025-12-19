@@ -384,6 +384,7 @@
             btnNextRound.TabIndex = 8;
             btnNextRound.Text = "NEXT ROUND";
             btnNextRound.UseVisualStyleBackColor = false;
+            btnNextRound.Click += btnNextRound_Click;
             // 
             // MatchesScheduleForm
             // 

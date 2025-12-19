@@ -167,15 +167,21 @@ namespace TeamListForm
         {
             try
             {
-                // Gọi hàm tạo vòng tiếp theo (đá knockout dựa trên đội winner hoặc chéo giữa 2 đội đầu bảng)
+                // 1. Tạo dữ liệu vòng mới trong SQL
                 MatchGenerator.GenerateNextRound(_tournamentId);
-                // Load lại giao diện
+
+                // 2. Load lại danh sách vòng đấu vào ComboBox
                 LoadRounds();
-                LoadMatchesToGrid();
+
+                // 3. Cập nhật trạng thái nút
                 UpdateButtonState();
-                // Tự động chọn vòng mới nhất vừa tạo
+
+                // 4. Chọn vòng mới nhất
                 if (choiceRoundComboBox.Items.Count > 0)
+                {
                     choiceRoundComboBox.SelectedIndex = choiceRoundComboBox.Items.Count - 1;
+                    LoadMatchesToGrid();
+                }
             }
             catch (Exception ex)
             {

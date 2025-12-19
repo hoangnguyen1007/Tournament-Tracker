@@ -404,54 +404,60 @@ FROM Tournaments;";
         {
             DataTable dt = new DataTable();
 
-            // Thêm điều kiện TournamentID
             string sql = @"
-        SELECT 
-            m.ID AS MatchID,
-            m.Round,
-            t1.TEAMNAME AS HomeTeamName,
-            t2.TEAMNAME AS AwayTeamName,
-            m.HomeScore,
-            m.AwayScore,
-            m.HomeTeamID,
-            m.AwayTeamID
-        FROM Matches m
-        JOIN Teams t1 ON m.HomeTeamID = t1.ID
-        JOIN Teams t2 ON m.AwayTeamID = t2.ID
-        WHERE m.TournamentID = @tId"; // [MỚI]
+            SELECT 
+                m.ID AS MatchID,
+                m.Round,
+                ISNULL(t1.TEAMNAME, 'Unknown Home (' + CAST(m.HomeTeamID AS NVARCHAR) + ')') AS HomeTeamName,
+                ISNULL(t2.TEAMNAME, 'Unknown Away (' + CAST(m.AwayTeamID AS NVARCHAR) + ')') AS AwayTeamName,
+                m.HomeScore,
+                m.AwayScore,
+                m.HomeTeamID,
+                m.AwayTeamID
+            FROM Matches m
+            LEFT JOIN Teams t1 ON m.HomeTeamID = t1.ID
+            LEFT JOIN Teams t2 ON m.AwayTeamID = t2.ID
+            WHERE m.TournamentID = @tId";
+
+            // Logic xử lý filter an toàn hơn
+            int roundNumber = 0;
+            bool hasRoundFilter = false;
 
             if (!string.IsNullOrEmpty(roundFilter))
             {
-                sql += " AND m.Round = @RoundNum"; // [SỬA] Đổi WHERE thành AND vì đã có WHERE ở trên
+                // 1. Xóa chữ "Round" và khoảng trắng dư thừa
+                string numberPart = roundFilter.Replace("Round", "").Trim();
+                // 2. Ép kiểu sang số 
+                if (int.TryParse(numberPart, out roundNumber))
+                {
+                    sql += " AND m.Round = @RoundNum";
+                    hasRoundFilter = true;
+                }
             }
-
             using (SqlConnection conn = new SqlConnection(connectionString))
             using (SqlCommand cmd = new SqlCommand(sql, conn))
             {
-                cmd.Parameters.AddWithValue("@tId", tournamentId); // [MỚI]
+                cmd.Parameters.AddWithValue("@tId", tournamentId);
 
-                if (!string.IsNullOrEmpty(roundFilter))
+                // Chỉ thêm tham số nếu ép kiểu thành công
+                if (hasRoundFilter)
                 {
-                    string roundNum = roundFilter.Replace("Round ", "").Trim();
-                    cmd.Parameters.AddWithValue("@RoundNum", int.Parse(roundNum));
+                    cmd.Parameters.AddWithValue("@RoundNum", roundNumber);
                 }
 
                 conn.Open();
                 SqlDataAdapter adapter = new SqlDataAdapter(cmd);
                 adapter.Fill(dt);
             }
-            // Thêm cột hiển thị tỷ số (ScoreDisplay) cho đẹp
+
+            // --- Xử lý hiển thị tỷ số (ScoreDisplay) ---
             dt.Columns.Add("ScoreDisplay", typeof(string));
             foreach (DataRow row in dt.Rows)
             {
                 if (row["HomeScore"] == DBNull.Value || row["AwayScore"] == DBNull.Value)
-                {
                     row["ScoreDisplay"] = "vs";
-                }
                 else
-                {
                     row["ScoreDisplay"] = $"{row["HomeScore"]} - {row["AwayScore"]}";
-                }
             }
 
             return dt;
