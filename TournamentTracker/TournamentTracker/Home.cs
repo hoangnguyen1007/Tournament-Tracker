@@ -141,6 +141,8 @@ namespace TourApp
             TournamentCard card = (TournamentCard)sender;
             int tourId = (int)card.Tag;
             // Sau này sẽ là: new frmTournamentDashboard(tourId).Show();
+            MatchesScheduleForm matchForm = new MatchesScheduleForm(tourId);
+            matchForm.Show();
         }
 
         private void screateBtn_Click(object sender, EventArgs e)

@@ -56,6 +56,8 @@
             colPTS = new DataGridViewTextBoxColumn();
             standingsLabel = new Label();
             titleLabel = new Label();
+            btnStart = new Button();
+            btnNextRound = new Button();
             ((System.ComponentModel.ISupportInitialize)matchesDataGridView).BeginInit();
             ((System.ComponentModel.ISupportInitialize)standingsDataGridView).BeginInit();
             SuspendLayout();
@@ -84,7 +86,7 @@
             choiceRoundComboBox.Location = new Point(338, 107);
             choiceRoundComboBox.Margin = new Padding(3, 4, 3, 4);
             choiceRoundComboBox.Name = "choiceRoundComboBox";
-            choiceRoundComboBox.Size = new Size(200, 33);
+            choiceRoundComboBox.Size = new Size(200, 28);
             choiceRoundComboBox.TabIndex = 2;
             choiceRoundComboBox.SelectedIndexChanged += choiceRoundComboBox_SelectedIndexChanged;
             // 
@@ -126,7 +128,7 @@
             matchesDataGridView.RowHeadersWidth = 51;
             matchesDataGridView.RowTemplate.Height = 50;
             matchesDataGridView.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            matchesDataGridView.Size = new Size(585, 487);
+            matchesDataGridView.Size = new Size(585, 355);
             matchesDataGridView.TabIndex = 3;
             // 
             // colHome
@@ -172,7 +174,7 @@
             updateButton.FlatStyle = FlatStyle.Flat;
             updateButton.Font = new Font("Segoe UI", 22F, FontStyle.Bold, GraphicsUnit.Pixel, 0);
             updateButton.ForeColor = Color.White;
-            updateButton.Location = new Point(44, 658);
+            updateButton.Location = new Point(44, 562);
             updateButton.Margin = new Padding(3, 4, 3, 4);
             updateButton.Name = "updateButton";
             updateButton.Size = new Size(585, 61);
@@ -253,7 +255,7 @@
             colP.MinimumWidth = 30;
             colP.Name = "colP";
             colP.ReadOnly = true;
-            colP.Width = 44;
+            colP.Width = 40;
             // 
             // colW
             // 
@@ -263,7 +265,7 @@
             colW.MinimumWidth = 30;
             colW.Name = "colW";
             colW.ReadOnly = true;
-            colW.Width = 50;
+            colW.Width = 46;
             // 
             // colD
             // 
@@ -273,7 +275,7 @@
             colD.MinimumWidth = 30;
             colD.Name = "colD";
             colD.ReadOnly = true;
-            colD.Width = 47;
+            colD.Width = 43;
             // 
             // colL
             // 
@@ -283,7 +285,7 @@
             colL.MinimumWidth = 30;
             colL.Name = "colL";
             colL.ReadOnly = true;
-            colL.Width = 43;
+            colL.Width = 39;
             // 
             // colGF
             // 
@@ -293,7 +295,7 @@
             colGF.MinimumWidth = 30;
             colGF.Name = "colGF";
             colGF.ReadOnly = true;
-            colGF.Width = 53;
+            colGF.Width = 49;
             // 
             // colGA
             // 
@@ -303,7 +305,7 @@
             colGA.MinimumWidth = 30;
             colGA.Name = "colGA";
             colGA.ReadOnly = true;
-            colGA.Width = 56;
+            colGA.Width = 52;
             // 
             // colGD
             // 
@@ -313,7 +315,7 @@
             colGD.MinimumWidth = 30;
             colGD.Name = "colGD";
             colGD.ReadOnly = true;
-            colGD.Width = 58;
+            colGD.Width = 54;
             // 
             // colPTS
             // 
@@ -323,7 +325,7 @@
             colPTS.MinimumWidth = 30;
             colPTS.Name = "colPTS";
             colPTS.ReadOnly = true;
-            colPTS.Width = 60;
+            colPTS.Width = 56;
             // 
             // standingsLabel
             // 
@@ -346,9 +348,42 @@
             titleLabel.ForeColor = Color.FromArgb(0, 180, 80);
             titleLabel.Location = new Point(23, 30);
             titleLabel.Name = "titleLabel";
-            titleLabel.Size = new Size(371, 54);
+            titleLabel.Size = new Size(368, 54);
             titleLabel.TabIndex = 0;
             titleLabel.Text = "🏆 TOURNAMENT";
+            // 
+            // btnStart
+            // 
+            btnStart.BackColor = Color.FromArgb(0, 180, 80);
+            btnStart.FlatAppearance.BorderColor = Color.SpringGreen;
+            btnStart.FlatAppearance.BorderSize = 0;
+            btnStart.FlatStyle = FlatStyle.Flat;
+            btnStart.Font = new Font("Segoe UI", 22F, FontStyle.Bold, GraphicsUnit.Pixel, 0);
+            btnStart.ForeColor = Color.White;
+            btnStart.Location = new Point(44, 658);
+            btnStart.Margin = new Padding(3, 4, 3, 4);
+            btnStart.Name = "btnStart";
+            btnStart.Size = new Size(257, 61);
+            btnStart.TabIndex = 7;
+            btnStart.Text = "START ROUND";
+            btnStart.UseVisualStyleBackColor = false;
+            btnStart.Click += btnStart_Click;
+            // 
+            // btnNextRound
+            // 
+            btnNextRound.BackColor = Color.FromArgb(0, 180, 80);
+            btnNextRound.FlatAppearance.BorderColor = Color.SpringGreen;
+            btnNextRound.FlatAppearance.BorderSize = 0;
+            btnNextRound.FlatStyle = FlatStyle.Flat;
+            btnNextRound.Font = new Font("Segoe UI", 22F, FontStyle.Bold, GraphicsUnit.Pixel, 0);
+            btnNextRound.ForeColor = Color.White;
+            btnNextRound.Location = new Point(363, 658);
+            btnNextRound.Margin = new Padding(3, 4, 3, 4);
+            btnNextRound.Name = "btnNextRound";
+            btnNextRound.Size = new Size(257, 61);
+            btnNextRound.TabIndex = 8;
+            btnNextRound.Text = "NEXT ROUND";
+            btnNextRound.UseVisualStyleBackColor = false;
             // 
             // MatchesScheduleForm
             // 
@@ -358,6 +393,8 @@
             BackgroundImage = (Image)resources.GetObject("$this.BackgroundImage");
             BackgroundImageLayout = ImageLayout.Stretch;
             ClientSize = new Size(1282, 773);
+            Controls.Add(btnNextRound);
+            Controls.Add(btnStart);
             Controls.Add(titleLabel);
             Controls.Add(standingsLabel);
             Controls.Add(standingsDataGridView);
@@ -402,6 +439,8 @@
         private DataGridViewTextBoxColumn colHome;
         private DataGridViewTextBoxColumn colScore;
         private DataGridViewTextBoxColumn colAway;
+        private Button btnStart;
+        private Button btnNextRound;
     }
 }
 

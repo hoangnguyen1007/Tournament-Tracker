@@ -518,41 +518,22 @@ FROM Tournaments;";
             }
         }
         // Hàm lấy Bảng Xếp Hạng (Dùng cho Round 1, Vòng bảng)
-        public static List<GroupStanding> GetStandings(int tournamentId, string groupName)
+        public static DataTable GetStandingsTable(int tournamentId, string groupName = null)
         {
-            var standings = new List<GroupStanding>();
-            // SQL tính điểm: Thắng 3, Hòa 1. Sắp xếp theo Điểm -> Hiệu số -> Bàn thắng
-            string sql = @"
-                SELECT TeamID, SUM(Points) as Pts, SUM(GoalDiff) as GD, SUM(Goals) as GF
-                FROM (
-                    SELECT HomeTeamID as TeamID, 
-                           CASE WHEN HomeScore > AwayScore THEN 3 WHEN HomeScore = AwayScore THEN 1 ELSE 0 END as Points,
-                           (HomeScore - AwayScore) as GoalDiff, HomeScore as Goals
-                    FROM Matches WHERE TournamentID = @tId AND GroupName = @g AND Status = 2
-                    UNION ALL
-                    SELECT AwayTeamID as TeamID, 
-                           CASE WHEN AwayScore > HomeScore THEN 3 WHEN AwayScore = HomeScore THEN 1 ELSE 0 END as Points,
-                           (AwayScore - HomeScore) as GoalDiff, AwayScore as Goals
-                    FROM Matches WHERE TournamentID = @tId AND GroupName = @g AND Status = 2
-                ) as Sub GROUP BY TeamID ORDER BY Pts DESC, GD DESC, GF DESC";
+            DataTable dt = new DataTable();
             using (SqlConnection conn = new SqlConnection(connectionString))
-            using (SqlCommand cmd = new SqlCommand(sql, conn))
+            using (SqlCommand cmd = new SqlCommand("sp_GetStandings", conn))
             {
-                cmd.Parameters.AddWithValue("@tId", tournamentId);
-                cmd.Parameters.AddWithValue("@g", groupName);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@TournamentID", tournamentId);
+                // Xử lý groupName null
+                cmd.Parameters.AddWithValue("@GroupName", string.IsNullOrEmpty(groupName) ? (object)DBNull.Value : groupName);
+
                 conn.Open();
-                using (SqlDataReader r = cmd.ExecuteReader())
-                {
-                    while (r.Read()) standings.Add(new GroupStanding
-                    {
-                        TeamId = r.GetInt32(0),
-                        Points = r.GetInt32(1),
-                        GoalDifference = r.GetInt32(2),
-                        GoalsFor = r.GetInt32(3)
-                    });
-                }
+                SqlDataAdapter adapter = new SqlDataAdapter(cmd);
+                adapter.Fill(dt);   
             }
-            return standings;
+            return dt;
         }
         // Hàm lấy danh sách người thắng (Dùng cho Round 2 trở đi, Vòng knockout)
         public static List<int> GetWinnersFromRound(int tournamentId, int round)
