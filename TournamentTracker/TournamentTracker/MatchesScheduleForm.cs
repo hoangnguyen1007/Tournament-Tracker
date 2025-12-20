@@ -16,23 +16,6 @@ namespace TeamListForm
             _tournamentId = tournamentId;
         }
 
-        private void LoadRounds()
-        {
-            // Gọi DatabaseHelper lấy các vòng đấu dựa trên ID giải (_tournamentId)
-            var rounds = DatabaseHelper.GetRounds(_tournamentId);
-
-            choiceRoundComboBox.DataSource = null;
-            if (rounds.Count > 0)
-            {
-                choiceRoundComboBox.DataSource = rounds;
-                // Khi gán DataSource, sự kiện SelectedIndexChanged sẽ tự chạy để load lưới trận đấu
-            }
-            else
-            {
-                matchesDataGridView.DataSource = null;
-            }
-        }
-
         private void choiceRoundComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             LoadMatchesToGrid();
@@ -134,24 +117,6 @@ namespace TeamListForm
                 MessageBox.Show("Lỗi: " + ex.Message);
             }
         }
-
-        private void choiceRoundComboBox_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            LoadMatchesToGrid();
-        }
-        private void LoadMatchesToGrid()
-        {
-            if (choiceRoundComboBox.SelectedItem == null) return;
-
-            string selectedRound = choiceRoundComboBox.SelectedItem.ToString();
-
-            // Gọi DatabaseHelper lấy dữ liệu
-            DataTable dt = DatabaseHelper.GetMatchesTable(_tournamentId, selectedRound);
-
-            // Gán vào bảng
-            matchesDataGridView.AutoGenerateColumns = false;
-            matchesDataGridView.DataSource = dt;
-        }
         // Hiển thị bảng xếp hạng
         private void RecalculateStandings()
         {
@@ -236,7 +201,8 @@ namespace TeamListForm
             {
                 MessageBox.Show("Có lỗi xảy ra: " + ex.Message);
             }
-            // INFO BUTTON
+        }
+        // INFO BUTTON
         private void InforButton_Click(object sender, EventArgs e)
         {
             // 1. Kiểm tra xem người dùng có chọn dòng nào không
