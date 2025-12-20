@@ -155,7 +155,7 @@ namespace TeamListForm
                 return;
             }
             // Gọi hàm tạo vòng 1 (đá vòng tròn, tất cả các đội trong bảng đều gặp nhau)
-            MatchGenerator.GenerateRound1(_tournamentId, teamIds);
+            MatchGenerator.GenerateRound1(_tournamentId);
             // Load lại giao diện
             LoadMatchesToGrid();
             UpdateButtonState(); // Tự động ẩn nút Start, hiện nút Next

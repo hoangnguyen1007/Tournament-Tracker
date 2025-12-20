@@ -500,6 +500,34 @@ FROM Tournaments;";
                 }
             }
         }
+        // [MỚI] 5. Lấy danh sách đội bóng thuộc một giải đấu cụ thể
+        public static List<Team> GetTeamsByTournament(int tournamentId)
+        {
+            List<Team> list = new List<Team>();
+            // Chỉ lấy đội có TournamentID trùng khớp
+            string sql = "SELECT * FROM Teams WHERE TournamentID = @tID";
+
+            using (SqlConnection conn = new SqlConnection(connectionString))
+            using (SqlCommand cmd = new SqlCommand(sql, conn))
+            {
+                cmd.Parameters.AddWithValue("@tID", tournamentId);
+                conn.Open();
+                using (SqlDataReader reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        Team t = new Team();
+                        t.ID = (int)reader["ID"];
+                        t.TEAMNAME = reader["TEAMNAME"].ToString();
+                        // Kiểm tra null cho cột Coach nếu cần
+                        t.COACH = reader["COACH"] != DBNull.Value ? reader["COACH"].ToString() : "";
+
+                        list.Add(t);
+                    }
+                }
+            }
+            return list;
+        }
         // Thêm trận đấu mới
         public static void InsertMatch(int tournamentId, int round, int roundType, int homeTeamId, int awayTeamId, string groupName = null)
         {

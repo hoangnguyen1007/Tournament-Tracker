@@ -9,10 +9,18 @@ namespace TeamListForm
 {
     public class MatchGenerator
     {
-        public static void GenerateRound1(int tournamentId, List<int> allTeamIds)
+        public static void GenerateRound1(int tournamentId)
         {
-            if (allTeamIds.Count < 4) { MessageBox.Show("Cần ít nhất 4 đội."); return; }
-
+            // Lấy danh sách đội tham gia giải đấu
+            List<Team> teamsInTournament = DatabaseHelper.GetTeamsByTournament(tournamentId);
+            // Kiểm tra điều kiện số lượng đội
+            if (teamsInTournament.Count < 4)
+            {
+                MessageBox.Show("Cần ít nhất 4 đội để bắt đầu giải đấu.");
+                return;
+            }
+            // Lấy danh sách ID để thực hiện chia bảng
+            List<int> allTeamIds = teamsInTournament.Select(t => t.ID).ToList();
             // Chia 2 bảng A và B
             int mid = allTeamIds.Count / 2;
             var groupA = allTeamIds.Take(mid).ToList();
