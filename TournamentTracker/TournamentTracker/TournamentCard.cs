@@ -12,12 +12,39 @@ namespace TeamListForm
 {
     public partial class TournamentCard : UserControl
     {
+        public void EnableOwnerMode(bool isOwner)
+        {
+            // Nếu bạn có nút Manage (như trong hình screenshot 2), hãy đặt tên cho nó ví dụ btnManage
+            // contextMenuStrip1 là cái menu chuột phải Xóa/Sửa
+
+            if (isOwner)
+            {
+                // Là chủ: Cho phép hiện nút Manage và Menu chuột phải
+                // btnManage.Visible = true; (nếu có nút này trên card)
+                this.ContextMenuStrip = contextMenuStrip1; // Gán menu chuột phải
+                this.Cursor = Cursors.Hand;
+            }
+            else
+            {
+                // Khách: Ẩn nút Manage, tắt menu chuột phải
+                // btnManage.Visible = false;
+                this.ContextMenuStrip = null; // Không cho chuột phải để xóa
+                this.Cursor = Cursors.Default; // Hoặc Hand tùy bạn
+            }
+        }
+        public event EventHandler<int> OnSelect;
+
+        private int _tournamentId;
+        private ContextMenuStrip? contextMenuStrip1;
+
         public TournamentCard()
         {
             InitializeComponent();
+
             this.MouseEnter += (s, e) => this.BackColor = Color.FromArgb(70, 70, 70);
             this.MouseLeave += (s, e) => this.BackColor = Color.FromArgb(50, 50, 50);
             this.Cursor = Cursors.Hand;
+            this.Click += (s, e) => TriggerSelection();
             foreach (Control c in this.Controls)
             {
                 c.Click += (s, e) => this.OnClick(e);
@@ -25,8 +52,14 @@ namespace TeamListForm
                 c.MouseLeave += (s, e) => this.OnMouseLeave(e);
             }
         }
+        private void TriggerSelection()
+        {
+            // Bắn pháo hiệu ra ngoài kèm ID
+            OnSelect?.Invoke(this, _tournamentId);
+        }
         public void SetData(int id, string name, string sport, string startTime, string prize, string participant, string posterPath)
         {
+            _tournamentId = id; // Lưu ID vào biến
             this.Tag = id;
             lblStartDate.Text = startTime.ToString();
             lblTitle.Text = name;

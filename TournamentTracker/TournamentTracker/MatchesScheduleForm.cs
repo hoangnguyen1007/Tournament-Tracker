@@ -70,7 +70,6 @@ namespace TeamListForm
             matchesDataGridView.AutoGenerateColumns = false;
             matchesDataGridView.DataSource = dt;
         }
-
         private void updateButton_Click(object sender, EventArgs e)
         {
             // 1. Kiểm tra xem người dùng có chọn dòng nào không

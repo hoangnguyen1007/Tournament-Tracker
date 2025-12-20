@@ -85,12 +85,13 @@
             // 
             // sfindBtn
             // 
+            sfindBtn.Cursor = Cursors.Hand;
             sfindBtn.FlatAppearance.BorderSize = 0;
             sfindBtn.FlatStyle = FlatStyle.Flat;
             sfindBtn.Font = new Font("Segoe UI", 18F, FontStyle.Regular, GraphicsUnit.Pixel);
             sfindBtn.ForeColor = Color.Transparent;
             sfindBtn.Image = (Image)resources.GetObject("sfindBtn.Image");
-            sfindBtn.Location = new Point(1072, 22);
+            sfindBtn.Location = new Point(1074, 24);
             sfindBtn.Name = "sfindBtn";
             sfindBtn.Size = new Size(30, 30);
             sfindBtn.TabIndex = 5;
@@ -99,12 +100,13 @@
             // screateBtn
             // 
             screateBtn.BackColor = Color.FromArgb(30, 30, 30);
+            screateBtn.Cursor = Cursors.Hand;
             screateBtn.FlatAppearance.BorderSize = 0;
             screateBtn.FlatStyle = FlatStyle.Flat;
             screateBtn.Font = new Font("Segoe UI", 18F, FontStyle.Regular, GraphicsUnit.Pixel);
             screateBtn.ForeColor = Color.Transparent;
             screateBtn.Image = (Image)resources.GetObject("screateBtn.Image");
-            screateBtn.Location = new Point(1147, 22);
+            screateBtn.Location = new Point(1149, 24);
             screateBtn.Name = "screateBtn";
             screateBtn.Size = new Size(30, 30);
             screateBtn.TabIndex = 6;
@@ -114,6 +116,7 @@
             // LogOutBtn
             // 
             LogOutBtn.BackColor = Color.Transparent;
+            LogOutBtn.Cursor = Cursors.Hand;
             LogOutBtn.FlatAppearance.BorderSize = 0;
             LogOutBtn.FlatAppearance.MouseDownBackColor = Color.Gray;
             LogOutBtn.FlatAppearance.MouseOverBackColor = Color.FromArgb(55, 55, 55);
@@ -145,6 +148,7 @@
             Account.Items.AddRange(new ToolStripItem[] { myAccountToolStripMenuItem, settingsToolStripMenuItem, logOutToolStripMenuItem, exitToolStripMenuItem });
             Account.Name = "Account";
             Account.Size = new Size(177, 132);
+            Account.Opening += Account_Opening;
             // 
             // myAccountToolStripMenuItem
             // 
@@ -175,6 +179,7 @@
             // createBtn
             // 
             createBtn.BackColor = Color.FromArgb(52, 178, 51);
+            createBtn.Cursor = Cursors.Hand;
             createBtn.FlatAppearance.BorderSize = 0;
             createBtn.FlatStyle = FlatStyle.Flat;
             createBtn.Font = new Font("Segoe UI", 22F, FontStyle.Bold, GraphicsUnit.Pixel);
@@ -190,6 +195,7 @@
             // findBtn
             // 
             findBtn.BackColor = Color.FromArgb(52, 178, 51);
+            findBtn.Cursor = Cursors.Hand;
             findBtn.FlatAppearance.BorderSize = 0;
             findBtn.FlatStyle = FlatStyle.Flat;
             findBtn.Font = new Font("Segoe UI", 22F, FontStyle.Bold, GraphicsUnit.Pixel);
@@ -200,6 +206,7 @@
             findBtn.TabIndex = 2;
             findBtn.Text = "FIND TOURNAMENTS";
             findBtn.UseVisualStyleBackColor = false;
+            findBtn.Click += findBtn_Click;
             // 
             // flowPanelCards
             // 
@@ -316,6 +323,7 @@
             // manageBtn
             // 
             manageBtn.BackColor = Color.FromArgb(30, 31, 35);
+            manageBtn.Cursor = Cursors.Hand;
             manageBtn.FlatAppearance.BorderColor = Color.FromArgb(63, 68, 76);
             manageBtn.FlatStyle = FlatStyle.Flat;
             manageBtn.Font = new Font("Segoe UI", 20F, FontStyle.Regular, GraphicsUnit.Pixel);
@@ -326,10 +334,12 @@
             manageBtn.TabIndex = 5;
             manageBtn.Text = "⚙ Manage";
             manageBtn.UseVisualStyleBackColor = false;
+            manageBtn.Click += manageBtn_Click;
             // 
             // viewDetailsBtn
             // 
             viewDetailsBtn.BackColor = Color.FromArgb(79, 209, 197);
+            viewDetailsBtn.Cursor = Cursors.Hand;
             viewDetailsBtn.FlatAppearance.BorderSize = 0;
             viewDetailsBtn.FlatStyle = FlatStyle.Flat;
             viewDetailsBtn.Font = new Font("Segoe UI", 20F, FontStyle.Regular, GraphicsUnit.Pixel);
@@ -340,6 +350,7 @@
             viewDetailsBtn.TabIndex = 4;
             viewDetailsBtn.Text = "▶ View Details";
             viewDetailsBtn.UseVisualStyleBackColor = false;
+            viewDetailsBtn.Click += viewDetailsBtn_Click;
             // 
             // heroInfoLabel
             // 
