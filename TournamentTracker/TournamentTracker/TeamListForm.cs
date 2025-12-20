@@ -78,7 +78,10 @@ namespace TeamListForm
                     if (DatabaseHelper.CheckTeam(newTeam.TEAMNAME, _tournamentId))
                     {
                         // 2. Thêm vào DB kèm ID Giải Đấu (Quan trọng!)
-                        DatabaseHelper.InsertTeam(newTeam, _tournamentId);
+                        newTeam.TournamentID = _tournamentId;
+
+                        // 2. Gọi hàm Insert chỉ với 1 tham số
+                        DatabaseHelper.InsertTeam(newTeam);
 
                         // 3. Tải lại lưới
                         LoadTeams();

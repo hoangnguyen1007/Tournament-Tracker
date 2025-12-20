@@ -7,33 +7,38 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.Windows.Forms.VisualStyles;
-using System.Xml.Linq;
-using TeamListForm;
+using TeamListForm; // Namespace chứa DatabaseHelper
 
 namespace TourApp
 {
-
-    public partial class CreaTourForm : System.Windows.Forms.Form
+    public partial class CreaTourForm : Form
     {
         private int? _tournamentId = null;
         public int CreatedTournamentId { get; private set; } = -1;
+        private string _posterPath = ""; // Biến lưu đường dẫn ảnh
+
         public CreaTourForm(int? id = null)
         {
             InitializeComponent();
             _tournamentId = id;
 
+            // Nếu có ID truyền vào thì là chế độ Sửa (Edit)
             if (_tournamentId.HasValue)
             {
                 this.Text = "Update Tournament";
-                createBtn.Text = "Save Changes"; 
+                createBtn.Text = "Save Changes";
                 LoadDataForEdit();
             }
         }
+
+        public CreaTourForm()
+        {
+            InitializeComponent();
+        }
+
         private void LoadDataForEdit()
         {
             DatabaseHelper db = new DatabaseHelper();
-            // Đảm bảo _tournamentId có giá trị
             DataRow row = db.GetTournamentById(_tournamentId.Value);
 
             if (row != null)
@@ -41,11 +46,9 @@ namespace TourApp
                 // Load thông tin cơ bản
                 nameTextBox.Text = row["NAME"].ToString();
 
-                // Load Sport an toàn (tránh lỗi nếu item không có trong list)
                 string sportDB = row["SPORT"].ToString();
-                if (sportCbox.Items.Contains(sportDB)) sportCbox.SelectedItem = sportDB;
+                if (!string.IsNullOrEmpty(sportDB)) sportCbox.Text = sportDB;
 
-                // Set Max trước khi set Value để tránh lỗi 123 > 100
                 numPar.Minimum = 2;
                 numPar.Maximum = 1000;
                 numPar.Value = Convert.ToInt32(row["TEAM_COUNT"]);
@@ -53,152 +56,128 @@ namespace TourApp
                 startDate.Value = Convert.ToDateTime(row["STARTDATE"]);
                 prizeTextBox.Text = row["PRIZE"].ToString();
 
-                // --- LOAD FORMAT (QUAN TRỌNG) ---
-                string mode = row["FormatMode"] != DBNull.Value ? row["FormatMode"].ToString() : "Single";
-                string s1 = row["Stage1Format"] != DBNull.Value ? row["Stage1Format"].ToString() : "";
-                string s2 = row["Stage2Format"] != DBNull.Value ? row["Stage2Format"].ToString() : "";
+                // --- LOAD GROUP COUNT (QUAN TRỌNG) ---
+                // Load số bảng đấu lên groupCbox
+                int groupCount = row["GroupCount"] != DBNull.Value ? Convert.ToInt32(row["GroupCount"]) : 1;
+                groupCbox.Text = groupCount.ToString();
 
-                if (mode == "Single")
-                {
-                    singleRad.Checked = true; // Sự kiện CheckedChanged sẽ tự bật comboBox2
-                    if (comboBox2.Items.Contains(s1)) comboBox2.SelectedItem = s1;
-                }
-                else if (mode == "Multi")
-                {
-                    multiRad.Checked = true; // Sự kiện CheckedChanged sẽ tự bật comboBox3, 4
-                    if (comboBox3.Items.Contains(s1)) comboBox3.SelectedItem = s1;
-                    if (comboBox4.Items.Contains(s2)) comboBox4.SelectedItem = s2;
-                }
+                // Load Poster
+                _posterPath = row["POSTERPATH"].ToString();
             }
-        }
-        public CreaTourForm()
-        {
-            InitializeComponent();
-        }
-
-        private void label3_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void singleRad_CheckedChanged(object sender, EventArgs e)
-        {
-            if (singleRad.Checked)
-            {
-                comboBox2.Enabled = true;
-                comboBox3.Enabled = false;
-                comboBox3.SelectedIndex = -1;
-                comboBox4.Enabled = false;
-                comboBox4.SelectedIndex = -1;
-            }
-        }
-
-        private void multiRad_CheckedChanged(object sender, EventArgs e)
-        {
-            if (multiRad.Checked)
-            {
-                comboBox2.Enabled = false;
-                comboBox2.SelectedIndex = -1;
-                comboBox3.Enabled = true;
-                comboBox4.Enabled = true;
-            }
-        }
-
-        private void label6_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void comboBox2_SelectedIndexChanged(object sender, EventArgs e)
-        {
-
         }
 
         private void createBtn_Click(object sender, EventArgs e)
         {
-            // --- 1. VALIDATION CƠ BẢN ---
+            // --- 1. VALIDATION (KIỂM TRA DỮ LIỆU) ---
+            // Giữ nguyên các if/else check như bạn yêu cầu
             if (string.IsNullOrWhiteSpace(nameTextBox.Text))
             {
                 MessageBox.Show("Please enter a tournament name.", "Missing Information", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 nameTextBox.Focus();
                 return;
             }
-            if (sportCbox.SelectedIndex == -1)
+
+            if (sportCbox.SelectedIndex == -1 && string.IsNullOrEmpty(sportCbox.Text))
             {
                 MessageBox.Show("Please select a sport type.", "Missing Information", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
-            if (numPar.Value < 2 || numPar.Value > 256)
+
+            if (numPar.Value < 2)
             {
-                MessageBox.Show("Participants must be between 2 and 256.", "Invalid Input", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Participants must be at least 2.", "Invalid Input", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
-            // --- 2. LẤY DỮ LIỆU FORMAT (QUAN TRỌNG) ---
-            string mode = "";
-            string s1Format = "";
-            string s2Format = null;
-
-            if (singleRad.Checked)
-            {
-                // Kiểm tra chọn Single
-                if (comboBox2.SelectedIndex == -1)
-                {
-                    MessageBox.Show("Please select a format for the Single Stage!", "Missing Information", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    comboBox2.Focus();
-                    return;
-                }
-                mode = "Single";
-                s1Format = comboBox2.SelectedItem.ToString();
-            }
-            else if (multiRad.Checked)
-            {
-                // Kiểm tra chọn Multi
-                if (comboBox3.SelectedIndex == -1)
-                {
-                    MessageBox.Show("Please select a format for Stage 1!", "Missing Information", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    comboBox3.Focus();
-                    return;
-                }
-                if (comboBox4.SelectedIndex == -1)
-                {
-                    MessageBox.Show("Please select a format for the Final Stage!", "Missing Information", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    comboBox4.Focus();
-                    return;
-                }
-                mode = "Multi";
-                s1Format = comboBox3.SelectedItem.ToString();
-                s2Format = comboBox4.SelectedItem.ToString();
-            }
-            else
-            {
-                MessageBox.Show("Please select a tournament format type!", "Missing Information", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
-            }
-
-            // --- 3. LẤY DỮ LIỆU CHUNG ---
-            string name = nameTextBox.Text.Trim();
-            string sport = sportCbox.SelectedItem.ToString();
+            // --- KIỂM TRA LOGIC SỐ BẢNG ---
             int teamCount = (int)numPar.Value;
+            int groupCount = 1;
+
+            // Parse số bảng từ groupCbox (nếu rỗng hoặc lỗi thì mặc định là 1)
+            if (!string.IsNullOrEmpty(groupCbox.Text))
+            {
+                if (!int.TryParse(groupCbox.Text, out groupCount))
+                {
+                    groupCount = 1;
+                }
+            }
+
+            // A. KIỂM TRA TỐI THIỂU: Mỗi bảng cần ít nhất 3 đội để đá vòng tròn hấp dẫn
+            // (Nếu bạn muốn tối thiểu là 2 thì sửa số 3 thành 2)
+            int minTeamsPerGroup = 2;
+            if (teamCount < groupCount * minTeamsPerGroup)
+            {
+                MessageBox.Show($"Số lượng đội quá ít! Với {groupCount} bảng, bạn cần ít nhất {groupCount * minTeamsPerGroup} đội (Tối thiểu {minTeamsPerGroup} đội/bảng).",
+                                "Logic Bảng Đấu", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return; // Dừng lại, không cho tạo
+            }
+
+            // B. CẢNH BÁO CHIA ĐỀU (Optional): Nhắc nhở nếu số đội không chia hết cho số bảng
+            // Ví dụ: 10 đội chia 4 bảng => Sẽ có bảng 3 đội, bảng 2 đội -> Lịch thi đấu sẽ lệch nhau.
+            if (teamCount % groupCount != 0)
+            {
+                var result = MessageBox.Show(
+                    $"Số đội ({teamCount}) không chia hết cho số bảng ({groupCount}).\n" +
+                    "Hệ thống sẽ tự động chia lệch (Ví dụ: Có bảng nhiều đội hơn).\n\n" +
+                    "Bạn có muốn tiếp tục không?",
+                    "Cảnh báo phân chia", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+
+                if (result == DialogResult.No) return;
+            }
+
+            // --- 2. LẤY DỮ LIỆU ---
+            string name = nameTextBox.Text.Trim();
+            string sport = sportCbox.Text;
             DateTime date = startDate.Value;
             string prize = prizeTextBox.Text.Trim();
-            string location = null;
-            string posterPath = null;
+            string location = ""; // Nếu form có ô location thì điền vào
 
             DatabaseHelper db = new DatabaseHelper();
             bool isSuccess = false;
 
-            // --- 4. GỌI DB HELPER (ĐÃ HẾT LỖI) ---
+            // --- 3. GỌI DATABASE (Hàm mới không còn Format) ---
             if (_tournamentId.HasValue)
             {
-                // UPDATE (Truyền thêm mode, s1, s2)
-                isSuccess = db.UpdateTournament(_tournamentId.Value, name, location, date, prize, posterPath, sport, teamCount, mode, s1Format, s2Format);
-                this.CreatedTournamentId = _tournamentId.Value;
+                // UPDATE
+                isSuccess = db.UpdateTournament(
+                    _tournamentId.Value,
+                    name,
+                    location,
+                    date,
+                    prize,
+                    _posterPath,
+                    sport,
+                    teamCount,
+                    groupCount // Truyền số bảng mới
+                );
+
+                if (isSuccess) this.CreatedTournamentId = _tournamentId.Value;
             }
             else
             {
-                // ADD (Truyền thêm mode, s1, s2)
-                int newId = db.AddTournament(name, location, date, prize, posterPath, sport, teamCount, mode, s1Format, s2Format);
+                // ADD
+                // Lấy ID User hiện tại (nếu chưa có session thì mặc định 1)
+                int createdBy = 1;
+                try
+                {
+                    if (UserSession.CurrentUserId > 0)
+                    {
+                        createdBy = UserSession.CurrentUserId;
+                    }
+                }
+                catch { }
+                int newId = db.AddTournament(
+                    name,
+                    location,
+                    date,
+                    prize,
+                    _posterPath,
+                    sport,
+                    teamCount,
+                    groupCount, // Truyền số bảng mới
+                    createdBy
+                );
+
                 if (newId != -1)
                 {
                     isSuccess = true;
@@ -206,7 +185,7 @@ namespace TourApp
                 }
             }
 
-            // --- 5. KẾT THÚC ---
+            // --- 4. KẾT QUẢ ---
             if (isSuccess)
             {
                 string msg = _tournamentId.HasValue ? "Update successfully!" : "Create successfully!";
@@ -220,32 +199,18 @@ namespace TourApp
             }
         }
 
+        // --- CÁC EVENT KHÁC (GIỮ NGUYÊN ĐỂ TRÁNH LỖI DESIGNER) ---
+
         private void numPar_ValueChanged(object sender, EventArgs e)
         {
             numPar.Minimum = 2;
-            numPar.Maximum = 256;
+            numPar.Maximum = 1000;
         }
 
         private void LogOutBtn_Click(object sender, EventArgs e)
         {
-            ContextMenuStrip myMenu = Account;
-            myMenu.Show(LogOutBtn, 0, LogOutBtn.Height);
-        }
-
-        private void CreaTourForm_Load(object sender, EventArgs e)
-        {
-            singleRad.Checked = true;
-            sportCbox.Text = "Football";
-        }
-
-        private void starTime_ValueChanged(object sender, EventArgs e)
-        {
-            startDate.CustomFormat = "dd/MM/yyyy";
-        }
-
-        private void Account_Opening(object sender, CancelEventArgs e)
-        {
-
+            // ContextMenuStrip myMenu = Account;
+            // myMenu.Show(LogOutBtn, 0, LogOutBtn.Height);
         }
 
         private void logOutToolStripMenuItem_Click(object sender, EventArgs e)
@@ -259,5 +224,21 @@ namespace TourApp
         {
             Application.Exit();
         }
+
+        private void CreaTourForm_Load(object sender, EventArgs e)
+        {
+            if (string.IsNullOrEmpty(sportCbox.Text)) sportCbox.Text = "Football";
+        }
+
+        private void starTime_ValueChanged(object sender, EventArgs e)
+        {
+            startDate.CustomFormat = "dd/MM/yyyy";
+        }
+
+        // Các hàm trống (Design generate ra)
+        private void label3_Click(object sender, EventArgs e) { }
+        private void label6_Click(object sender, EventArgs e) { }
+        private void comboBox2_SelectedIndexChanged(object sender, EventArgs e) { }
+        private void Account_Opening(object sender, CancelEventArgs e) { }
     }
 }

@@ -162,23 +162,43 @@ namespace TeamListForm
 
         private void btnStart_Click(object sender, EventArgs e)
         {
-            // Lấy danh sách tất cả các đội
-            List<Team> teams = DatabaseHelper.GetTeams();
-            List<int> teamIds = teams.Select(t => t.ID).ToList();
-
-            if (teamIds.Count < 2)
+            List<Team> teams = DatabaseHelper.GetTeams(_tournamentId);
+            if (teams.Count < 2)
             {
                 MessageBox.Show("Cần ít nhất 2 đội để bắt đầu giải đấu!");
                 return;
             }
-            // Gọi hàm tạo vòng 1 (đá vòng tròn, tất cả các đội trong bảng đều gặp nhau)
-            MatchGenerator.GenerateRound1(_tournamentId);
-            // Load lại giao diện
-            LoadMatchesToGrid();
-            UpdateButtonState(); // Tự động ẩn nút Start, hiện nút Next
-            // Tự chọn Round 1 để hiển thị ngay
-            if (choiceRoundComboBox.Items.Count > 0)
-                choiceRoundComboBox.SelectedIndex = 0;
+
+            // Có thể check thêm: teams.Count < (Số bảng * 2) thì cảnh báo...
+
+            // 2. Gọi SQL để chia bảng và xếp lịch (Code Mới)
+            DatabaseHelper db = new DatabaseHelper();
+            bool success = db.GenerateSchedule(_tournamentId);
+
+            if (success)
+            {
+                MessageBox.Show("Đã sinh lịch thi đấu và chia bảng thành công!", "Thành công");
+
+                // 3. Load lại giao diện
+                LoadRounds(); // Load danh sách vòng (Round 1, 2...)
+
+                // Tự động chọn Round 1
+                if (choiceRoundComboBox.Items.Count > 0)
+                {
+                    choiceRoundComboBox.SelectedIndex = 0;
+                }
+                else
+                {
+                    // Fallback nếu combo chưa kịp update
+                    LoadMatchesToGrid();
+                }
+
+                UpdateButtonState(); // Ẩn nút Start, hiện nút Next
+            }
+            else
+            {
+                MessageBox.Show("Lỗi khi sinh lịch thi đấu. Vui lòng kiểm tra lại số lượng đội!", "Lỗi");
+            }
         }
         private void btnNextRound_Click(object sender, EventArgs e)
         {
