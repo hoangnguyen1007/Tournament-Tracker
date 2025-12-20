@@ -13,7 +13,7 @@ namespace TeamListForm
 {
     internal class DatabaseHelper
     {
-        private static string connectionString = "";
+        private static string connectionString = "Data Source=localhost;Initial Catalog=TournamentTracker;Integrated Security=True;Persist Security Info=False;Pooling=False;MultipleActiveResultSets=False;Encrypt=False;TrustServerCertificate=True;Command Timeout=30";
 
         // TEAMS
         public static List<Team> GetTeams(int tournamentId, string search = "")
@@ -392,17 +392,23 @@ namespace TeamListForm
         }
 
         // 2. Lấy giải đấu của người khác (FIND / EXPLORE)
-        public DataTable GetOtherTournaments(int currentUserId)
+        // Thêm tham số string keyword mặc định là rỗng
+         public DataTable GetOtherTournaments(int currentUserId, string keyword = "")
         {
             DataTable dt = new DataTable();
             using (SqlConnection conn = new SqlConnection(connectionString))
             {
                 conn.Open();
-                // Lấy tất cả giải MÀ KHÔNG PHẢI do mình tạo (CreatedBy != ID hoặc CreatedBy IS NULL)
-                string query = "SELECT * FROM Tournaments WHERE (CreatedBy <> @uid OR CreatedBy IS NULL) ORDER BY ID DESC";
+
+                // --- SỬA Ở ĐÂY ---
+                // Bỏ điều kiện "(CreatedBy <> @uid)" đi để nó lấy TOÀN BỘ giải trên hệ thống
+                string query = @"SELECT * FROM Tournaments 
+                         WHERE (@key = '' OR NAME LIKE N'%' + @key + '%') 
+                         ORDER BY ID DESC";
 
                 SqlCommand cmd = new SqlCommand(query, conn);
-                cmd.Parameters.AddWithValue("@uid", currentUserId);
+                // cmd.Parameters.AddWithValue("@uid", currentUserId); // Không cần dòng này nữa
+                cmd.Parameters.AddWithValue("@key", keyword);
 
                 SqlDataAdapter adapter = new SqlDataAdapter(cmd);
                 adapter.Fill(dt);
@@ -503,8 +509,9 @@ namespace TeamListForm
                 }
                 else
                 {
-                    // Chế độ TÌM KIẾM: Đếm giải của người khác (hoặc toàn bộ public)
-                    whereClause = "WHERE (CreatedBy <> @uid OR CreatedBy IS NULL)";
+                    // Chế độ TÌM KIẾM: Đếm TOÀN BỘ (không cần WHERE hoặc WHERE 1=1)
+                    // Bạn muốn đếm cả của mình và người khác thì bỏ điều kiện lọc đi
+                    whereClause = "";
                 }
 
                 string query = $@"
@@ -513,10 +520,14 @@ namespace TeamListForm
                 SUM(CASE WHEN STARTDATE > GETDATE() THEN 1 ELSE 0 END) AS UpcomingTournaments,
                 SUM(CASE WHEN STARTDATE <= GETDATE() THEN 1 ELSE 0 END) AS StartedOrFinishedTournaments
             FROM Tournaments
-            {whereClause}"; // Chèn điều kiện lọc vào đây
+            {whereClause}";
 
                 SqlCommand cmd = new SqlCommand(query, conn);
-                cmd.Parameters.AddWithValue("@uid", userId);
+                // Chỉ truyền tham số nếu câu lệnh có dùng @uid
+                if (isMyTournamentMode)
+                {
+                    cmd.Parameters.AddWithValue("@uid", userId);
+                }
 
                 SqlDataAdapter adapter = new SqlDataAdapter(cmd);
                 adapter.Fill(dt);
@@ -524,7 +535,51 @@ namespace TeamListForm
                 return dt.Rows.Count > 0 ? dt.Rows[0] : null;
             }
         }
+        public DataTable GetTournamentsByFilter(int userId, string filterMode)
+        {
+            DataTable dt = new DataTable();
+            using (SqlConnection conn = new SqlConnection(connectionString))
+            {
+                conn.Open();
+                string sql = "SELECT * FROM Tournaments WHERE (CreatedBy <> @uid OR CreatedBy IS NULL) ";
 
+                // Nối thêm điều kiện dựa vào nút bấm
+                switch (filterMode)
+                {
+                    case "Active":
+                        // Đang diễn ra: Ngày bắt đầu <= Hôm nay
+                        sql += " AND STARTDATE <= CAST(GETDATE() AS DATE)";
+                        break;
+                    case "Upcoming":
+                        // Sắp tới: Ngày bắt đầu > Hôm nay
+                        sql += " AND STARTDATE > CAST(GETDATE() AS DATE)";
+                        break;
+                    case "HighPrize":
+                        // Ví dụ: Lọc giải thưởng lớn (Logic này tuỳ bạn xử lý chuỗi tiền tệ)
+                        // sql += " ... "; 
+                        sql += " ORDER BY PRIZE DESC"; // Sắp xếp tiền to lên đầu
+                        break;
+                    case "Recently":
+                        sql += " ORDER BY ID DESC"; // Mới tạo nhất
+                        break;
+                    case "All":
+                    default:
+                        // Mặc định sắp xếp theo ngày
+                        sql += " ORDER BY ID DESC";
+                        break;
+                }
+
+                // Nếu câu lệnh chưa có ORDER BY thì thêm mặc định
+                if (!sql.Contains("ORDER BY")) sql += " ORDER BY STARTDATE ASC";
+
+                SqlCommand cmd = new SqlCommand(sql, conn);
+                cmd.Parameters.AddWithValue("@uid", userId);
+
+                SqlDataAdapter adapter = new SqlDataAdapter(cmd);
+                adapter.Fill(dt);
+            }
+            return dt;
+        }
         // =============================================================
         // PHẦN 4: TOURNAMENTS & MATCHES (CẬP NHẬT MỚI)
         // =============================================================

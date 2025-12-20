@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             components = new System.ComponentModel.Container();
+            Label label6;
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Home));
             panel1 = new Panel();
             sfindBtn = new Button();
@@ -49,9 +50,9 @@
             label2 = new Label();
             addBtn = new Button();
             contextMenuStrip1 = new ContextMenuStrip(components);
-            deleteBtn = new ToolStripMenuItem();
+            editBtn = new ToolStripMenuItem();
             toolStripTextBox1 = new ToolStripMenuItem();
-            panel2 = new Panel();
+            pnlHeroSection = new Panel();
             manageBtn = new Button();
             viewDetailsBtn = new Button();
             heroInfoLabel = new Label();
@@ -62,13 +63,37 @@
             lblActive = new Label();
             lblUpcoming = new Label();
             panel3 = new Panel();
+            txtSearchGlobal = new TextBox();
+            btnMyTournaments = new Button();
+            pnlSearchSection = new Panel();
+            label8 = new Label();
+            flowQuickFilters = new FlowLayoutPanel();
+            btnFilterAll = new Button();
+            btnFilterActive = new Button();
+            btnFilterUpcoming = new Button();
+            label7 = new Label();
+            label6 = new Label();
             panel1.SuspendLayout();
             Account.SuspendLayout();
             pnlEmptyState.SuspendLayout();
             contextMenuStrip1.SuspendLayout();
-            panel2.SuspendLayout();
+            pnlHeroSection.SuspendLayout();
             panel3.SuspendLayout();
+            pnlSearchSection.SuspendLayout();
+            flowQuickFilters.SuspendLayout();
             SuspendLayout();
+            // 
+            // label6
+            // 
+            label6.AutoSize = true;
+            label6.Font = new Font("Segoe UI", 22F, FontStyle.Regular, GraphicsUnit.Pixel);
+            label6.ForeColor = Color.WhiteSmoke;
+            label6.Location = new Point(44, 91);
+            label6.Name = "label6";
+            label6.Size = new Size(198, 30);
+            label6.TabIndex = 12;
+            label6.Text = "Tournament Name:";
+            label6.TextAlign = ContentAlignment.MiddleCenter;
             // 
             // panel1
             // 
@@ -246,18 +271,17 @@
             // 
             // label3
             // 
-            label3.AutoSize = true;
             label3.Font = new Font("Segoe UI", 24F, FontStyle.Bold, GraphicsUnit.Pixel);
             label3.ForeColor = SystemColors.ControlLightLight;
-            label3.Location = new Point(579, 109);
+            label3.Location = new Point(278, 109);
             label3.Name = "label3";
-            label3.Size = new Size(141, 32);
+            label3.Size = new Size(742, 32);
             label3.TabIndex = 2;
             label3.Text = "Get started";
+            label3.TextAlign = ContentAlignment.MiddleCenter;
             // 
             // label2
             // 
-            label2.AutoSize = true;
             label2.Font = new Font("Segoe UI", 36F, FontStyle.Bold, GraphicsUnit.Pixel);
             label2.ForeColor = SystemColors.ControlLightLight;
             label2.Location = new Point(465, 52);
@@ -265,6 +289,7 @@
             label2.Size = new Size(371, 48);
             label2.TabIndex = 1;
             label2.Text = "No tournaments yet!";
+            label2.TextAlign = ContentAlignment.MiddleCenter;
             // 
             // addBtn
             // 
@@ -286,17 +311,17 @@
             // contextMenuStrip1
             // 
             contextMenuStrip1.ImageScalingSize = new Size(24, 24);
-            contextMenuStrip1.Items.AddRange(new ToolStripItem[] { deleteBtn, toolStripTextBox1 });
+            contextMenuStrip1.Items.AddRange(new ToolStripItem[] { editBtn, toolStripTextBox1 });
             contextMenuStrip1.Name = "contextMenuStrip1";
             contextMenuStrip1.Size = new Size(214, 68);
             // 
-            // deleteBtn
+            // editBtn
             // 
-            deleteBtn.BackColor = Color.White;
-            deleteBtn.Name = "deleteBtn";
-            deleteBtn.Size = new Size(213, 32);
-            deleteBtn.Text = "✏️ Chỉnh sửa";
-            deleteBtn.Click += deleteBtn_Click;
+            editBtn.BackColor = Color.White;
+            editBtn.Name = "editBtn";
+            editBtn.Size = new Size(213, 32);
+            editBtn.Text = "✏️ Chỉnh sửa";
+            editBtn.Click += editBtn_Click;
             // 
             // toolStripTextBox1
             // 
@@ -305,21 +330,21 @@
             toolStripTextBox1.Text = "🗑️ Xóa giải đấu";
             toolStripTextBox1.Click += toolStripTextBox1_Click;
             // 
-            // panel2
+            // pnlHeroSection
             // 
-            panel2.BackColor = Color.FromArgb(30, 31, 35);
-            panel2.Controls.Add(manageBtn);
-            panel2.Controls.Add(viewDetailsBtn);
-            panel2.Controls.Add(heroInfoLabel);
-            panel2.Controls.Add(heroSubLabel);
-            panel2.Controls.Add(heroTitleLabel);
-            panel2.Controls.Add(label5);
-            panel2.Font = new Font("Segoe UI", 18F, FontStyle.Regular, GraphicsUnit.Pixel);
-            panel2.Location = new Point(647, 91);
-            panel2.Name = "panel2";
-            panel2.Size = new Size(562, 323);
-            panel2.TabIndex = 5;
-            panel2.Paint += panel2_Paint;
+            pnlHeroSection.BackColor = Color.FromArgb(30, 31, 35);
+            pnlHeroSection.Controls.Add(manageBtn);
+            pnlHeroSection.Controls.Add(viewDetailsBtn);
+            pnlHeroSection.Controls.Add(heroInfoLabel);
+            pnlHeroSection.Controls.Add(heroSubLabel);
+            pnlHeroSection.Controls.Add(heroTitleLabel);
+            pnlHeroSection.Controls.Add(label5);
+            pnlHeroSection.Font = new Font("Segoe UI", 18F, FontStyle.Regular, GraphicsUnit.Pixel);
+            pnlHeroSection.Location = new Point(647, 91);
+            pnlHeroSection.Name = "pnlHeroSection";
+            pnlHeroSection.Size = new Size(562, 323);
+            pnlHeroSection.TabIndex = 5;
+            pnlHeroSection.Paint += panel2_Paint;
             // 
             // manageBtn
             // 
@@ -449,14 +474,142 @@
             panel3.Size = new Size(464, 100);
             panel3.TabIndex = 9;
             // 
+            // txtSearchGlobal
+            // 
+            txtSearchGlobal.BackColor = Color.FromArgb(18, 18, 18);
+            txtSearchGlobal.Font = new Font("Segoe UI", 24F, FontStyle.Regular, GraphicsUnit.Pixel);
+            txtSearchGlobal.ForeColor = SystemColors.Info;
+            txtSearchGlobal.Location = new Point(248, 86);
+            txtSearchGlobal.Name = "txtSearchGlobal";
+            txtSearchGlobal.PlaceholderText = "Search tournament";
+            txtSearchGlobal.Size = new Size(352, 39);
+            txtSearchGlobal.TabIndex = 10;
+            txtSearchGlobal.Visible = false;
+            txtSearchGlobal.KeyDown += txtSearchGlobal_KeyDown_1;
+            // 
+            // btnMyTournaments
+            // 
+            btnMyTournaments.BackColor = Color.FromArgb(52, 178, 51);
+            btnMyTournaments.Cursor = Cursors.Hand;
+            btnMyTournaments.FlatAppearance.BorderSize = 0;
+            btnMyTournaments.FlatStyle = FlatStyle.Flat;
+            btnMyTournaments.Font = new Font("Segoe UI", 24F, FontStyle.Bold, GraphicsUnit.Pixel);
+            btnMyTournaments.ForeColor = Color.White;
+            btnMyTournaments.Location = new Point(134, 154);
+            btnMyTournaments.Name = "btnMyTournaments";
+            btnMyTournaments.Size = new Size(339, 74);
+            btnMyTournaments.TabIndex = 11;
+            btnMyTournaments.Text = "MY TOURNAMENTS";
+            btnMyTournaments.UseVisualStyleBackColor = false;
+            btnMyTournaments.Visible = false;
+            btnMyTournaments.Click += btnMyTournaments_Click;
+            // 
+            // pnlSearchSection
+            // 
+            pnlSearchSection.Controls.Add(label8);
+            pnlSearchSection.Controls.Add(flowQuickFilters);
+            pnlSearchSection.Controls.Add(label7);
+            pnlSearchSection.Controls.Add(label6);
+            pnlSearchSection.Controls.Add(txtSearchGlobal);
+            pnlSearchSection.Font = new Font("Segoe UI", 18F, FontStyle.Regular, GraphicsUnit.Pixel);
+            pnlSearchSection.Location = new Point(579, 91);
+            pnlSearchSection.Name = "pnlSearchSection";
+            pnlSearchSection.Size = new Size(665, 323);
+            pnlSearchSection.TabIndex = 12;
+            pnlSearchSection.Visible = false;
+            // 
+            // label8
+            // 
+            label8.AutoSize = true;
+            label8.Font = new Font("Segoe UI", 24F, FontStyle.Bold, GraphicsUnit.Pixel);
+            label8.ForeColor = Color.WhiteSmoke;
+            label8.Location = new Point(290, 149);
+            label8.Name = "label8";
+            label8.Size = new Size(72, 32);
+            label8.TabIndex = 15;
+            label8.Text = "Filter";
+            label8.TextAlign = ContentAlignment.MiddleCenter;
+            // 
+            // flowQuickFilters
+            // 
+            flowQuickFilters.AutoSize = true;
+            flowQuickFilters.Controls.Add(btnFilterAll);
+            flowQuickFilters.Controls.Add(btnFilterActive);
+            flowQuickFilters.Controls.Add(btnFilterUpcoming);
+            flowQuickFilters.Location = new Point(71, 208);
+            flowQuickFilters.Name = "flowQuickFilters";
+            flowQuickFilters.Size = new Size(514, 64);
+            flowQuickFilters.TabIndex = 14;
+            // 
+            // btnFilterAll
+            // 
+            btnFilterAll.BackColor = Color.FromArgb(42, 42, 42);
+            btnFilterAll.Cursor = Cursors.Hand;
+            btnFilterAll.FlatAppearance.BorderSize = 0;
+            btnFilterAll.FlatStyle = FlatStyle.Flat;
+            btnFilterAll.Font = new Font("Segoe UI", 22F, FontStyle.Regular, GraphicsUnit.Pixel);
+            btnFilterAll.ForeColor = Color.FromArgb(189, 189, 189);
+            btnFilterAll.Location = new Point(3, 3);
+            btnFilterAll.Name = "btnFilterAll";
+            btnFilterAll.Size = new Size(164, 48);
+            btnFilterAll.TabIndex = 0;
+            btnFilterAll.Text = "All";
+            btnFilterAll.UseVisualStyleBackColor = false;
+            btnFilterAll.Click += QuickFilter_Click;
+            // 
+            // btnFilterActive
+            // 
+            btnFilterActive.BackColor = Color.FromArgb(42, 42, 42);
+            btnFilterActive.Cursor = Cursors.Hand;
+            btnFilterActive.FlatAppearance.BorderSize = 0;
+            btnFilterActive.FlatStyle = FlatStyle.Flat;
+            btnFilterActive.Font = new Font("Segoe UI", 22F, FontStyle.Regular, GraphicsUnit.Pixel);
+            btnFilterActive.ForeColor = Color.FromArgb(189, 189, 189);
+            btnFilterActive.Location = new Point(173, 3);
+            btnFilterActive.Name = "btnFilterActive";
+            btnFilterActive.Size = new Size(164, 48);
+            btnFilterActive.TabIndex = 1;
+            btnFilterActive.Text = "🔥 Active Now";
+            btnFilterActive.UseVisualStyleBackColor = false;
+            btnFilterActive.Click += QuickFilter_Click;
+            // 
+            // btnFilterUpcoming
+            // 
+            btnFilterUpcoming.BackColor = Color.FromArgb(42, 42, 42);
+            btnFilterUpcoming.Cursor = Cursors.Hand;
+            btnFilterUpcoming.FlatAppearance.BorderSize = 0;
+            btnFilterUpcoming.FlatStyle = FlatStyle.Flat;
+            btnFilterUpcoming.Font = new Font("Segoe UI", 22F, FontStyle.Regular, GraphicsUnit.Pixel);
+            btnFilterUpcoming.ForeColor = Color.FromArgb(189, 189, 189);
+            btnFilterUpcoming.Location = new Point(343, 3);
+            btnFilterUpcoming.Name = "btnFilterUpcoming";
+            btnFilterUpcoming.Size = new Size(164, 48);
+            btnFilterUpcoming.TabIndex = 2;
+            btnFilterUpcoming.Text = "⏳ Upcoming";
+            btnFilterUpcoming.UseVisualStyleBackColor = false;
+            btnFilterUpcoming.Click += QuickFilter_Click;
+            // 
+            // label7
+            // 
+            label7.AutoSize = true;
+            label7.Font = new Font("Segoe UI", 32F, FontStyle.Bold, GraphicsUnit.Pixel);
+            label7.ForeColor = Color.FromArgb(52, 178, 51);
+            label7.Location = new Point(193, 11);
+            label7.Name = "label7";
+            label7.Size = new Size(289, 45);
+            label7.TabIndex = 13;
+            label7.Text = "Find Tournaments";
+            // 
             // Home
             // 
             AutoScaleMode = AutoScaleMode.None;
             BackColor = Color.FromArgb(32, 34, 37);
             BackgroundImage = (Image)resources.GetObject("$this.BackgroundImage");
             ClientSize = new Size(1278, 764);
+            Controls.Add(pnlSearchSection);
+            Controls.Add(btnMyTournaments);
             Controls.Add(panel3);
-            Controls.Add(panel2);
+            Controls.Add(pnlHeroSection);
             Controls.Add(pnlEmptyState);
             Controls.Add(flowPanelCards);
             Controls.Add(findBtn);
@@ -476,10 +629,13 @@
             pnlEmptyState.ResumeLayout(false);
             pnlEmptyState.PerformLayout();
             contextMenuStrip1.ResumeLayout(false);
-            panel2.ResumeLayout(false);
-            panel2.PerformLayout();
+            pnlHeroSection.ResumeLayout(false);
+            pnlHeroSection.PerformLayout();
             panel3.ResumeLayout(false);
             panel3.PerformLayout();
+            pnlSearchSection.ResumeLayout(false);
+            pnlSearchSection.PerformLayout();
+            flowQuickFilters.ResumeLayout(false);
             ResumeLayout(false);
         }
 
@@ -496,7 +652,7 @@
         private Button createBtn;
         private Button findBtn;
         private Button Screate;
-        private Button button2;
+        private Button btnFilterActive;
         private Button sfindBtn;
         private Button screateBtn;
         private FlowLayoutPanel flowPanelCards;
@@ -505,10 +661,10 @@
         private Label label3;
         private Label label2;
         private ContextMenuStrip contextMenuStrip1;
-        private ToolStripMenuItem deleteBtn;
+        private ToolStripMenuItem editBtn;
         private ToolStripMenuItem toolStripTextBox1;
         private Label label4;
-        private Panel panel2;
+        private Panel pnlHeroSection;
         private Label heroTitleLabel;
         private Label heroInfoLabel;
         private Label heroSubLabel;
@@ -519,5 +675,14 @@
         private Label lblActive;
         private Label lblUpcoming;
         private Panel panel3;
+        private TextBox textBox1;
+        private TextBox txtSearchGlobal;
+        private Button btnMyTournaments;
+        private Panel pnlSearchSection;
+        private Label label7;
+        private FlowLayoutPanel flowQuickFilters;
+        private Button btnFilterAll;
+        private Button btnFilterUpcoming;
+        private Label label8;
     }
 }

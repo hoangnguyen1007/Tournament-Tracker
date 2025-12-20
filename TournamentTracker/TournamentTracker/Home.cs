@@ -12,8 +12,10 @@ namespace TourApp
 {
     public partial class Home : System.Windows.Forms.Form
     {
+        private Button _currentFilterBtn = null;
         private bool _isViewingMyTournaments = true;
         private int _currentHeroId = -1;
+        private DataTable _rawDataTable = new DataTable();
         protected override CreateParams CreateParams
         {
             get
@@ -114,9 +116,11 @@ namespace TourApp
 
             if (hero == null)
             {
-                // Xử lý Empty State (Giữ nguyên logic cũ của bạn nhưng sửa text cho hợp lý)
-                heroTitleLabel.Text = viewMineOnly ? "No upcoming tournaments" : "No public tournaments found";
-                heroSubLabel.Text = viewMineOnly ? "Create your first tournament" : "Check back later";
+                if (viewMineOnly)
+                {
+                    heroTitleLabel.Text = "No upcoming tournaments";
+                    heroSubLabel.Text = "Create your first tournament";
+                }
                 heroInfoLabel.Text = "";
 
                 viewDetailsBtn.Visible = false;
@@ -128,8 +132,6 @@ namespace TourApp
             _currentHeroId = Convert.ToInt32(hero["ID"]);
             viewDetailsBtn.Visible = true;
 
-            // --- LOGIC PHÂN QUYỀN NÚT MANAGE (QUAN TRỌNG) ---
-            // Chỉ hiện nút Manage nếu User hiện tại là chủ nhân giải đấu này
             int creatorId = hero["CreatedBy"] != DBNull.Value ? Convert.ToInt32(hero["CreatedBy"]) : 0;
 
             if (creatorId == UserSession.CurrentUserId)
@@ -150,42 +152,31 @@ namespace TourApp
         }
         public void LoadDashboard(bool viewMineOnly)
         {
-            _isViewingMyTournaments = viewMineOnly; // Lưu trạng thái
+            _isViewingMyTournaments = viewMineOnly;
             flowPanelCards.Controls.Clear();
 
-            DatabaseHelper repo = new DatabaseHelper();
-            DataTable dt;
-
-            // --- QUYẾT ĐỊNH LẤY DỮ LIỆU NÀO ---
+            // --- FORCE HIỆN NÚT CỘNG NẾU LÀ MY TOURNAMENTS ---
             if (viewMineOnly)
             {
-                // Chế độ 1: Chỉ lấy giải của tôi
-                dt = repo.GetMyTournaments(UserSession.CurrentUserId);
-                // Đổi tiêu đề cho người dùng biết (nếu bạn có label tiêu đề danh sách)
-                // lblListTitle.Text = "My Tournaments"; 
+                addBtn.Visible = true;
             }
             else
             {
-                // Chế độ 2: Lấy giải người khác (Find)
-                dt = repo.GetOtherTournaments(UserSession.CurrentUserId);
-                // lblListTitle.Text = "Public Tournaments";
+                addBtn.Visible = false;
             }
-            // -----------------------------------
+            DatabaseHelper repo = new DatabaseHelper();
+            DataTable dt;
+
+            if (viewMineOnly)
+                dt = repo.GetMyTournaments(UserSession.CurrentUserId);
+            else
+                dt = repo.GetOtherTournaments(UserSession.CurrentUserId); // Đã sửa SQL ở Bước 1
 
             if (dt.Rows.Count == 0)
             {
-                // Nếu là xem của mình mà trống -> Hiện "Tạo giải đầu tiên đi"
-                // Nếu là Find mà trống -> Hiện "Không tìm thấy giải nào"
                 pnlEmptyState.Visible = true;
-                pnlEmptyState.BringToFront();
+                pnlEmptyState.BringToFront(); // Đảm bảo nó nổi lên trên
                 flowPanelCards.Visible = false;
-
-                // Cập nhật text empty state cho hợp ngữ cảnh
-                if (viewMineOnly)
-                    heroSubLabel.Text = "Create your first tournament";
-                else
-                    heroSubLabel.Text = "No public tournaments found";
-
                 return;
             }
 
@@ -208,6 +199,7 @@ namespace TourApp
                 string participant = row["TEAM_COUNT"].ToString();
 
                 card.SetData(id, name, sport, date, prize, participant, path);
+                card.Cursor = Cursors.Hand;
                 card.Margin = new Padding(15);
                 card.OnSelect += Card_Selected_Handler;
 
@@ -222,10 +214,112 @@ namespace TourApp
                     // Nếu đang xem list người khác -> Chắc chắn là khách -> Ẩn nút Manage
                     card.EnableOwnerMode(false);
                 }
-
                 card.ContextMenuStrip = contextMenuStrip1;
                 flowPanelCards.Controls.Add(card);
             }
+        }
+        private void LoadPublicTournaments(string keyword)
+        {
+            flowPanelCards.SuspendLayout();
+            DatabaseHelper repo = new DatabaseHelper();
+            DataTable dt = repo.GetOtherTournaments(UserSession.CurrentUserId, keyword);
+            RenderCards(dt);
+            if (dt.Rows.Count == 0 && !_isViewingMyTournaments)
+            {
+                label3.Text = $"Couldn't find any results for '{keyword}'";
+            }
+
+            // 5. Tiếp tục vẽ
+            flowPanelCards.ResumeLayout();
+        }
+        private void RenderCards(DataTable dt)
+        {
+            flowPanelCards.SuspendLayout();
+            flowPanelCards.Controls.Clear();
+
+            // --- XỬ LÝ KHI KHÔNG CÓ DỮ LIỆU ---
+            if (dt.Rows.Count == 0)
+            {
+                pnlEmptyState.Visible = true;
+                flowPanelCards.Visible = false;
+
+                // KIỂM TRA ĐANG Ở CHẾ ĐỘ NÀO
+                if (_isViewingMyTournaments)
+                {
+                    label2.Text = "No tournaments yet!";
+                    label3.Text = "Get started by creating your first tournament.";
+
+                    // Hiện nút dấu cộng để tạo
+                    addBtn.Visible = true;
+                }
+                else
+                {
+                    label2.Text = "Not Found";
+                    label3.Text = "Couldn't find any tournaments matching your criteria.";
+
+                  
+                    addBtn.Visible = false;
+                }
+
+                flowPanelCards.ResumeLayout();
+                return;
+            }
+
+            // --- CÓ DỮ LIỆU THÌ VẼ CARD ---
+            pnlEmptyState.Visible = false;
+            flowPanelCards.Visible = true;
+
+            foreach (DataRow row in dt.Rows)
+            {
+                TournamentCard card = new TournamentCard();
+                card.SetData(
+                    Convert.ToInt32(row["ID"]),
+                    row["NAME"].ToString(),
+                    row["SPORT"].ToString(),
+                    Convert.ToDateTime(row["STARTDATE"]).ToString("dd MMM yyyy"),
+                    row["PRIZE"].ToString(),
+                    row["TEAM_COUNT"].ToString(),
+                    row["POSTERPATH"].ToString()
+                );
+
+                card.Tag = Convert.ToInt32(row["ID"]);
+                card.Cursor = Cursors.Hand;
+                card.Margin = new Padding(15);
+                card.EnableOwnerMode(false);
+                card.ContextMenuStrip = null;
+                card.OnSelect += Card_Selected_Handler;
+
+                flowPanelCards.Controls.Add(card);
+            }
+            flowPanelCards.ResumeLayout();
+        }
+        private void LoadTournamentsAsync(string filterMode)
+        {
+            // Hiện trạng thái đang tải
+            flowPanelCards.Controls.Clear();
+            heroSubLabel.Text = "Loading...";
+
+            // CHẠY BACKGROUND
+            Task.Run(() =>
+            {
+                DatabaseHelper repo = new DatabaseHelper();
+                // Gọi SQL (Nặng)
+                DataTable dt = repo.GetTournamentsByFilter(UserSession.CurrentUserId, filterMode);
+
+                // ĐEM DỮ LIỆU VỀ UI (Nhẹ)
+                this.Invoke(new Action(() =>
+                {
+                    RenderCards(dt);
+                }));
+            });
+        }
+
+        private void ShowEmptyState(string msg)
+        {
+            pnlEmptyState.Visible = true;
+            flowPanelCards.Visible = false;
+            heroSubLabel.Text = msg;
+            addBtn.Visible = false;
         }
         private void Card_Selected_Handler(object sender, int tournamentId)
         {
@@ -385,6 +479,26 @@ namespace TourApp
 
         private void findBtn_Click(object sender, EventArgs e)
         {
+            _isViewingMyTournaments = false;
+
+            // --- 1. ẨN GIAO DIỆN CŨ ---
+            pnlHeroSection.Visible = false;
+            createBtn.Visible = false;
+            addBtn.Visible = false;
+            findBtn.Visible = false;
+
+            // --- 2. HIỆN GIAO DIỆN MỚI ---
+            pnlSearchSection.Visible = true;
+            btnMyTournaments.Visible = true;
+
+            txtSearchGlobal.Visible = true;
+            txtSearchGlobal.Focus();
+
+            // --- 3. LOAD DỮ LIỆU (Không cần check Radio nữa) ---
+            LoadPublicTournaments("");
+
+            // Load thống kê
+            LoadTournamentStats(false);
         }
 
         private void Account_Opening(object sender, CancelEventArgs e)
@@ -392,7 +506,7 @@ namespace TourApp
 
         }
 
-        private void deleteBtn_Click(object sender, EventArgs e)
+        private void editBtn_Click(object sender, EventArgs e)
         {
             ToolStripItem item = (ToolStripItem)sender;
             ContextMenuStrip menu = (ContextMenuStrip)item.Owner;
@@ -416,12 +530,88 @@ namespace TourApp
                     LoadDashboard(true);
                     LoadHeroTournament(true);
                     LoadTournamentStats(true);
-                    if (MessageBox.Show("Tournament updated successfully!\nDo you want to manage the team list now ? ",  "Next Step", MessageBoxButtons.YesNo) == DialogResult.Yes)
+                    if (MessageBox.Show("Tournament updated successfully!\nDo you want to manage the team list now ? ", "Next Step", MessageBoxButtons.YesNo) == DialogResult.Yes)
                     {
                         TeamListForm.TeamListForm teamList = new TeamListForm.TeamListForm(tournamentId);
                         teamList.ShowDialog();
                     }
                 }
+            }
+        }
+
+        private void txtSearchGlobal_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                // Chỉ tìm kiếm khi đang ở chế độ Find
+                if (!_isViewingMyTournaments)
+                {
+                    string keyword = txtSearchGlobal.Text.Trim();
+                    LoadPublicTournaments(keyword);
+                }
+                e.SuppressKeyPress = true;
+            }
+        }
+        private void QuickFilter_Click(object sender, EventArgs e)
+        {
+            Button btn = sender as Button;
+            if (btn == null) return;
+
+            // --- A. ĐỔI MÀU GIAO DIỆN (UX) ---
+            // Reset nút cũ
+            if (_currentFilterBtn != null)
+            {
+                _currentFilterBtn.BackColor = Color.FromArgb(50, 50, 50); // Màu xám gốc
+                _currentFilterBtn.ForeColor = Color.White;
+            }
+
+            // Set màu nút mới (Ví dụ màu Cam hoặc Xanh)
+            btn.BackColor = Color.DarkOrange;
+            btn.ForeColor = Color.White;
+            _currentFilterBtn = btn; // Lưu lại
+
+            // --- B. LẤY TỪ KHÓA LỌC ---
+            // Bạn có thể dùng Tag của nút, hoặc check Text
+            string filterMode = "All";
+            if (btn.Text.Contains("Active")) filterMode = "Active";
+            else if (btn.Text.Contains("Upcoming")) filterMode = "Upcoming";
+            else if (btn.Text.Contains("High Prize")) filterMode = "HighPrize";
+
+            // --- C. GỌI HÀM LOAD KHÔNG LAG ---
+            LoadTournamentsAsync(filterMode);
+        }
+        private void btnMyTournaments_Click(object sender, EventArgs e)
+        {
+            _isViewingMyTournaments = true;
+
+            // --- 1. ẨN GIAO DIỆN FIND ---
+            pnlSearchSection.Visible = false; // Ẩn cụm Search & Filter
+            btnMyTournaments.Visible = false; // Ẩn nút quay về
+
+            txtSearchGlobal.Visible = false;  // Ẩn thanh Search (YÊU CẦU CỦA BẠN)
+            txtSearchGlobal.Clear();          // Xóa chữ
+
+            // --- 2. HIỆN GIAO DIỆN MY TOUR ---
+            pnlHeroSection.Visible = true;    // Hiện lại Hero Banner
+            createBtn.Visible = true;         // Hiện nút Tạo
+            addBtn.Visible = true;            // Hiện nút Cộng
+            findBtn.Visible = true;           // Hiện nút Find
+
+            // --- 3. LOAD LẠI DỮ LIỆU CỦA MÌNH ---
+            LoadDashboard(true);
+            LoadHeroTournament(true);
+            LoadTournamentStats(true);
+        }
+
+        private void txtSearchGlobal_KeyDown_1(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                string keyword = txtSearchGlobal.Text.Trim();
+                LoadPublicTournaments(keyword); // Gọi hàm load với từ khóa
+
+                e.SuppressKeyPress = true;
+                e.Handled = true;
             }
         }
     }
