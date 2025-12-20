@@ -107,9 +107,9 @@
             // lbPlayerName
             // 
             lbPlayerName.AutoSize = true;
-            lbPlayerName.BackColor = Color.FromArgb(35, 38, 39);
+            lbPlayerName.BackColor = Color.Transparent;
             lbPlayerName.Font = new Font("Segoe UI Semibold", 24F, FontStyle.Bold, GraphicsUnit.Pixel, 0);
-            lbPlayerName.ForeColor = Color.FromArgb(40, 156, 56);
+            lbPlayerName.ForeColor = Color.White;
             lbPlayerName.Location = new Point(39, 26);
             lbPlayerName.Name = "lbPlayerName";
             lbPlayerName.Size = new Size(153, 32);

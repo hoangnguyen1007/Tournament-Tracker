@@ -9,31 +9,11 @@ namespace TeamListForm
 {
     public partial class MatchesScheduleForm : Form
     {
-        // Biến lưu ID giải đấu nhận từ Form cha
         private int _tournamentId;
-
-        // 1. SỬA CONSTRUCTOR ĐỂ NHẬN ID
         public MatchesScheduleForm(int tournamentId)
         {
             InitializeComponent();
-            _tournamentId = tournamentId; // Lưu lại ID để dùng
-        }
-
-        // 2. FORM LOAD: Tải dữ liệu ngay lập tức
-        private void MatchesScheduleForm_Load(object sender, EventArgs e)
-        {
-            try
-            {
-                // Tải danh sách vòng đấu của giải này
-                LoadRounds();
-
-                // Tính toán bảng xếp hạng của giải này
-                RecalculateStandings();
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Lỗi tải dữ liệu: " + ex.Message);
-            }
+            _tournamentId = tournamentId;
         }
 
         private void LoadRounds()
@@ -126,72 +106,137 @@ namespace TeamListForm
                 }
             }
         }
-
-        private void RecalculateStandings()
+        // Load danh sách vòng đấu lên ComboBox
+        private void LoadRounds()
         {
-            // Lấy dữ liệu trận đấu CHỈ CỦA GIẢI NÀY
-            DataTable dtMatches = DatabaseHelper.GetMatchesTable(_tournamentId, "");
-            var originalTeams = DatabaseHelper.GetTeamsByTournament(_tournamentId);
+            // Lấy danh sách vòng đấu mới nhất từ DB
+            var rounds = DatabaseHelper.GetRounds(_tournamentId);
 
-            var standingsList = new List<TeamStanding>();
-
-            // Khởi tạo danh sách team
-            foreach (var team in originalTeams)
+            // Xử lý hiển thị lên ComboBox
+            choiceRoundComboBox.DataSource = null;
+            if (rounds.Count > 0)
             {
-                standingsList.Add(new TeamStanding { Name = team.TEAMNAME });
+                choiceRoundComboBox.DataSource = rounds;
             }
-
-            // Tính điểm
-            foreach (DataRow row in dtMatches.Rows)
+        }
+        // Sự kiện Load Form
+        private void MatchesScheduleForm_Load(object sender, EventArgs e)
+        {
+            try
             {
-                if (row["HomeScore"] == DBNull.Value || row["AwayScore"] == DBNull.Value) continue;
+                LoadRounds();
 
-                int hScore = Convert.ToInt32(row["HomeScore"]);
-                int aScore = Convert.ToInt32(row["AwayScore"]);
-                string homeName = row["HomeTeamName"].ToString();
-                string awayName = row["AwayTeamName"].ToString();
-
-                var homeStats = standingsList.FirstOrDefault(s => s.Name == homeName);
-                var awayStats = standingsList.FirstOrDefault(s => s.Name == awayName);
-
-                if (homeStats != null && awayStats != null)
-                {
-                    homeStats.Played++;
-                    awayStats.Played++;
-                    homeStats.GF += hScore; homeStats.GA += aScore;
-                    awayStats.GF += aScore; awayStats.GA += hScore;
-
-                    if (hScore > aScore)
-                    {
-                        homeStats.Won++; homeStats.Points += 3;
-                        awayStats.Lost++;
-                    }
-                    else if (aScore > hScore)
-                    {
-                        awayStats.Won++; awayStats.Points += 3;
-                        homeStats.Lost++;
-                    }
-                    else
-                    {
-                        homeStats.Drawn++; homeStats.Points += 1;
-                        awayStats.Drawn++; awayStats.Points += 1;
-                    }
-                }
+                RecalculateStandings();
+                UpdateButtonState();
             }
-
-            // Sắp xếp BXH
-            var sortedList = standingsList.OrderByDescending(t => t.Points)
-                                          .ThenByDescending(t => t.GD)
-                                          .ThenByDescending(t => t.GF)
-                                          .ToList();
-
-            // Đánh số hạng
-            for (int i = 0; i < sortedList.Count; i++) sortedList[i].Rank = i + 1;
-
-            standingsDataGridView.AutoGenerateColumns = false;
-            standingsDataGridView.DataSource = sortedList;
+            catch (Exception ex)
+            {
+                MessageBox.Show("Lỗi: " + ex.Message);
+            }
         }
 
+        private void choiceRoundComboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            LoadMatchesToGrid();
+        }
+        private void LoadMatchesToGrid()
+        {
+            if (choiceRoundComboBox.SelectedItem == null) return;
+
+            string selectedRound = choiceRoundComboBox.SelectedItem.ToString();
+
+            // Gọi DatabaseHelper lấy dữ liệu
+            DataTable dt = DatabaseHelper.GetMatchesTable(_tournamentId, selectedRound);
+
+            // Gán vào bảng
+            matchesDataGridView.AutoGenerateColumns = false;
+            matchesDataGridView.DataSource = dt;
+        }
+        // Hiển thị bảng xếp hạng
+        private void RecalculateStandings()
+        {
+            try
+            {
+                // Gọi Stored Procedure qua DatabaseHelper để lấy bảng xếp hạng đã tính sẵn
+                DataTable dt = DatabaseHelper.GetStandingsTable(_tournamentId);
+
+                // Gán dữ liệu vào GridView
+                standingsDataGridView.AutoGenerateColumns = false; // Giữ nguyên cấu hình cột đã thiết kế
+                standingsDataGridView.DataSource = dt;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Lỗi tải bảng xếp hạng: " + ex.Message);
+            }
+        }
+        // Nút bắt đầu giải (Round 1 - Chưa bấm thì Round 1 null)
+        // Nút tiếp vòng (Round 2 trở đi - Chỉ hiện khi đã bấm nút bắt đầu)
+        private void UpdateButtonState()
+        {
+            // Lấy vòng đấu lớn nhất hiện tại từ DB
+            int currentRound = DatabaseHelper.GetMaxRound(_tournamentId);
+
+            if (currentRound == 0)
+            {
+                // Chưa có trận nào -> Hiện nút START, Ẩn nút NEXT
+                btnStart.Visible = true;
+                btnNextRound.Visible = false;
+                choiceRoundComboBox.Visible = false; // Ẩn luôn combo chọn vòng cho gọn (vì chưa đá mà ..)
+            }
+            else
+            {
+                // Đã có trận -> Ẩn nút START, Hiện nút NEXT
+                btnStart.Visible = false;
+                btnNextRound.Visible = true;
+                choiceRoundComboBox.Visible = true;
+            }
+        }
+
+        private void btnStart_Click(object sender, EventArgs e)
+        {
+            // Lấy danh sách tất cả các đội
+            List<Team> teams = DatabaseHelper.GetTeams();
+            List<int> teamIds = teams.Select(t => t.ID).ToList();
+
+            if (teamIds.Count < 2)
+            {
+                MessageBox.Show("Cần ít nhất 2 đội để bắt đầu giải đấu!");
+                return;
+            }
+            // Gọi hàm tạo vòng 1 (đá vòng tròn, tất cả các đội trong bảng đều gặp nhau)
+            MatchGenerator.GenerateRound1(_tournamentId);
+            // Load lại giao diện
+            LoadMatchesToGrid();
+            UpdateButtonState(); // Tự động ẩn nút Start, hiện nút Next
+            // Tự chọn Round 1 để hiển thị ngay
+            if (choiceRoundComboBox.Items.Count > 0)
+                choiceRoundComboBox.SelectedIndex = 0;
+        }
+        private void btnNextRound_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                // 1. Tạo dữ liệu vòng mới trong SQL
+                MatchGenerator.GenerateNextRound(_tournamentId);
+
+                // 2. Load lại danh sách vòng đấu vào ComboBox
+                LoadRounds();
+
+                // 3. Cập nhật trạng thái nút
+                UpdateButtonState();
+
+                // 4. Chọn vòng mới nhất
+                if (choiceRoundComboBox.Items.Count > 0)
+                {
+                    choiceRoundComboBox.SelectedIndex = choiceRoundComboBox.Items.Count - 1;
+                    LoadMatchesToGrid();
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Có lỗi xảy ra: " + ex.Message);
+            }
+            // INFO BUTTON
         private void InforButton_Click(object sender, EventArgs e)
         {
             // 1. Kiểm tra xem người dùng có chọn dòng nào không
@@ -278,15 +323,15 @@ namespace TeamListForm
 
     public class TeamStanding
     {
-        public int Rank { get; set; }
-        public string Name { get; set; }
-        public int Played { get; set; }
-        public int Won { get; set; }
-        public int Drawn { get; set; }
-        public int Lost { get; set; }
-        public int GF { get; set; }
-        public int GA { get; set; }
-        public int Points { get; set; }
-        public int GD => GF - GA;
+        public int Rank { get; set; }       // Hạng
+        public string Name { get; set; }    // Tên đội
+        public int Played { get; set; }     // Số trận
+        public int Won { get; set; }        // Thắng
+        public int Drawn { get; set; }      // Hòa
+        public int Lost { get; set; }       // Thua
+        public int GF { get; set; }         // Bàn thắng
+        public int GA { get; set; }         // Bàn thua
+        public int Points { get; set; }     // Điểm s
+        public int GD => GF - GA;           // Hiệu số (Tự động tính)
     }
 }

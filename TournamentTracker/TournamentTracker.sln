@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.13.35919.96
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TournamentTracker", "TournamentTracker\TeamListForm.csproj", "{ABFA57D9-EC42-4509-B09E-C985D1CAD536}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TeamListForm", "TournamentTracker\TeamListForm.csproj", "{ABFA57D9-EC42-4509-B09E-C985D1CAD536}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
