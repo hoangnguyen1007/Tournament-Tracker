@@ -13,7 +13,17 @@ namespace TeamListForm
 {
     internal class DatabaseHelper
     {
-        private static string connectionString = @"Data Source=localhost;Initial Catalog=TournamentTracker;Integrated Security=True;Persist Security Info=False;Pooling=False;MultipleActiveResultSets=False;Encrypt=False;TrustServerCertificate=True;Command Timeout=30";
+        private static string connectionString =
+            @"Data Source=.\SQLEXPRESS;
+              Initial Catalog=TournamentTracker;
+              Integrated Security=True;
+              Persist Security Info=False;
+              Pooling=False;
+              MultipleActiveResultSets=False;
+              Encrypt=False;
+              TrustServerCertificate=True;
+              Application Name=""SQL Server Management Studio"";
+              Command Timeout=30";
 
         // TEAMS
         public static List<Team> GetTeams(string search = "")
@@ -508,7 +518,10 @@ namespace TeamListForm
                     m.HomeScore,
                     m.AwayScore,
                     m.HomeTeamID,
-                    m.AwayTeamID
+                    m.AwayTeamID,
+                    m.MatchDate,
+                    m.Location,
+                    m.Status
                 FROM Matches m
                 JOIN Teams t1 ON m.HomeTeamID = t1.ID
                 JOIN Teams t2 ON m.AwayTeamID = t2.ID
@@ -582,6 +595,34 @@ namespace TeamListForm
                 conn.Open();
                 cmd.ExecuteNonQuery();
             }
+        }
+        // [MỚI] 5. Lấy danh sách đội bóng thuộc một giải đấu cụ thể
+        public static List<Team> GetTeamsByTournament(int tournamentId)
+        {
+            List<Team> list = new List<Team>();
+            // Chỉ lấy đội có TournamentID trùng khớp
+            string sql = "SELECT * FROM Teams WHERE TournamentID = @tID";
+
+            using (SqlConnection conn = new SqlConnection(connectionString))
+            using (SqlCommand cmd = new SqlCommand(sql, conn))
+            {
+                cmd.Parameters.AddWithValue("@tID", tournamentId);
+                conn.Open();
+                using (SqlDataReader reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        Team t = new Team();
+                        t.ID = (int)reader["ID"];
+                        t.TEAMNAME = reader["TEAMNAME"].ToString();
+                        // Kiểm tra null cho cột Coach nếu cần
+                        t.COACH = reader["COACH"] != DBNull.Value ? reader["COACH"].ToString() : "";
+
+                        list.Add(t);
+                    }
+                }
+            }
+            return list;
         }
     }
 }
