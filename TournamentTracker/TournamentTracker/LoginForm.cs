@@ -136,11 +136,25 @@ namespace TourApp
             }
             if (db.Login(usnTextBox.Text, passTextBox.Text))
             {
-                TeamListForm.Properties.Settings.Default.SavedUserId = UserSession.CurrentUserId;
-                TeamListForm.Properties.Settings.Default.Save();
-                Home homeform = new Home();
-                homeform.Show();
-                this.Hide();
+                string username = usnTextBox.Text;
+                int userId = db.GetUserId(username); // Lấy ID thật từ DB
+                int realUserId = db.GetUserId(usnTextBox.Text);
+
+                if (realUserId > 0)
+                {
+                    // 2. Lưu vào Session
+                    UserSession.CurrentUserId = realUserId;
+                    UserSession.CurrentUsername = usnTextBox.Text;
+
+                    // 3. Lưu vào ổ cứng (Settings) để lần sau tự vào
+                    TeamListForm.Properties.Settings.Default.SavedUserId = realUserId;
+                    TeamListForm.Properties.Settings.Default.Save();
+
+                    // 4. Mở Home
+                    Home homeform = new Home();
+                    homeform.Show();
+                    this.Hide();
+                }
             }
             else
             {
