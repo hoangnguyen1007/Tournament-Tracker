@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using TeamListForm; // Namespace chứa DatabaseHelper
+using TeamListForm; 
 
 namespace TourApp
 {
@@ -55,8 +55,6 @@ namespace TourApp
 
                 startDate.Value = Convert.ToDateTime(row["STARTDATE"]);
                 prizeTextBox.Text = row["PRIZE"].ToString();
-
-                // --- LOAD GROUP COUNT (QUAN TRỌNG) ---
                 // Load số bảng đấu lên groupCbox
                 int groupCount = row["GroupCount"] != DBNull.Value ? Convert.ToInt32(row["GroupCount"]) : 1;
                 groupCbox.Text = groupCount.ToString();
@@ -68,8 +66,8 @@ namespace TourApp
 
         private void createBtn_Click(object sender, EventArgs e)
         {
-            // --- 1. VALIDATION (KIỂM TRA DỮ LIỆU) ---
-            // Giữ nguyên các if/else check như bạn yêu cầu
+            Cursor.Current = Cursors.WaitCursor;
+            createBtn.Enabled = false;
             if (string.IsNullOrWhiteSpace(nameTextBox.Text))
             {
                 MessageBox.Show("Please enter a tournament name.", "Missing Information", MessageBoxButtons.OK, MessageBoxIcon.Warning);
@@ -93,7 +91,6 @@ namespace TourApp
             int teamCount = (int)numPar.Value;
             int groupCount = 1;
 
-            // Parse số bảng từ groupCbox (nếu rỗng hoặc lỗi thì mặc định là 1)
             if (!string.IsNullOrEmpty(groupCbox.Text))
             {
                 if (!int.TryParse(groupCbox.Text, out groupCount))
@@ -109,7 +106,7 @@ namespace TourApp
             {
                 MessageBox.Show($"Số lượng đội quá ít! Với {groupCount} bảng, bạn cần ít nhất {groupCount * minTeamsPerGroup} đội (Tối thiểu {minTeamsPerGroup} đội/bảng).",
                                 "Logic Bảng Đấu", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return; // Dừng lại, không cho tạo
+                return; 
             }
 
             // B. CẢNH BÁO CHIA ĐỀU (Optional): Nhắc nhở nếu số đội không chia hết cho số bảng
@@ -130,12 +127,10 @@ namespace TourApp
             string sport = sportCbox.Text;
             DateTime date = startDate.Value;
             string prize = prizeTextBox.Text.Trim();
-            string location = ""; // Nếu form có ô location thì điền vào
+            string location = ""; 
 
             DatabaseHelper db = new DatabaseHelper();
             bool isSuccess = false;
-
-            // --- 3. GỌI DATABASE (Hàm mới không còn Format) ---
             if (_tournamentId.HasValue)
             {
                 // UPDATE
@@ -148,15 +143,13 @@ namespace TourApp
                     _posterPath,
                     sport,
                     teamCount,
-                    groupCount // Truyền số bảng mới
+                    groupCount 
                 );
 
                 if (isSuccess) this.CreatedTournamentId = _tournamentId.Value;
             }
             else
             {
-                // ADD
-                // Lấy ID User hiện tại (nếu chưa có session thì mặc định 1)
                 int createdBy = 1;
                 try
                 {
@@ -174,7 +167,7 @@ namespace TourApp
                     _posterPath,
                     sport,
                     teamCount,
-                    groupCount, // Truyền số bảng mới
+                    groupCount,
                     createdBy
                 );
 
@@ -184,8 +177,6 @@ namespace TourApp
                     this.CreatedTournamentId = newId;
                 }
             }
-
-            // --- 4. KẾT QUẢ ---
             if (isSuccess)
             {
                 string msg = _tournamentId.HasValue ? "Update successfully!" : "Create successfully!";
@@ -199,7 +190,6 @@ namespace TourApp
             }
         }
 
-        // --- CÁC EVENT KHÁC (GIỮ NGUYÊN ĐỂ TRÁNH LỖI DESIGNER) ---
 
         private void numPar_ValueChanged(object sender, EventArgs e)
         {
@@ -209,8 +199,6 @@ namespace TourApp
 
         private void LogOutBtn_Click(object sender, EventArgs e)
         {
-            // ContextMenuStrip myMenu = Account;
-            // myMenu.Show(LogOutBtn, 0, LogOutBtn.Height);
         }
 
         private void logOutToolStripMenuItem_Click(object sender, EventArgs e)
@@ -235,7 +223,6 @@ namespace TourApp
             startDate.CustomFormat = "dd/MM/yyyy";
         }
 
-        // Các hàm trống (Design generate ra)
         private void label3_Click(object sender, EventArgs e) { }
         private void label6_Click(object sender, EventArgs e) { }
         private void comboBox2_SelectedIndexChanged(object sender, EventArgs e) { }
