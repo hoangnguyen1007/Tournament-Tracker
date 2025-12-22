@@ -70,5 +70,26 @@ Dành cho người dùng muốn nhanh gọn, copy vào USB.
 
 ---
 
-## 👥 Nhóm Tác giả (Authors)
-<div align="center"> <i>Developed with ❤️ & ☕ by UIT Students.</i> </div>
+## 👥 Nhóm Tác giả (Authors) 
+
+| STT | Sinh viên thực hiện | MSSV |
+| :--: | :--- | :--- |
+| **1** | **[Tên Thành Viên 1]** | [2xxxxxxx] |
+| **2** | **[Tên Thành Viên 2]** | [2xxxxxxx] | 
+| **3** | **[Tên Thành Viên 3]** | [2xxxxxxx] | 
+
+---
+
+<br>
+
+<div align="center">
+  
+  **TOURNAMENT TRACKER PROJECT**
+  
+  Copyright © 2025 UIT Student Project. All rights reserved.
+  
+  <br>
+  
+  <i>Developed with ❤️, ☕ and C# by UIT Students.</i>
+  
+</div>
