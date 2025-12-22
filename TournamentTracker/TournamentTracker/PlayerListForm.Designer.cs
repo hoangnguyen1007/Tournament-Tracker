@@ -85,6 +85,7 @@
             // btnSearch
             // 
             btnSearch.BackColor = Color.FromArgb(35, 38, 39);
+            btnSearch.Cursor = Cursors.Hand;
             btnSearch.Font = new Font("Segoe UI Semibold", 24F, FontStyle.Bold, GraphicsUnit.Pixel, 0);
             btnSearch.Location = new Point(679, 22);
             btnSearch.Name = "btnSearch";
@@ -129,6 +130,7 @@
             // btnDelete
             // 
             btnDelete.BackColor = Color.FromArgb(35, 38, 39);
+            btnDelete.Cursor = Cursors.Hand;
             btnDelete.Font = new Font("Segoe UI Semibold", 24F, FontStyle.Bold, GraphicsUnit.Pixel, 0);
             btnDelete.Location = new Point(679, 27);
             btnDelete.Name = "btnDelete";
@@ -141,6 +143,7 @@
             // btnUpdate
             // 
             btnUpdate.BackColor = Color.FromArgb(35, 38, 39);
+            btnUpdate.Cursor = Cursors.Hand;
             btnUpdate.Font = new Font("Segoe UI Semibold", 24F, FontStyle.Bold, GraphicsUnit.Pixel, 0);
             btnUpdate.Location = new Point(372, 27);
             btnUpdate.Name = "btnUpdate";
@@ -153,6 +156,7 @@
             // btnAdd
             // 
             btnAdd.BackColor = Color.FromArgb(35, 38, 39);
+            btnAdd.Cursor = Cursors.Hand;
             btnAdd.Font = new Font("Segoe UI Semibold", 24F, FontStyle.Bold, GraphicsUnit.Pixel, 0);
             btnAdd.Location = new Point(35, 27);
             btnAdd.Name = "btnAdd";
@@ -201,6 +205,7 @@
             dataGridViewCellStyle3.WrapMode = DataGridViewTriState.True;
             dgvPlayers.RowHeadersDefaultCellStyle = dataGridViewCellStyle3;
             dgvPlayers.RowHeadersVisible = false;
+            dgvPlayers.RowHeadersWidth = 62;
             dgvPlayers.RowTemplate.Height = 42;
             dgvPlayers.RowTemplate.ReadOnly = true;
             dgvPlayers.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
@@ -213,6 +218,7 @@
             btnCloseForm.BackColor = Color.Transparent;
             btnCloseForm.BackgroundImage = (Image)resources.GetObject("btnCloseForm.BackgroundImage");
             btnCloseForm.BackgroundImageLayout = ImageLayout.Stretch;
+            btnCloseForm.Cursor = Cursors.Hand;
             btnCloseForm.FlatAppearance.BorderSize = 0;
             btnCloseForm.FlatAppearance.MouseDownBackColor = Color.DimGray;
             btnCloseForm.FlatAppearance.MouseOverBackColor = Color.Transparent;

@@ -86,6 +86,7 @@
             // btnSearch
             // 
             btnSearch.BackColor = Color.Transparent;
+            btnSearch.Cursor = Cursors.Hand;
             btnSearch.FlatAppearance.BorderSize = 0;
             btnSearch.FlatAppearance.MouseDownBackColor = Color.DimGray;
             btnSearch.FlatAppearance.MouseOverBackColor = Color.Transparent;
@@ -126,6 +127,7 @@
             // btnViewPlayers
             // 
             btnViewPlayers.BackColor = Color.FromArgb(35, 38, 39);
+            btnViewPlayers.Cursor = Cursors.Hand;
             btnViewPlayers.Font = new Font("Segoe UI Semibold", 18F, FontStyle.Bold, GraphicsUnit.Pixel);
             btnViewPlayers.ForeColor = Color.FromArgb(40, 156, 56);
             btnViewPlayers.Location = new Point(759, 35);
@@ -139,6 +141,7 @@
             // btnRemove
             // 
             btnRemove.BackColor = Color.FromArgb(35, 38, 39);
+            btnRemove.Cursor = Cursors.Hand;
             btnRemove.Font = new Font("Segoe UI Semibold", 18F, FontStyle.Bold, GraphicsUnit.Pixel);
             btnRemove.ForeColor = Color.FromArgb(40, 156, 56);
             btnRemove.Location = new Point(524, 35);
@@ -152,6 +155,7 @@
             // btnUpdate
             // 
             btnUpdate.BackColor = Color.FromArgb(35, 38, 39);
+            btnUpdate.Cursor = Cursors.Hand;
             btnUpdate.Font = new Font("Segoe UI Semibold", 18F, FontStyle.Bold, GraphicsUnit.Pixel);
             btnUpdate.ForeColor = Color.FromArgb(40, 156, 56);
             btnUpdate.Location = new Point(274, 35);
@@ -165,6 +169,7 @@
             // btnAdd
             // 
             btnAdd.BackColor = Color.FromArgb(35, 38, 39);
+            btnAdd.Cursor = Cursors.Hand;
             btnAdd.Font = new Font("Segoe UI Semibold", 18F, FontStyle.Bold, GraphicsUnit.Pixel);
             btnAdd.ForeColor = Color.FromArgb(40, 156, 56);
             btnAdd.Location = new Point(33, 35);
@@ -216,6 +221,7 @@
             dataGridViewCellStyle3.WrapMode = DataGridViewTriState.True;
             dgvTeams.RowHeadersDefaultCellStyle = dataGridViewCellStyle3;
             dgvTeams.RowHeadersVisible = false;
+            dgvTeams.RowHeadersWidth = 62;
             dgvTeams.RowTemplate.Height = 42;
             dgvTeams.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             dgvTeams.Size = new Size(889, 416);
@@ -226,6 +232,7 @@
             btnCloseForm.BackColor = Color.Transparent;
             btnCloseForm.BackgroundImage = (Image)resources.GetObject("btnCloseForm.BackgroundImage");
             btnCloseForm.BackgroundImageLayout = ImageLayout.Stretch;
+            btnCloseForm.Cursor = Cursors.Hand;
             btnCloseForm.FlatAppearance.BorderSize = 0;
             btnCloseForm.FlatAppearance.MouseDownBackColor = Color.DimGray;
             btnCloseForm.FlatAppearance.MouseOverBackColor = Color.Transparent;
@@ -243,6 +250,7 @@
             btnMinimize.BackColor = Color.Transparent;
             btnMinimize.BackgroundImage = (Image)resources.GetObject("btnMinimize.BackgroundImage");
             btnMinimize.BackgroundImageLayout = ImageLayout.Stretch;
+            btnMinimize.Cursor = Cursors.Hand;
             btnMinimize.FlatAppearance.BorderSize = 0;
             btnMinimize.FlatAppearance.MouseDownBackColor = Color.DimGray;
             btnMinimize.FlatAppearance.MouseOverBackColor = Color.Transparent;
