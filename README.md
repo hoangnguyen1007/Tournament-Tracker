@@ -1,76 +1,74 @@
-# Tournament Tracker
+<div align="center">
 
-Project quản lý giải đấu thể thao (Bóng đá), được viết bằng **C# WinForms** kết hợp với **SQL Server**.
-Đây là đồ án môn học **IT008 - Lập trình trực quan** (UIT).
+  # 🏆 TOURNAMENT TRACKER
+  
+  **Hệ thống Quản lý Giải đấu Bóng đá & Theo dõi Tỉ số Trực tuyến**
+  
+  [![.NET](https://img.shields.io/badge/.NET-8.0-purple.svg)](https://dotnet.microsoft.com/)
+  [![Language](https://img.shields.io/badge/Language-C%23-blue.svg)](https://docs.microsoft.com/en-us/dotnet/csharp/)
+  [![Database](https://img.shields.io/badge/Database-SQL%20Server%20Cloud-red.svg)](https://azure.microsoft.com/en-us/services/sql-database/)
+  [![Status](https://img.shields.io/badge/Status-Release%20v1.0-success.svg)]()
 
-## 👨‍💻 Team Dev
-
-Dự án được thực hiện bởi 3 thành viên:
-1. **[Tên Thành Viên 1]** - [MSSV]
-2. **Lê Vũ Hoàng Nguyên** - 24521182
-3. **[Tên Thành Viên 3]** - [MSSV]
-
-## 📋 Giới thiệu
-
-Ứng dụng Desktop giúp các nhà tổ chức giải đấu quản lý quy trình từ lúc tạo giải, thêm đội bóng cho đến khi xếp lịch và cập nhật kết quả.
-Hệ thống tập trung vào việc xử lý dữ liệu chặt chẽ (Ràng buộc khóa ngoại, phân quyền) và hỗ trợ nhiều thể thức thi đấu.
-
-## ✨ Tính năng chính
-
-* **Authentication:** Đăng ký, Đăng nhập, Phân quyền (Chỉ người tạo giải mới có quyền sửa/xóa giải đó).
-* **Quản lý Giải đấu (Tournaments):**
-    * Tạo giải đấu mới với các tùy chọn Format: **Single Stage** hoặc **Multi Stage**.
-    * Xem danh sách giải đấu dạng Dashboard.
-* **Quản lý Đội bóng & Cầu thủ:**
-    * Thêm/Sửa/Xóa đội bóng (Dữ liệu đội bóng gắn liền với giải đấu, không dùng chung).
-    * Quản lý danh sách cầu thủ chi tiết.
-* **Vận hành giải:**
-    * Xem lịch thi đấu (Schedule).
-    * Cập nhật tỉ số trận đấu.
-
-## 🛠 Tech Stack
-
-* **Language:** C# (.NET Framework/.NET Core)
-* **GUI:** Windows Forms (WinForms)
-* **Database:** SQL Server
-* **Architecture:** 3-Layer (cơ bản), sử dụng **ADO.NET** thuần (không dùng Entity Framework để tối ưu query).
-
-## 🗄️ Database Schema
-
-Hệ thống gồm 5 bảng chính:
-* `Account`: Lưu User/Pass (Password được hash SHA256).
-* `Tournaments`: Lưu thông tin giải và cấu hình thể thức (`FormatMode`, `Stage1Format`, `Stage2Format`).
-* `Teams`: Đội bóng (FK tới Tournaments).
-* `Players`: Cầu thủ (FK tới Teams).
-* `Matches`: Trận đấu, tỉ số, vòng đấu.
-
-## 🚀 Cài đặt & Chạy (Localhost)
-
-**Bước 1: Clone source code**
-```bash
-git clone https://github.com/hoangnguyen1007/Tournament-Tracker
-```
-Bước 2: Cài đặt Database
-
-Mở SQL Server Management Studio (SSMS).
-
-Mở file TournamentTracker.sql trong thư mục code.
-
-Chạy toàn bộ script (Execute) để tạo database và dữ liệu mẫu.
-
-Bước 3: Cấu hình kết nối
-
-Mở file DatabaseHelper.cs trong Visual Studio.
-
-Tìm dòng connectionString và sửa lại Data Source cho đúng với tên Server của máy bạn:
-
-private static string connectionString = @"Data Source=TEN_MAY_CUA_BAN;Initial Catalog=TournamentTracker;Integrated Security=True;...";
-
-Bước 4: Build & Run
-
-Nhấn F5 trong Visual Studio để chạy ứng dụng.
-
-Tài khoản Admin mặc định (nếu có trong script SQL): admin / 123456.
+  <p align="center">
+    <a href="#tính-năng-nổi-bật">Tính năng</a> •
+    <a href="#công-nghệ-sử-dụng">Công nghệ</a> •
+    <a href="#cài-đặt">Cài đặt</a> •
+    <a href="#kiến-trúc-hệ-thống">Kiến trúc</a> •
+    <a href="#nhóm-tác-giả">Tác giả</a>
+  </p>
+</div>
 
 ---
-*© 2025 UIT - Tournament Tracker Project*
+
+## 📖 Giới thiệu (About)
+
+**Tournament Tracker** là giải pháp phần mềm Desktop Application hiện đại, giúp đơn giản hóa quy trình tổ chức và quản lý các giải đấu thể thao. Dự án tập trung giải quyết bài toán đồng bộ dữ liệu giữa nhiều người dùng thông qua kiến trúc **Centralized Cloud Database**.
+
+Thay vì lưu trữ cục bộ, ứng dụng cho phép Ban tổ chức (Admin) tạo giải đấu tại máy chủ, và Người xem (Viewer) có thể cập nhật kết quả theo thời gian thực từ bất kỳ đâu chỉ cần có Internet.
+
+---
+
+## 🚀 Tính năng nổi bật (Key Features)
+
+* **☁️ Cloud-First Architecture:** Dữ liệu được lưu trữ tập trung trên máy chủ SQL Server Cloud, đảm bảo tính nhất quán và đồng bộ thời gian thực (Real-time Sync).
+* **🔒 Secure Authentication:** Hệ thống đăng ký/đăng nhập bảo mật, phân quyền người dùng.
+* **📅 Smart Scheduling:** Thuật toán tự động sắp xếp lịch thi đấu vòng tròn (Round-Robin) và tạo bảng đấu một cách công bằng.
+* **📊 Dashboard Trực quan:** Giao diện theo dõi tỉ số, bảng xếp hạng (Standings) được cập nhật tự động ngay khi có kết quả trận đấu.
+* **📦 Flexible Deployment:** Cung cấp đa dạng tùy chọn cài đặt: Bộ cài chuẩn Windows (.msi) hoặc bản Portable (.zip) chạy ngay không cần cài đặt.
+
+---
+
+## 🛠 Công nghệ sử dụng (Tech Stack)
+
+| Thành phần | Công nghệ | Chi tiết |
+| :--- | :--- | :--- |
+| **Frontend** | Windows Forms (WinForms) | .NET 8.0, Modern UI Design |
+| **Backend Logic** | C# | OOP, LINQ, Exception Handling |
+| **Database** | SQL Server (Cloud Hosted) | T-SQL, Stored Procedures, Relational Design |
+| **Connectivity** | ADO.NET | Direct TCP/IP Connection, SqlClient |
+| **Tools** | Visual Studio 2022 | SSMS, Git, GitHub Actions |
+
+---
+
+## 📥 Hướng dẫn Cài đặt & Sử dụng (Installation)
+
+Dự án cung cấp 2 phiên bản tại mục [**Releases**](../../releases). Vui lòng chọn phiên bản phù hợp:
+
+### 🔹 Cách 1: Cài đặt chuyên nghiệp (Recommended)
+Dành cho người dùng phổ thông, tự động tạo Shortcut.
+1. Tải file **`TournamentTracker_Installer.msi`**.
+2. Chạy file cài đặt và nhấn **Next** liên tục.
+3. Mở ứng dụng từ biểu tượng ngoài Desktop.
+
+### 🔹 Cách 2: Bản Portable (Chạy ngay)
+Dành cho người dùng muốn nhanh gọn, copy vào USB.
+1. Tải file **`TournamentTracker_Portable.zip`**.
+2. Giải nén (Extract) toàn bộ thư mục.
+3. Chạy file **`TournamentTracker.exe`** bên trong.
+
+> **⚠️ Lưu ý:** Do ứng dụng chưa được ký số (Digital Signature), Windows Defender có thể hiện cảnh báo màu xanh (SmartScreen). Bạn vui lòng chọn **"More info"** -> **"Run anyway"** để tiếp tục.
+
+---
+
+👥 Nhóm Tác giả (Authors)
+<div align="center"> <i>Developed with ❤️ & ☕ by UIT Students.</i> </div>
