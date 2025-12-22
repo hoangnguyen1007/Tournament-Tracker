@@ -70,5 +70,5 @@ Dành cho người dùng muốn nhanh gọn, copy vào USB.
 
 ---
 
-👥 Nhóm Tác giả (Authors)
+## 👥 Nhóm Tác giả (Authors)
 <div align="center"> <i>Developed with ❤️ & ☕ by UIT Students.</i> </div>
