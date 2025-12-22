@@ -84,12 +84,8 @@ Dành cho người dùng muốn nhanh gọn, copy vào USB.
 
 <div align="center">
   
-  **TOURNAMENT TRACKER PROJECT**
-  
-  Copyright © 2025 UIT Student Project. All rights reserved.
-  
-  <br>
-  
+  **TOURNAMENT TRACKER PROJECT**  
+  <br> 
   <i>Developed with ❤️, ☕ and C# by UIT Students.</i>
   
 </div>
