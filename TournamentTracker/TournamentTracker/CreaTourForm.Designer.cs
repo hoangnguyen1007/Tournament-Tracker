@@ -320,6 +320,7 @@
             Controls.Add(sportCbox);
             Controls.Add(panel1);
             FormBorderStyle = FormBorderStyle.Fixed3D;
+            Icon = (Icon)resources.GetObject("$this.Icon");
             MaximizeBox = false;
             Name = "CreaTourForm";
             StartPosition = FormStartPosition.CenterScreen;
