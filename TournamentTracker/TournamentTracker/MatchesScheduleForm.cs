@@ -14,6 +14,7 @@ namespace TeamListForm
         {
             InitializeComponent();
             _tournamentId = tournamentId;
+            matchesDataGridView.AutoGenerateColumns = false; // Giữ nguyên design cột
         }
 
         private void choiceRoundComboBox_SelectedIndexChanged(object sender, EventArgs e)
@@ -23,15 +24,46 @@ namespace TeamListForm
 
         private void LoadMatchesToGrid()
         {
+            // Kiểm tra nếu chưa chọn vòng đấu thì thoát
             if (choiceRoundComboBox.SelectedItem == null) return;
-
-            string selectedRound = choiceRoundComboBox.SelectedItem.ToString();
-
-            // Truyền ID giải đấu + Vòng đấu để lấy danh sách trận
-            DataTable dt = DatabaseHelper.GetMatchesTable(_tournamentId, selectedRound);
-
-            matchesDataGridView.AutoGenerateColumns = false;
-            matchesDataGridView.DataSource = dt;
+            matchesDataGridView.AutoGenerateColumns = false; // Giữ nguyên design cột
+            try
+            {
+                int roundNum = 1; 
+                string roundText = choiceRoundComboBox.SelectedItem.ToString();
+                string cleanRound = roundText.Replace("Round ", "").Replace("Vòng ", "").Trim();
+                int.TryParse(cleanRound, out roundNum);
+                // Hiển thị/ẩn ComboBox lọc bảng dựa vào vòng đấu (Từ round 2 thì ko hiện cái chọn Bảng nữa, mặc định là chọn tất cả)
+                if (roundNum == 1)
+                {
+                    comboGroupFilter.Visible = true;
+                }
+                else
+                {
+                    if (comboGroupFilter.Items.Count > 0 && comboGroupFilter.SelectedIndex != 0)
+                    {
+                        comboGroupFilter.SelectedIndex = 0; // Chọn về "All"
+                    }
+                    comboGroupFilter.Visible = false; // Ẩn đi cho gọn
+                }
+                string groupName = "All"; // Mặc định lấy tất cả
+                // Kiểm tra xem ComboBox lọc bảng có đang chọn gì không
+                if (comboGroupFilter != null && comboGroupFilter.SelectedItem != null)
+                {
+                    string groupText = comboGroupFilter.SelectedItem.ToString();
+                    if (groupText.Contains("Bảng"))
+                    {
+                        groupName = groupText.Replace("Bảng ", "").Trim();
+                    }
+                    // Nếu chọn "Tất cả..." thì giữ nguyên là "All"
+                }
+                DataTable dt = DatabaseHelper.GetMatchesTable(_tournamentId, roundNum, groupName);
+                matchesDataGridView.DataSource = dt;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Lỗi tải lịch thi đấu: " + ex.Message);
+            }
         }
         private void updateButton_Click(object sender, EventArgs e)
         {
@@ -92,14 +124,17 @@ namespace TeamListForm
         // Load danh sách vòng đấu lên ComboBox
         private void LoadRounds()
         {
-            // Lấy danh sách vòng đấu mới nhất từ DB
-            var rounds = DatabaseHelper.GetRounds(_tournamentId);
-
-            // Xử lý hiển thị lên ComboBox
-            choiceRoundComboBox.DataSource = null;
+            // Lấy danh sách thật từ DB
+            List<string> rounds = DatabaseHelper.GetRounds(_tournamentId);
+            // Chỉ thêm vào nếu có dữ liệu thật
             if (rounds.Count > 0)
             {
-                choiceRoundComboBox.DataSource = rounds;
+                foreach (string r in rounds)
+                {
+                    choiceRoundComboBox.Items.Add(r);
+                }
+                // Chọn cái mới nhất
+                choiceRoundComboBox.SelectedIndex = choiceRoundComboBox.Items.Count - 1;
             }
         }
         // Sự kiện Load Form
@@ -108,7 +143,7 @@ namespace TeamListForm
             try
             {
                 LoadRounds();
-
+                LoadGroupComboBox();
                 RecalculateStandings();
                 UpdateButtonState();
             }
@@ -120,16 +155,20 @@ namespace TeamListForm
         // Hiển thị bảng xếp hạng
         private void RecalculateStandings()
         {
-            // Lấy dữ liệu trận đấu CHỈ CỦA GIẢI NÀY
-            DataTable dtMatches = DatabaseHelper.GetMatchesTable(_tournamentId, "");
-            var originalTeams = DatabaseHelper.GetTeams(_tournamentId);
             try
             {
-                // Gọi Stored Procedure qua DatabaseHelper để lấy bảng xếp hạng đã tính sẵn
-                DataTable dt = DatabaseHelper.GetStandingsTable(_tournamentId);
-
+                string groupName = "All"; // Giá trị mặc định là xem hết
+                if (comboGroupFilter != null && comboGroupFilter.SelectedItem != null)
+                {
+                    string selectedText = comboGroupFilter.SelectedItem.ToString();
+                    if (selectedText.Contains("Bảng"))
+                    {
+                        groupName = selectedText.Replace("Bảng ", "").Trim(); 
+                    }
+                }
+                DataTable dt = DatabaseHelper.GetStandings(_tournamentId, groupName);
                 // Gán dữ liệu vào GridView
-                standingsDataGridView.AutoGenerateColumns = false; // Giữ nguyên cấu hình cột đã thiết kế
+                standingsDataGridView.AutoGenerateColumns = false; 
                 standingsDataGridView.DataSource = dt;
             }
             catch (Exception ex)
@@ -141,68 +180,35 @@ namespace TeamListForm
         // Nút tiếp vòng (Round 2 trở đi - Chỉ hiện khi đã bấm nút bắt đầu)
         private void UpdateButtonState()
         {
-            // Lấy vòng đấu lớn nhất hiện tại từ DB
+            // Lấy vòng lớn nhất hiện tại
             int currentRound = DatabaseHelper.GetMaxRound(_tournamentId);
-
             if (currentRound == 0)
             {
-                // Chưa có trận nào -> Hiện nút START, Ẩn nút NEXT
-                btnStart.Visible = true;
-                btnNextRound.Visible = false;
-                choiceRoundComboBox.Visible = false; // Ẩn luôn combo chọn vòng cho gọn (vì chưa đá mà ..)
+                // TRƯỜNG HỢP 1: GIẢI CHƯA BẮT ĐẦU
+                btnStart.Visible = true;       
+                btnNextRound.Visible = false;  
+
+                // QUAN TRỌNG: Ẩn luôn ComboBox vì chưa có gì để xem
+                choiceRoundComboBox.Visible = false;
             }
             else
             {
-                // Đã có trận -> Ẩn nút START, Hiện nút NEXT
-                btnStart.Visible = false;
-                btnNextRound.Visible = true;
-                choiceRoundComboBox.Visible = true;
+                // TRƯỜNG HỢP 2: ĐANG DIỄN RA
+                btnStart.Visible = false;       
+                btnNextRound.Visible = true;   
+
+                choiceRoundComboBox.Visible = true; // Hiện ComboBox để chọn vòng
             }
         }
-
         private void btnStart_Click(object sender, EventArgs e)
         {
-            try
-            {
-                // Lấy thông tin cấu hình của giải (Số bảng cần chia)
-                int groupCount = DatabaseHelper.GetTournamentGroupCount(_tournamentId);
-                // Lấy danh sách đội để kiểm tra
-                List<Team> teams = DatabaseHelper.GetTeams(_tournamentId);
-                // CHECK 1: Không có đội
-                if (teams.Count == 0)
-                {
-                    MessageBox.Show("Giải đấu chưa có đội nào đăng ký!", "Cảnh báo");
-                    return;
-                }
-                // CHECK 2: Số đội không đủ để chia (Mỗi bảng tối thiểu 2 đội)
-                if (teams.Count < groupCount * 2)
-                {
-                    MessageBox.Show($"Không đủ đội! Bạn muốn chia {groupCount} bảng thì cần tối thiểu {groupCount * 2} đội.\nHiện tại chỉ có: {teams.Count} đội.", "Lỗi cấu hình");
-                    return;
-                }
-                // Gọi hàm sinh lịch (Truyền thêm groupCount)
-                bool success = DatabaseHelper.GenerateGroupStage(_tournamentId, groupCount);
-                if (success)
-                {
-                    MessageBox.Show($"Đã chia ngẫu nhiên thành {groupCount} bảng và tạo lịch thi đấu!", "Thành công");
-                    // 4. Cập nhật giao diện
-                    LoadRounds();
-                    // Tự động chọn Round 1 nếu có
-                    if (choiceRoundComboBox.Items.Count > 0)
-                        choiceRoundComboBox.SelectedIndex = 0;
-                    else
-                        LoadMatchesToGrid();
-                    UpdateButtonState(); // Ẩn Start, hiện Next
-                }
-                else
-                {
-                    MessageBox.Show("Lỗi khi gọi Stored Procedure. Vui lòng thử lại.", "Lỗi");
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Lỗi hệ thống: " + ex.Message);
-            }
+            // Tất cả logic kiểm tra và gọi SQL đã nằm trong hàm này rồi
+            MatchGenerator.GenerateRound1(_tournamentId);
+            UpdateButtonState();
+            // Cập nhật giao diện sau khi tạo xong
+            LoadRounds();
+            if (choiceRoundComboBox.Items.Count > 0) choiceRoundComboBox.SelectedIndex = 0;
+            else LoadMatchesToGrid();
         }
         private void btnNextRound_Click(object sender, EventArgs e)
         {
@@ -294,6 +300,56 @@ namespace TeamListForm
         private void matchesDataGridView_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
             InforButton_Click(sender, e);
+        }
+        // Xem theo từng bảng đấu (comboGroupFilter)
+        private void LoadGroupComboBox()
+        {
+            comboGroupFilter.Items.Clear();
+            // Luôn có lựa chọn xem tất cả
+            comboGroupFilter.Items.Add("All");
+            // Lấy số lượng bảng từ DB 
+            int groupCount = DatabaseHelper.GetTournamentGroupCount(_tournamentId);
+            // 
+            for (int i = 0; i < groupCount; i++)
+            {
+                string name = ((char)('A' + i)).ToString();
+                comboGroupFilter.Items.Add($"Bảng {name}");
+            }
+            // Mặc định chọn "Tất cả"
+            comboGroupFilter.SelectedIndex = 0; 
+        }
+        // Tải lại dữ liệu khi chọn bảng lọc
+        private void comboGroupFilter_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            LoadMatchesToGrid();
+            RecalculateStandings();
+            LoadData(); 
+        }
+        // Hàm tải dữ liệu với bộ lọc vòng và bảng
+        private void LoadData()
+        {
+            // Lấy round và group từ 2 combobox
+            int selectedRound = 1;
+            if (choiceRoundComboBox.SelectedItem != null)
+            {
+                // Logic tách số từ chuỗi "Round 1" -> 1
+                string roundStr = choiceRoundComboBox.SelectedItem.ToString().Replace("Round ", "");
+                int.TryParse(roundStr, out selectedRound);
+            }
+            // Lấy Group (Ví dụ combobox đang chọn "Bảng A")
+            string selectedGroup = "All";
+            if (comboGroupFilter.SelectedItem != null)
+            {
+                string txt = comboGroupFilter.SelectedItem.ToString();
+                if (txt.Contains("Bảng"))
+                    selectedGroup = txt.Replace("Bảng", "").Trim(); // Lấy chữ "A"
+                else
+                    selectedGroup = "All";
+            }
+            // GỌI HÀM VỪA SỬA
+            DataTable dtMatches = DatabaseHelper.GetMatchesTable(_tournamentId, selectedRound, selectedGroup);
+            // Gán vào lưới
+            matchesDataGridView.DataSource = dtMatches;
         }
     }
 

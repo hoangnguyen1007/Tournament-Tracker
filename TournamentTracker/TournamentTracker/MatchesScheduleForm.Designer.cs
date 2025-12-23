@@ -59,6 +59,7 @@
             btnStart = new Button();
             btnNextRound = new Button();
             InforButton = new Button();
+            comboGroupFilter = new ComboBox();
             ((System.ComponentModel.ISupportInitialize)matchesDataGridView).BeginInit();
             ((System.ComponentModel.ISupportInitialize)standingsDataGridView).BeginInit();
             SuspendLayout();
@@ -69,7 +70,7 @@
             matchesLabel.BackColor = Color.Transparent;
             matchesLabel.Font = new Font("Segoe UI", 25F, FontStyle.Bold, GraphicsUnit.Pixel, 0);
             matchesLabel.ForeColor = Color.Gold;
-            matchesLabel.Location = new Point(39, 105);
+            matchesLabel.Location = new Point(44, 112);
             matchesLabel.Name = "matchesLabel";
             matchesLabel.Size = new Size(262, 35);
             matchesLabel.TabIndex = 1;
@@ -83,11 +84,10 @@
             choiceRoundComboBox.Font = new Font("Microsoft Sans Serif", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
             choiceRoundComboBox.ForeColor = Color.White;
             choiceRoundComboBox.FormattingEnabled = true;
-            choiceRoundComboBox.Items.AddRange(new object[] { "Round 1", "Round 2" });
-            choiceRoundComboBox.Location = new Point(338, 107);
+            choiceRoundComboBox.Location = new Point(380, 119);
             choiceRoundComboBox.Margin = new Padding(3, 4, 3, 4);
             choiceRoundComboBox.Name = "choiceRoundComboBox";
-            choiceRoundComboBox.Size = new Size(200, 28);
+            choiceRoundComboBox.Size = new Size(158, 28);
             choiceRoundComboBox.TabIndex = 2;
             choiceRoundComboBox.SelectedIndexChanged += choiceRoundComboBox_SelectedIndexChanged;
             // 
@@ -121,7 +121,7 @@
             matchesDataGridView.DefaultCellStyle = dataGridViewCellStyle4;
             matchesDataGridView.EnableHeadersVisualStyles = false;
             matchesDataGridView.GridColor = SystemColors.GrayText;
-            matchesDataGridView.Location = new Point(44, 161);
+            matchesDataGridView.Location = new Point(44, 170);
             matchesDataGridView.Margin = new Padding(3, 4, 3, 4);
             matchesDataGridView.Name = "matchesDataGridView";
             matchesDataGridView.ReadOnly = true;
@@ -215,7 +215,7 @@
             standingsDataGridView.DefaultCellStyle = dataGridViewCellStyle7;
             standingsDataGridView.EnableHeadersVisualStyles = false;
             standingsDataGridView.GridColor = SystemColors.GrayText;
-            standingsDataGridView.Location = new Point(654, 161);
+            standingsDataGridView.Location = new Point(654, 170);
             standingsDataGridView.Margin = new Padding(3, 4, 3, 4);
             standingsDataGridView.Name = "standingsDataGridView";
             standingsDataGridView.ReadOnly = true;
@@ -223,7 +223,7 @@
             standingsDataGridView.RowHeadersWidth = 51;
             standingsDataGridView.RowTemplate.Height = 50;
             standingsDataGridView.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            standingsDataGridView.Size = new Size(585, 558);
+            standingsDataGridView.Size = new Size(585, 549);
             standingsDataGridView.TabIndex = 5;
             // 
             // colSTT
@@ -335,7 +335,7 @@
             standingsLabel.BackColor = Color.Transparent;
             standingsLabel.Font = new Font("Segoe UI", 25F, FontStyle.Bold, GraphicsUnit.Pixel, 0);
             standingsLabel.ForeColor = Color.Gold;
-            standingsLabel.Location = new Point(649, 105);
+            standingsLabel.Location = new Point(654, 114);
             standingsLabel.Name = "standingsLabel";
             standingsLabel.Size = new Size(158, 35);
             standingsLabel.TabIndex = 6;
@@ -387,6 +387,7 @@
             btnNextRound.Text = "NEXT ROUND";
             btnNextRound.UseVisualStyleBackColor = false;
             btnNextRound.Click += btnNextRound_Click;
+            // 
             // InforButton
             // 
             InforButton.AutoSize = true;
@@ -395,13 +396,28 @@
             InforButton.FlatStyle = FlatStyle.Flat;
             InforButton.Font = new Font("Segoe UI", 30F, FontStyle.Regular, GraphicsUnit.Pixel);
             InforButton.ForeColor = Color.White;
-            InforButton.Location = new Point(582, 96);
+            InforButton.Location = new Point(567, 48);
             InforButton.Name = "InforButton";
             InforButton.Size = new Size(62, 52);
             InforButton.TabIndex = 0;
             InforButton.Text = "⌞⌝";
             InforButton.UseVisualStyleBackColor = false;
             InforButton.Click += InforButton_Click;
+            // 
+            // comboGroupFilter
+            // 
+            comboGroupFilter.BackColor = Color.FromArgb(32, 33, 36);
+            comboGroupFilter.DropDownStyle = ComboBoxStyle.DropDownList;
+            comboGroupFilter.FlatStyle = FlatStyle.Flat;
+            comboGroupFilter.Font = new Font("Microsoft Sans Serif", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            comboGroupFilter.ForeColor = Color.White;
+            comboGroupFilter.FormattingEnabled = true;
+            comboGroupFilter.Location = new Point(544, 119);
+            comboGroupFilter.Margin = new Padding(3, 4, 3, 4);
+            comboGroupFilter.Name = "comboGroupFilter";
+            comboGroupFilter.Size = new Size(85, 28);
+            comboGroupFilter.TabIndex = 9;
+            comboGroupFilter.SelectedIndexChanged += comboGroupFilter_SelectedIndexChanged;
             // 
             // MatchesScheduleForm
             // 
@@ -411,6 +427,7 @@
             BackgroundImage = (Image)resources.GetObject("$this.BackgroundImage");
             BackgroundImageLayout = ImageLayout.Stretch;
             ClientSize = new Size(1282, 773);
+            Controls.Add(comboGroupFilter);
             Controls.Add(btnNextRound);
             Controls.Add(btnStart);
             Controls.Add(InforButton);
@@ -461,6 +478,7 @@
         private Button btnStart;
         private Button btnNextRound;
         private Button InforButton;
+        private ComboBox comboGroupFilter;
     }
 }
 
