@@ -52,7 +52,7 @@
             // 
             // panelHeader
             // 
-            panelHeader.BackColor = Color.FromArgb(35, 38, 39);
+            panelHeader.BackColor = Color.Transparent;
             panelHeader.Controls.Add(lblTitle);
             panelHeader.Location = new Point(272, 73);
             panelHeader.Name = "panelHeader";

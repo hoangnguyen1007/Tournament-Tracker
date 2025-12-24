@@ -45,6 +45,7 @@
             dgvTeams = new DataGridView();
             btnCloseForm = new Button();
             btnMinimize = new Button();
+            btnImportExcel = new Button();
             panelSearch.SuspendLayout();
             panelOption.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dgvTeams).BeginInit();
@@ -119,7 +120,7 @@
             panelOption.Controls.Add(btnRemove);
             panelOption.Controls.Add(btnUpdate);
             panelOption.Controls.Add(btnAdd);
-            panelOption.Location = new Point(195, 669);
+            panelOption.Location = new Point(195, 678);
             panelOption.Name = "panelOption";
             panelOption.Size = new Size(889, 100);
             panelOption.TabIndex = 10;
@@ -263,6 +264,20 @@
             btnMinimize.UseVisualStyleBackColor = false;
             btnMinimize.Click += btnMinimize_Click;
             // 
+            // btnImportExcel
+            // 
+            btnImportExcel.BackColor = Color.FromArgb(35, 38, 39);
+            btnImportExcel.Cursor = Cursors.Hand;
+            btnImportExcel.Font = new Font("Segoe UI Semibold", 18F, FontStyle.Bold, GraphicsUnit.Pixel);
+            btnImportExcel.ForeColor = Color.FromArgb(40, 156, 56);
+            btnImportExcel.Location = new Point(906, 644);
+            btnImportExcel.Name = "btnImportExcel";
+            btnImportExcel.Size = new Size(178, 48);
+            btnImportExcel.TabIndex = 11;
+            btnImportExcel.Text = "Import form Excel";
+            btnImportExcel.UseVisualStyleBackColor = false;
+            btnImportExcel.Click += btnImportExcel_Click;
+            // 
             // TeamListForm
             // 
             AutoScaleMode = AutoScaleMode.None;
@@ -270,6 +285,7 @@
             BackgroundImage = (Image)resources.GetObject("$this.BackgroundImage");
             BackgroundImageLayout = ImageLayout.Stretch;
             ClientSize = new Size(1284, 781);
+            Controls.Add(btnImportExcel);
             Controls.Add(btnMinimize);
             Controls.Add(btnCloseForm);
             Controls.Add(dgvTeams);
@@ -306,5 +322,6 @@
         private Button btnViewPlayers;
         private Button btnCloseForm;
         private Button btnMinimize;
+        private Button btnImportExcel;
     }
 }
