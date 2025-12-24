@@ -6,7 +6,7 @@
   
   [![.NET](https://img.shields.io/badge/.NET-8.0-purple.svg)](https://dotnet.microsoft.com/)
   [![Language](https://img.shields.io/badge/Language-C%23-blue.svg)](https://docs.microsoft.com/en-us/dotnet/csharp/)
-  [![Database](https://img.shields.io/badge/Database-SQL%20Server%20Cloud-red.svg)](https://azure.microsoft.com/en-us/services/sql-database/)
+  [![Database](https://img.shields.io/badge/Database-SQL%20Server%20Cloud-red.svg)]([https://azure.microsoft.com/en-us/services/sql-database/](https://www.smarterasp.net/))
   [![Status](https://img.shields.io/badge/Status-Release%20v1.0-success.svg)]()
 
   <p align="center">
