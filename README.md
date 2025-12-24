@@ -74,7 +74,7 @@ Dành cho người dùng muốn nhanh gọn, copy vào USB.
 
 | STT | Sinh viên thực hiện | MSSV |
 | :--: | :--- | :--- |
-| **1** | **[Tên Thành Viên 1]** | [2xxxxxxx] |
+| **1** | **Tô Thành Nguyên** | 24521207 |
 | **2** | **Lê Vũ Hoàng Nguyên** | 24521182 | 
 | **3** | **Nguyễn Quốc Nguyên** | 24521197 | 
 
