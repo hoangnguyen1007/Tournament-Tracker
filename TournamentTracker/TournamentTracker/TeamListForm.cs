@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using Microsoft.Data.SqlClient;
 using System.Drawing;
+using ExcelDataReader;
+using System.Data;
 
 namespace TeamListForm
 {
@@ -13,9 +15,9 @@ namespace TeamListForm
         {
             InitializeComponent();
             _tournamentId = tournamentId;
-            LoadTeams(); 
+            LoadTeams();
         }
-        
+
 
         private void SearchBtn_Click(object sender, EventArgs e)
         {
@@ -155,6 +157,113 @@ namespace TeamListForm
         private void btnMinimize_Click(object sender, EventArgs e)
         {
             this.WindowState = FormWindowState.Minimized;
+        }
+
+        private void btnImportExcel_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+            openFileDialog.Filter = "Excel Files|*.xlsx;*.xls";
+            openFileDialog.Title = "Chọn file dữ liệu Giải đấu (Teams + Players)";
+
+            if (openFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                try
+                {
+                    // 1. Đăng ký encoding để đọc được file Excel đời cũ và mới
+                    System.Text.Encoding.RegisterProvider(System.Text.CodePagesEncodingProvider.Instance);
+
+                    using (var stream = File.Open(openFileDialog.FileName, FileMode.Open, FileAccess.Read))
+                    {
+                        using (var reader = ExcelReaderFactory.CreateReader(stream))
+                        {
+                            // 2. Đọc Excel ra bảng dữ liệu
+                            var result = reader.AsDataSet();
+                            DataTable table = result.Tables[0]; // Lấy Sheet 1
+
+                            // Bộ nhớ tạm để lưu: "Tên Đội" -> "ID trong DB"
+                            // Giúp tránh việc tạo lại đội bóng nếu file Excel sắp xếp lộn xộn
+                            Dictionary<string, int> teamCache = new Dictionary<string, int>();
+
+                            int teamCount = 0;
+                            int playerCount = 0;
+
+                            // 3. Duyệt từng dòng (Bỏ dòng 0 là tiêu đề, chạy từ i = 1)
+                            for (int i = 1; i < table.Rows.Count; i++)
+                            {
+                                DataRow row = table.Rows[i];
+
+                                // Lấy thông tin cơ bản
+                                string teamName = row[0]?.ToString().Trim(); // Cột A
+                                string coachName = row[1]?.ToString().Trim(); // Cột B
+                                string playerName = row[2]?.ToString().Trim(); // Cột C
+
+                                // Nếu dòng này không có tên đội thì bỏ qua
+                                if (string.IsNullOrEmpty(teamName)) continue;
+
+                                int currentTeamId = 0;
+
+                                // --- LOGIC XỬ LÝ ĐỘI BÓNG ---
+                                if (teamCache.ContainsKey(teamName))
+                                {
+                                    // Nếu đội này đã tạo rồi thì lấy ID trong cache ra dùng
+                                    currentTeamId = teamCache[teamName];
+                                }
+                                else
+                                {
+                                    // Nếu chưa có, kiểm tra trong DB xem có chưa (tránh trùng khi import 2 lần)
+                                    // Bạn có thể bỏ qua bước check DB nếu muốn import đè, nhưng nên check cho chắc
+
+                                    // Ở đây mình giả định là tạo mới luôn cho đơn giản
+                                    Team newTeam = new Team();
+                                    newTeam.TournamentID = _tournamentId; 
+                                    newTeam.TEAMNAME = teamName;
+                                    newTeam.COACH = coachName;
+
+                                    // Gọi hàm thêm đội và LẤY ID VỀ NGAY
+                                    currentTeamId = DatabaseHelper.InsertTeamAndGetID(newTeam);
+
+                                    // Lưu vào cache để những dòng sau dùng lại ID này
+                                    teamCache.Add(teamName, currentTeamId);
+                                    teamCount++;
+                                }
+
+                                // --- LOGIC XỬ LÝ CẦU THỦ ---
+                                if (!string.IsNullOrEmpty(playerName))
+                                {
+                                    Player newPlayer = new Player();
+                                    newPlayer.TeamID = currentTeamId; // Gắn ID đội vừa lấy được
+                                    newPlayer.PlayerName = playerName;
+
+                                    // Parse số áo (Cột D)
+                                    int.TryParse(row[3]?.ToString(), out int num);
+                                    newPlayer.Number = num;
+
+                                    // Vị trí (Cột E)
+                                    newPlayer.Position = row[4]?.ToString();
+
+                                    // Tuổi (Cột F)
+                                    int.TryParse(row[5]?.ToString(), out int age);
+                                    newPlayer.Age = age;
+
+                                    // Thêm cầu thủ vào DB
+                                    DatabaseHelper.InsertPlayer(newPlayer);
+                                    playerCount++;
+                                }
+                            }
+
+                            MessageBox.Show($"Nhập dữ liệu thành công!\n- {teamCount} Đội bóng mới\n- {playerCount} Cầu thủ",
+                                            "Tuyệt vời", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                            // Load lại danh sách lên màn hình
+                            LoadTeams();
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Lỗi khi đọc file: " + ex.Message);
+                }
+            }
         }
     }
 }

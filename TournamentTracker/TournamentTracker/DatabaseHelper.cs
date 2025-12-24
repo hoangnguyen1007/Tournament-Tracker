@@ -11,6 +11,11 @@ using System.Security.Cryptography;
 
 namespace TeamListForm
 {
+    public class TeamCountInfo
+    {
+        public int CurrentCount { get; set; } // Số đội hiện có trong DB
+        public int MaxCount { get; set; }     // Số đội quy định (TEAM_COUNT)
+    }
     internal class DatabaseHelper
     {
         private static string connectionString = @"Data Source=.\SQLEXPRESS;Initial Catalog=TournamentTracker;Integrated Security=True;TrustServerCertificate=True;";
@@ -63,8 +68,55 @@ namespace TeamListForm
                 cmd.Parameters.AddWithValue("@Coach", string.IsNullOrWhiteSpace(team.COACH) ? (object)DBNull.Value : team.COACH);
 
                 conn.Open();
-                cmd.ExecuteNonQuery();
+                cmd.ExecuteScalar();
             }
+        }
+        public static int InsertTeamAndGetID(Team team)
+        {
+            // Dùng OUTPUT INSERTED.ID để lấy ID ngay khi thêm
+            string sql = @"INSERT INTO Teams (TournamentID, TEAMNAME, COACH) 
+                   OUTPUT INSERTED.ID 
+                   VALUES (@TourID, @Name, @Coach)";
+
+            using (SqlConnection conn = new SqlConnection(connectionString))
+            using (SqlCommand cmd = new SqlCommand(sql, conn))
+            {
+                cmd.Parameters.AddWithValue("@TourID", team.TournamentID);
+                cmd.Parameters.AddWithValue("@Name", team.TEAMNAME);
+                cmd.Parameters.AddWithValue("@Coach", string.IsNullOrWhiteSpace(team.COACH) ? (object)DBNull.Value : team.COACH);
+
+                conn.Open();
+
+                // ExecuteScalar dùng để lấy giá trị ô đầu tiên trả về (chính là ID)
+                int newId = (int)cmd.ExecuteScalar();
+                return newId;
+            }
+        }
+        public TeamCountInfo GetTeamCountInfo(int tournamentId)
+        {
+            TeamCountInfo info = new TeamCountInfo();
+            using (SqlConnection conn = new SqlConnection(connectionString))
+            {
+                conn.Open();
+
+                // 1. Lấy giới hạn đội (TEAM_COUNT)
+                string sqlMax = "SELECT TEAM_COUNT FROM Tournaments WHERE ID = @id";
+                using (SqlCommand cmd = new SqlCommand(sqlMax, conn))
+                {
+                    cmd.Parameters.AddWithValue("@id", tournamentId);
+                    object result = cmd.ExecuteScalar();
+                    info.MaxCount = (result != null) ? Convert.ToInt32(result) : 0;
+                }
+
+                // 2. Đếm số đội hiện tại
+                string sqlCount = "SELECT COUNT(*) FROM Teams WHERE TournamentID = @id";
+                using (SqlCommand cmd = new SqlCommand(sqlCount, conn))
+                {
+                    cmd.Parameters.AddWithValue("@id", tournamentId);
+                    info.CurrentCount = (int)cmd.ExecuteScalar();
+                }
+            }
+            return info;
         }
         // CRUD FUNCTION
         public static bool CheckTeam(string teamName, int tournamentId)
@@ -172,6 +224,27 @@ namespace TeamListForm
                 cmd.Parameters.AddWithValue("@ID", id);
                 conn.Open();
                 cmd.ExecuteNonQuery();
+            }
+        }
+        public static bool IsRoundComplete(int tournamentId, int round)
+        {
+            using (SqlConnection conn = new SqlConnection(connectionString))
+            {
+                conn.Open();
+                // Đếm số trận chưa kết thúc (Status khác 2)
+                // Status: 0=Chưa đá, 1=Đang đá, 2=Kết thúc
+                string sql = "SELECT COUNT(*) FROM Matches WHERE TournamentID = @tId AND Round = @r AND Status <> 2";
+
+                using (SqlCommand cmd = new SqlCommand(sql, conn))
+                {
+                    cmd.Parameters.AddWithValue("@tId", tournamentId);
+                    cmd.Parameters.AddWithValue("@r", round);
+
+                    int unfinishedMatches = (int)cmd.ExecuteScalar();
+
+                    // Nếu số trận chưa đấu = 0 nghĩa là đã xong hết -> True
+                    return unfinishedMatches == 0;
+                }
             }
         }
         // PLAYERS

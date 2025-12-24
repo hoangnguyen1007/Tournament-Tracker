@@ -79,6 +79,7 @@
             // choiceRoundComboBox
             // 
             choiceRoundComboBox.BackColor = Color.FromArgb(32, 33, 36);
+            choiceRoundComboBox.Cursor = Cursors.Hand;
             choiceRoundComboBox.DropDownStyle = ComboBoxStyle.DropDownList;
             choiceRoundComboBox.FlatStyle = FlatStyle.Flat;
             choiceRoundComboBox.Font = new Font("Microsoft Sans Serif", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
@@ -87,7 +88,11 @@
             choiceRoundComboBox.Location = new Point(380, 119);
             choiceRoundComboBox.Margin = new Padding(3, 4, 3, 4);
             choiceRoundComboBox.Name = "choiceRoundComboBox";
+<<<<<<< HEAD
             choiceRoundComboBox.Size = new Size(158, 28);
+=======
+            choiceRoundComboBox.Size = new Size(200, 37);
+>>>>>>> 01da6fb4b90f7def795c6dfba154b42adbf7d185
             choiceRoundComboBox.TabIndex = 2;
             choiceRoundComboBox.SelectedIndexChanged += choiceRoundComboBox_SelectedIndexChanged;
             // 
@@ -171,6 +176,7 @@
             // updateButton
             // 
             updateButton.BackColor = Color.FromArgb(0, 180, 80);
+            updateButton.Cursor = Cursors.Hand;
             updateButton.FlatAppearance.BorderColor = Color.SpringGreen;
             updateButton.FlatAppearance.BorderSize = 0;
             updateButton.FlatStyle = FlatStyle.Flat;
@@ -257,7 +263,7 @@
             colP.MinimumWidth = 30;
             colP.Name = "colP";
             colP.ReadOnly = true;
-            colP.Width = 40;
+            colP.Width = 51;
             // 
             // colW
             // 
@@ -267,7 +273,7 @@
             colW.MinimumWidth = 30;
             colW.Name = "colW";
             colW.ReadOnly = true;
-            colW.Width = 46;
+            colW.Width = 57;
             // 
             // colD
             // 
@@ -277,7 +283,7 @@
             colD.MinimumWidth = 30;
             colD.Name = "colD";
             colD.ReadOnly = true;
-            colD.Width = 43;
+            colD.Width = 54;
             // 
             // colL
             // 
@@ -287,7 +293,7 @@
             colL.MinimumWidth = 30;
             colL.Name = "colL";
             colL.ReadOnly = true;
-            colL.Width = 39;
+            colL.Width = 50;
             // 
             // colGF
             // 
@@ -297,7 +303,7 @@
             colGF.MinimumWidth = 30;
             colGF.Name = "colGF";
             colGF.ReadOnly = true;
-            colGF.Width = 49;
+            colGF.Width = 60;
             // 
             // colGA
             // 
@@ -307,7 +313,7 @@
             colGA.MinimumWidth = 30;
             colGA.Name = "colGA";
             colGA.ReadOnly = true;
-            colGA.Width = 52;
+            colGA.Width = 63;
             // 
             // colGD
             // 
@@ -317,7 +323,7 @@
             colGD.MinimumWidth = 30;
             colGD.Name = "colGD";
             colGD.ReadOnly = true;
-            colGD.Width = 54;
+            colGD.Width = 65;
             // 
             // colPTS
             // 
@@ -327,7 +333,7 @@
             colPTS.MinimumWidth = 30;
             colPTS.Name = "colPTS";
             colPTS.ReadOnly = true;
-            colPTS.Width = 56;
+            colPTS.Width = 67;
             // 
             // standingsLabel
             // 
@@ -357,6 +363,7 @@
             // btnStart
             // 
             btnStart.BackColor = Color.FromArgb(0, 180, 80);
+            btnStart.Cursor = Cursors.Hand;
             btnStart.FlatAppearance.BorderColor = Color.SpringGreen;
             btnStart.FlatAppearance.BorderSize = 0;
             btnStart.FlatStyle = FlatStyle.Flat;
@@ -374,6 +381,7 @@
             // btnNextRound
             // 
             btnNextRound.BackColor = Color.FromArgb(0, 180, 80);
+            btnNextRound.Cursor = Cursors.Hand;
             btnNextRound.FlatAppearance.BorderColor = Color.SpringGreen;
             btnNextRound.FlatAppearance.BorderSize = 0;
             btnNextRound.FlatStyle = FlatStyle.Flat;
@@ -392,6 +400,7 @@
             // 
             InforButton.AutoSize = true;
             InforButton.BackColor = Color.Transparent;
+            InforButton.Cursor = Cursors.Hand;
             InforButton.FlatAppearance.BorderSize = 0;
             InforButton.FlatStyle = FlatStyle.Flat;
             InforButton.Font = new Font("Segoe UI", 30F, FontStyle.Regular, GraphicsUnit.Pixel);

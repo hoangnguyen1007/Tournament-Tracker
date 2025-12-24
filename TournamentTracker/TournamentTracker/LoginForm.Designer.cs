@@ -130,6 +130,7 @@
             // 
             logBtn.BackColor = Color.Transparent;
             resources.ApplyResources(logBtn, "logBtn");
+            logBtn.Cursor = Cursors.Hand;
             logBtn.FlatAppearance.BorderSize = 0;
             logBtn.ForeColor = Color.Transparent;
             logBtn.Name = "logBtn";
@@ -264,6 +265,7 @@
             // 
             resBtn.BackColor = Color.Transparent;
             resources.ApplyResources(resBtn, "resBtn");
+            resBtn.Cursor = Cursors.Hand;
             resBtn.FlatAppearance.BorderSize = 0;
             resBtn.ForeColor = Color.Transparent;
             resBtn.Name = "resBtn";
@@ -322,10 +324,10 @@
             AutoScaleMode = AutoScaleMode.None;
             BackColor = Color.FromArgb(44, 44, 44);
             resources.ApplyResources(this, "$this");
-            Controls.Add(registerPanel);
             Controls.Add(pictureBox2);
             Controls.Add(label1);
             Controls.Add(loginPanel);
+            Controls.Add(registerPanel);
             FormBorderStyle = FormBorderStyle.Fixed3D;
             MaximizeBox = false;
             Name = "LoginForm";
