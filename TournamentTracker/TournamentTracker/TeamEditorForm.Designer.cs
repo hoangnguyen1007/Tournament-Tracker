@@ -84,6 +84,7 @@
             // btnOption
             // 
             btnOption.BackColor = Color.FromArgb(35, 38, 39);
+            btnOption.Cursor = Cursors.Hand;
             btnOption.Font = new Font("Segoe UI Semibold", 24F, FontStyle.Bold, GraphicsUnit.Pixel, 0);
             btnOption.Location = new Point(126, 246);
             btnOption.Margin = new Padding(2);
@@ -97,6 +98,7 @@
             // btnCancel
             // 
             btnCancel.BackColor = Color.FromArgb(35, 38, 39);
+            btnCancel.Cursor = Cursors.Hand;
             btnCancel.Font = new Font("Segoe UI Semibold", 24F, FontStyle.Bold, GraphicsUnit.Pixel, 0);
             btnCancel.Location = new Point(498, 246);
             btnCancel.Margin = new Padding(2);

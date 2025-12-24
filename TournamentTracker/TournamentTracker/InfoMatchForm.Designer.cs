@@ -186,7 +186,7 @@
             colD.MinimumWidth = 30;
             colD.Name = "colD";
             colD.ReadOnly = true;
-            colD.Width = 64;
+            colD.Width = 79;
             // 
             // colL
             // 
@@ -196,7 +196,7 @@
             colL.MinimumWidth = 30;
             colL.Name = "colL";
             colL.ReadOnly = true;
-            colL.Width = 96;
+            colL.Width = 117;
             // 
             // homeLabel
             // 
@@ -313,7 +313,7 @@
             dataGridViewTextBoxColumn5.MinimumWidth = 30;
             dataGridViewTextBoxColumn5.Name = "dataGridViewTextBoxColumn5";
             dataGridViewTextBoxColumn5.ReadOnly = true;
-            dataGridViewTextBoxColumn5.Width = 64;
+            dataGridViewTextBoxColumn5.Width = 79;
             // 
             // dataGridViewTextBoxColumn6
             // 
@@ -323,7 +323,7 @@
             dataGridViewTextBoxColumn6.MinimumWidth = 30;
             dataGridViewTextBoxColumn6.Name = "dataGridViewTextBoxColumn6";
             dataGridViewTextBoxColumn6.ReadOnly = true;
-            dataGridViewTextBoxColumn6.Width = 96;
+            dataGridViewTextBoxColumn6.Width = 117;
             // 
             // dateLabel
             // 
@@ -436,6 +436,7 @@
             // backButton
             // 
             backButton.BackColor = Color.Transparent;
+            backButton.Cursor = Cursors.Hand;
             backButton.FlatAppearance.BorderSize = 0;
             backButton.FlatStyle = FlatStyle.Flat;
             backButton.Font = new Font("Segoe UI", 40F, FontStyle.Regular, GraphicsUnit.Pixel);

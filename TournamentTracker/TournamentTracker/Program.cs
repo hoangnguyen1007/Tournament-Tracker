@@ -11,7 +11,19 @@ namespace TeamListForm
         static void Main()
         {
             ApplicationConfiguration.Initialize();
-            Application.Run(new LoginForm());
+            int savedId = Properties.Settings.Default.SavedUserId;
+
+            if (savedId > 0)
+            {
+                // 2. Nếu có: Khôi phục Session và vào thẳng Home
+                UserSession.CurrentUserId = savedId;
+                Application.Run(new Home());
+            }
+            else
+            {
+                // 3. Nếu không: Chạy màn hình Login
+                Application.Run(new LoginForm());
+            }
         }
     }
 }

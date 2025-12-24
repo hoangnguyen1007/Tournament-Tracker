@@ -40,17 +40,6 @@
             nameTextBox = new TextBox();
             label4 = new Label();
             numPar = new NumericUpDown();
-            panelSingle = new Panel();
-            label8 = new Label();
-            comboBox2 = new ComboBox();
-            panelMulti = new Panel();
-            label5 = new Label();
-            label6 = new Label();
-            comboBox4 = new ComboBox();
-            comboBox3 = new ComboBox();
-            singleRad = new RadioButton();
-            multiRad = new RadioButton();
-            label7 = new Label();
             createBtn = new Button();
             Account = new ContextMenuStrip(components);
             myAccountToolStripMenuItem = new ToolStripMenuItem();
@@ -61,10 +50,10 @@
             label10 = new Label();
             startDate = new DateTimePicker();
             prizeTextBox = new TextBox();
+            label5 = new Label();
+            groupCbox = new ComboBox();
             panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)numPar).BeginInit();
-            panelSingle.SuspendLayout();
-            panelMulti.SuspendLayout();
             Account.SuspendLayout();
             SuspendLayout();
             // 
@@ -195,144 +184,6 @@
             numPar.TabIndex = 9;
             numPar.ValueChanged += numPar_ValueChanged;
             // 
-            // panelSingle
-            // 
-            panelSingle.Controls.Add(label8);
-            panelSingle.Controls.Add(comboBox2);
-            panelSingle.Font = new Font("Segoe UI", 18F, FontStyle.Regular, GraphicsUnit.Pixel);
-            panelSingle.Location = new Point(303, 370);
-            panelSingle.Name = "panelSingle";
-            panelSingle.Size = new Size(400, 81);
-            panelSingle.TabIndex = 10;
-            // 
-            // label8
-            // 
-            label8.AutoSize = true;
-            label8.Font = new Font("Segoe UI", 16F, FontStyle.Regular, GraphicsUnit.Pixel);
-            label8.ForeColor = SystemColors.Control;
-            label8.Location = new Point(36, 9);
-            label8.Name = "label8";
-            label8.Size = new Size(73, 21);
-            label8.TabIndex = 15;
-            label8.Text = "Stage 1st";
-            // 
-            // comboBox2
-            // 
-            comboBox2.BackColor = Color.FromArgb(64, 64, 64);
-            comboBox2.DropDownStyle = ComboBoxStyle.DropDownList;
-            comboBox2.FlatStyle = FlatStyle.Flat;
-            comboBox2.Font = new Font("Segoe UI", 18F, FontStyle.Regular, GraphicsUnit.Pixel);
-            comboBox2.ForeColor = SystemColors.Info;
-            comboBox2.FormattingEnabled = true;
-            comboBox2.Items.AddRange(new object[] { "Knockout Bracket", "Round-robin League" });
-            comboBox2.Location = new Point(31, 22);
-            comboBox2.Name = "comboBox2";
-            comboBox2.Size = new Size(345, 33);
-            comboBox2.TabIndex = 0;
-            comboBox2.SelectedIndexChanged += comboBox2_SelectedIndexChanged;
-            // 
-            // panelMulti
-            // 
-            panelMulti.Controls.Add(label5);
-            panelMulti.Controls.Add(label6);
-            panelMulti.Controls.Add(comboBox4);
-            panelMulti.Controls.Add(comboBox3);
-            panelMulti.Font = new Font("Segoe UI", 18F, FontStyle.Regular, GraphicsUnit.Pixel);
-            panelMulti.Location = new Point(303, 466);
-            panelMulti.Name = "panelMulti";
-            panelMulti.Size = new Size(400, 122);
-            panelMulti.TabIndex = 11;
-            // 
-            // label5
-            // 
-            label5.AutoSize = true;
-            label5.Font = new Font("Segoe UI", 16F, FontStyle.Regular, GraphicsUnit.Pixel);
-            label5.ForeColor = SystemColors.Control;
-            label5.Location = new Point(36, 54);
-            label5.Name = "label5";
-            label5.Size = new Size(79, 21);
-            label5.TabIndex = 15;
-            label5.Text = "Stage 2nd";
-            // 
-            // label6
-            // 
-            label6.AutoSize = true;
-            label6.Font = new Font("Segoe UI", 16F, FontStyle.Regular, GraphicsUnit.Pixel);
-            label6.ForeColor = SystemColors.Control;
-            label6.Location = new Point(36, 0);
-            label6.Name = "label6";
-            label6.Size = new Size(73, 21);
-            label6.TabIndex = 14;
-            label6.Text = "Stage 1st";
-            label6.Click += label6_Click;
-            // 
-            // comboBox4
-            // 
-            comboBox4.BackColor = Color.FromArgb(64, 64, 64);
-            comboBox4.DropDownStyle = ComboBoxStyle.DropDownList;
-            comboBox4.FlatStyle = FlatStyle.Flat;
-            comboBox4.Font = new Font("Segoe UI", 18F, FontStyle.Regular, GraphicsUnit.Pixel);
-            comboBox4.ForeColor = SystemColors.Info;
-            comboBox4.FormattingEnabled = true;
-            comboBox4.Items.AddRange(new object[] { "Knockout Bracket", "Round-robin League" });
-            comboBox4.Location = new Point(32, 70);
-            comboBox4.Name = "comboBox4";
-            comboBox4.Size = new Size(345, 33);
-            comboBox4.TabIndex = 1;
-            // 
-            // comboBox3
-            // 
-            comboBox3.BackColor = Color.FromArgb(64, 64, 64);
-            comboBox3.DropDownStyle = ComboBoxStyle.DropDownList;
-            comboBox3.FlatStyle = FlatStyle.Flat;
-            comboBox3.Font = new Font("Segoe UI", 18F, FontStyle.Regular, GraphicsUnit.Pixel);
-            comboBox3.ForeColor = SystemColors.Info;
-            comboBox3.FormattingEnabled = true;
-            comboBox3.Items.AddRange(new object[] { "Knockout Bracket", "Round-robin League" });
-            comboBox3.Location = new Point(32, 18);
-            comboBox3.Name = "comboBox3";
-            comboBox3.Size = new Size(345, 33);
-            comboBox3.TabIndex = 0;
-            // 
-            // singleRad
-            // 
-            singleRad.AutoSize = true;
-            singleRad.Font = new Font("Segoe UI", 18F, FontStyle.Bold, GraphicsUnit.Pixel);
-            singleRad.ForeColor = SystemColors.Info;
-            singleRad.Location = new Point(60, 393);
-            singleRad.Name = "singleRad";
-            singleRad.Size = new Size(140, 29);
-            singleRad.TabIndex = 12;
-            singleRad.TabStop = true;
-            singleRad.Text = "Single stage";
-            singleRad.UseVisualStyleBackColor = true;
-            singleRad.CheckedChanged += singleRad_CheckedChanged;
-            // 
-            // multiRad
-            // 
-            multiRad.AutoSize = true;
-            multiRad.Font = new Font("Segoe UI", 18F, FontStyle.Bold, GraphicsUnit.Pixel);
-            multiRad.ForeColor = SystemColors.Info;
-            multiRad.Location = new Point(60, 498);
-            multiRad.Name = "multiRad";
-            multiRad.Size = new Size(133, 29);
-            multiRad.TabIndex = 13;
-            multiRad.TabStop = true;
-            multiRad.Text = "Multi stage";
-            multiRad.UseVisualStyleBackColor = true;
-            multiRad.CheckedChanged += multiRad_CheckedChanged;
-            // 
-            // label7
-            // 
-            label7.AutoSize = true;
-            label7.Font = new Font("Segoe UI", 22F, FontStyle.Bold, GraphicsUnit.Pixel);
-            label7.ForeColor = SystemColors.ButtonHighlight;
-            label7.Location = new Point(321, 324);
-            label7.Name = "label7";
-            label7.Size = new Size(87, 30);
-            label7.TabIndex = 14;
-            label7.Text = "Format";
-            // 
             // createBtn
             // 
             createBtn.BackColor = Color.FromArgb(52, 178, 51);
@@ -340,7 +191,7 @@
             createBtn.FlatStyle = FlatStyle.Flat;
             createBtn.Font = new Font("Segoe UI", 20F, FontStyle.Bold, GraphicsUnit.Pixel);
             createBtn.ForeColor = Color.White;
-            createBtn.Location = new Point(214, 614);
+            createBtn.Location = new Point(205, 417);
             createBtn.Name = "createBtn";
             createBtn.Size = new Size(303, 60);
             createBtn.TabIndex = 15;
@@ -384,7 +235,7 @@
             label9.AutoSize = true;
             label9.Font = new Font("Segoe UI", 22F, FontStyle.Bold, GraphicsUnit.Pixel);
             label9.ForeColor = SystemColors.ButtonHighlight;
-            label9.Location = new Point(538, 236);
+            label9.Location = new Point(326, 322);
             label9.Name = "label9";
             label9.Size = new Size(65, 30);
             label9.TabIndex = 16;
@@ -417,27 +268,50 @@
             prizeTextBox.BackColor = Color.FromArgb(64, 64, 64);
             prizeTextBox.Font = new Font("Segoe UI", 20F, FontStyle.Regular, GraphicsUnit.Pixel);
             prizeTextBox.ForeColor = SystemColors.Info;
-            prizeTextBox.Location = new Point(436, 269);
+            prizeTextBox.Location = new Point(224, 355);
             prizeTextBox.Name = "prizeTextBox";
             prizeTextBox.PlaceholderText = "Tournament Prize";
             prizeTextBox.Size = new Size(279, 34);
             prizeTextBox.TabIndex = 19;
             // 
+            // label5
+            // 
+            label5.AutoSize = true;
+            label5.Font = new Font("Segoe UI", 22F, FontStyle.Bold, GraphicsUnit.Pixel);
+            label5.ForeColor = SystemColors.ButtonHighlight;
+            label5.Location = new Point(465, 232);
+            label5.Name = "label5";
+            label5.Size = new Size(206, 30);
+            label5.TabIndex = 21;
+            label5.Text = "Number of Groups";
+            // 
+            // groupCbox
+            // 
+            groupCbox.BackColor = Color.FromArgb(64, 64, 64);
+            groupCbox.DropDownStyle = ComboBoxStyle.DropDownList;
+            groupCbox.FlatStyle = FlatStyle.Flat;
+            groupCbox.Font = new Font("Segoe UI", 20F, FontStyle.Regular, GraphicsUnit.Pixel);
+            groupCbox.ForeColor = SystemColors.Info;
+            groupCbox.FormattingEnabled = true;
+            groupCbox.IntegralHeight = false;
+            groupCbox.Items.AddRange(new object[] { "1", "2", "4", "8" });
+            groupCbox.Location = new Point(433, 265);
+            groupCbox.Name = "groupCbox";
+            groupCbox.Size = new Size(282, 36);
+            groupCbox.TabIndex = 20;
+            // 
             // CreaTourForm
             // 
             AutoScaleMode = AutoScaleMode.None;
             BackColor = Color.FromArgb(64, 64, 64);
-            ClientSize = new Size(737, 691);
+            ClientSize = new Size(737, 518);
+            Controls.Add(label5);
+            Controls.Add(groupCbox);
             Controls.Add(prizeTextBox);
             Controls.Add(startDate);
             Controls.Add(label10);
             Controls.Add(label9);
             Controls.Add(createBtn);
-            Controls.Add(label7);
-            Controls.Add(multiRad);
-            Controls.Add(singleRad);
-            Controls.Add(panelMulti);
-            Controls.Add(panelSingle);
             Controls.Add(numPar);
             Controls.Add(label4);
             Controls.Add(nameTextBox);
@@ -446,6 +320,7 @@
             Controls.Add(sportCbox);
             Controls.Add(panel1);
             FormBorderStyle = FormBorderStyle.Fixed3D;
+            Icon = (Icon)resources.GetObject("$this.Icon");
             MaximizeBox = false;
             Name = "CreaTourForm";
             StartPosition = FormStartPosition.CenterScreen;
@@ -454,10 +329,6 @@
             panel1.ResumeLayout(false);
             panel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)numPar).EndInit();
-            panelSingle.ResumeLayout(false);
-            panelSingle.PerformLayout();
-            panelMulti.ResumeLayout(false);
-            panelMulti.PerformLayout();
             Account.ResumeLayout(false);
             ResumeLayout(false);
             PerformLayout();
@@ -475,18 +346,7 @@
         private TextBox nameTextBox;
         private Label label4;
         private NumericUpDown numPar;
-        private Label label5;
         private DateTimePicker startDate;
-        private Panel panelSingle;
-        private ComboBox comboBox2;
-        private Panel panelMulti;
-        private ComboBox comboBox4;
-        private ComboBox comboBox3;
-        private RadioButton singleRad;
-        private RadioButton multiRad;
-        private Label label6;
-        private Label label8;
-        private Label label7;
         private Button createBtn;
         private ContextMenuStrip Account;
         private ToolStripMenuItem myAccountToolStripMenuItem;
@@ -496,5 +356,7 @@
         private Label label9;
         private Label label10;
         private TextBox prizeTextBox;
+        private Label label5;
+        private ComboBox groupCbox;
     }
 }

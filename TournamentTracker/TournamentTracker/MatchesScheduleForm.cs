@@ -108,9 +108,9 @@ namespace TeamListForm
             try
             {
                 LoadRounds();
-
                 RecalculateStandings();
                 UpdateButtonState();
+                CheckPermission();
             }
             catch (Exception ex)
             {
@@ -159,29 +159,114 @@ namespace TeamListForm
                 choiceRoundComboBox.Visible = true;
             }
         }
-
-        private void btnStart_Click(object sender, EventArgs e)
+        private void CheckPermission()
         {
-            // Lấy danh sách tất cả các đội
-            List<Team> teams = DatabaseHelper.GetTeams();
-            List<int> teamIds = teams.Select(t => t.ID).ToList();
+            DatabaseHelper db = new DatabaseHelper();
+            // Lấy thông tin giải đấu hiện tại để xem ai là người tạo
+            DataRow tournament = db.GetTournamentById(_tournamentId); // Hàm này có sẵn trong DatabaseHelper
 
-            if (teamIds.Count < 2)
+            if (tournament != null)
+            {
+                // 1. Lấy ID người tạo giải
+                int createdBy = tournament["CreatedBy"] != DBNull.Value ? Convert.ToInt32(tournament["CreatedBy"]) : 0;
+
+                // 2. So sánh với người đang đăng nhập
+                // (Giả định bạn có UserSession.CurrentUserId lưu ID người đang login)
+                bool isOwner = (createdBy == UserSession.CurrentUserId);
+
+                // 3. Ẩn/Hiện các nút dựa trên quyền
+                // Nút cập nhật tỉ số
+                updateButton.Visible = isOwner;
+
+                // Nút Bắt đầu giải / Tạo lịch (Nếu bạn có nút này, ví dụ tên là createScheduleButton hoặc btnStart)
+                if (Controls.ContainsKey("createScheduleButton")) Controls["createScheduleButton"].Visible = isOwner;
+                if (Controls.ContainsKey("btnStartTournament")) Controls["btnStartTournament"].Visible = isOwner;
+
+                // Nút Qua vòng tiếp theo (Nếu bạn có nút này, ví dụ btnNextRound)
+                if (Controls.ContainsKey("nextRoundButton")) Controls["nextRoundButton"].Visible = isOwner;
+                if (Controls.ContainsKey("btnNextRound")) Controls["btnNextRound"].Visible = isOwner;
+
+                // --- TÙY CHỈNH GIAO DIỆN CHO KHÁCH ---
+                if (!isOwner)
+                {
+                    this.Text += " (View Only Mode)"; // Thêm chữ vào tiêu đề cho dễ biết
+
+                    // Nếu muốn kỹ hơn: Chặn sửa trực tiếp trên GridView (nếu grid cho phép sửa)
+                    matchesDataGridView.ReadOnly = true;
+                }
+            }
+        }
+        private void btnStart_Click(object sender, EventArgs e)
+        {    
+            List<Team> teams = DatabaseHelper.GetTeams(_tournamentId);
+            if (teams.Count < 2)
             {
                 MessageBox.Show("Cần ít nhất 2 đội để bắt đầu giải đấu!");
                 return;
             }
-            // Gọi hàm tạo vòng 1 (đá vòng tròn, tất cả các đội trong bảng đều gặp nhau)
-            MatchGenerator.GenerateRound1(_tournamentId);
-            // Load lại giao diện
-            LoadMatchesToGrid();
-            UpdateButtonState(); // Tự động ẩn nút Start, hiện nút Next
-            // Tự chọn Round 1 để hiển thị ngay
-            if (choiceRoundComboBox.Items.Count > 0)
-                choiceRoundComboBox.SelectedIndex = 0;
+
+            // Có thể check thêm: teams.Count < (Số bảng * 2) thì cảnh báo...
+
+            // 2. Gọi SQL để chia bảng và xếp lịch (Code Mới)
+            DatabaseHelper db = new DatabaseHelper();
+            var info = db.GetTeamCountInfo(_tournamentId);
+            if (info.CurrentCount < info.MaxCount)
+            {
+                MessageBox.Show($"Not enough teams to start!\n" +
+                                $"Current: {info.CurrentCount}\n" +
+                                $"Required: {info.MaxCount}\n" +
+                                $"Please add more teams.",
+                                "Insufficient Teams", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return; // Stop here
+            }
+            if (info.CurrentCount > info.MaxCount)
+            {
+                int diff = info.CurrentCount - info.MaxCount;
+                MessageBox.Show($"Too many teams!\n" +
+                                $"Current: {info.CurrentCount}\n" +
+                                $"Required: {info.MaxCount}\n" +
+                                $"Please remove {diff} team(s) before starting.",
+                                "Team Limit Exceeded", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return; // Stop here
+            }
+            bool success = db.GenerateSchedule(_tournamentId);
+            if (success)
+            {
+                MessageBox.Show("Đã sinh lịch thi đấu và chia bảng thành công!", "Thành công");
+
+                // 3. Load lại giao diện
+                LoadRounds(); // Load danh sách vòng (Round 1, 2...)
+
+                // Tự động chọn Round 1
+                if (choiceRoundComboBox.Items.Count > 0)
+                {
+                    choiceRoundComboBox.SelectedIndex = 0;
+                }
+                else
+                {
+                    // Fallback nếu combo chưa kịp update
+                    LoadMatchesToGrid();
+                }
+
+                UpdateButtonState(); // Ẩn nút Start, hiện nút Next
+            }
+            else
+            {
+                MessageBox.Show("Lỗi khi sinh lịch thi đấu. Vui lòng kiểm tra lại số lượng đội!", "Lỗi");
+            }
         }
         private void btnNextRound_Click(object sender, EventArgs e)
         {
+            int currentRound = DatabaseHelper.GetMaxRound(_tournamentId);
+
+            // 2. --- RÀNG BUỘC MỚI: KIỂM TRA TỈ SỐ ---
+            if (!DatabaseHelper.IsRoundComplete(_tournamentId, currentRound))
+            {
+                MessageBox.Show($"Current round (Round {currentRound}) is not finished!\n" +
+                                "Please update scores for all matches before generating the next round.",
+                                "Action Denied", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return; // <--- DỪNG LẠI NGAY, KHÔNG CHO CHẠY TIẾP
+            }
             try
             {
                 // 1. Tạo dữ liệu vòng mới trong SQL
