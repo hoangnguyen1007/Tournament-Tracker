@@ -85,10 +85,10 @@
             choiceRoundComboBox.Font = new Font("Microsoft Sans Serif", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
             choiceRoundComboBox.ForeColor = Color.White;
             choiceRoundComboBox.FormattingEnabled = true;
-            choiceRoundComboBox.Location = new Point(380, 119);
+            choiceRoundComboBox.Location = new Point(315, 119);
             choiceRoundComboBox.Margin = new Padding(3, 4, 3, 4);
             choiceRoundComboBox.Name = "choiceRoundComboBox";
-            choiceRoundComboBox.Size = new Size(158, 28);
+            choiceRoundComboBox.Size = new Size(158, 33);
             choiceRoundComboBox.TabIndex = 2;
             choiceRoundComboBox.SelectedIndexChanged += choiceRoundComboBox_SelectedIndexChanged;
             // 
@@ -130,7 +130,7 @@
             matchesDataGridView.RowHeadersWidth = 51;
             matchesDataGridView.RowTemplate.Height = 50;
             matchesDataGridView.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            matchesDataGridView.Size = new Size(585, 355);
+            matchesDataGridView.Size = new Size(585, 478);
             matchesDataGridView.TabIndex = 3;
             matchesDataGridView.CellDoubleClick += matchesDataGridView_CellDoubleClick;
             // 
@@ -178,7 +178,7 @@
             updateButton.FlatStyle = FlatStyle.Flat;
             updateButton.Font = new Font("Segoe UI", 22F, FontStyle.Bold, GraphicsUnit.Pixel, 0);
             updateButton.ForeColor = Color.White;
-            updateButton.Location = new Point(44, 562);
+            updateButton.Location = new Point(44, 658);
             updateButton.Margin = new Padding(3, 4, 3, 4);
             updateButton.Name = "updateButton";
             updateButton.Size = new Size(585, 61);
@@ -259,7 +259,7 @@
             colP.MinimumWidth = 30;
             colP.Name = "colP";
             colP.ReadOnly = true;
-            colP.Width = 51;
+            colP.Width = 44;
             // 
             // colW
             // 
@@ -269,7 +269,7 @@
             colW.MinimumWidth = 30;
             colW.Name = "colW";
             colW.ReadOnly = true;
-            colW.Width = 57;
+            colW.Width = 50;
             // 
             // colD
             // 
@@ -279,7 +279,7 @@
             colD.MinimumWidth = 30;
             colD.Name = "colD";
             colD.ReadOnly = true;
-            colD.Width = 54;
+            colD.Width = 47;
             // 
             // colL
             // 
@@ -289,7 +289,7 @@
             colL.MinimumWidth = 30;
             colL.Name = "colL";
             colL.ReadOnly = true;
-            colL.Width = 50;
+            colL.Width = 43;
             // 
             // colGF
             // 
@@ -299,7 +299,7 @@
             colGF.MinimumWidth = 30;
             colGF.Name = "colGF";
             colGF.ReadOnly = true;
-            colGF.Width = 60;
+            colGF.Width = 53;
             // 
             // colGA
             // 
@@ -309,7 +309,7 @@
             colGA.MinimumWidth = 30;
             colGA.Name = "colGA";
             colGA.ReadOnly = true;
-            colGA.Width = 63;
+            colGA.Width = 56;
             // 
             // colGD
             // 
@@ -319,7 +319,7 @@
             colGD.MinimumWidth = 30;
             colGD.Name = "colGD";
             colGD.ReadOnly = true;
-            colGD.Width = 65;
+            colGD.Width = 58;
             // 
             // colPTS
             // 
@@ -329,7 +329,7 @@
             colPTS.MinimumWidth = 30;
             colPTS.Name = "colPTS";
             colPTS.ReadOnly = true;
-            colPTS.Width = 67;
+            colPTS.Width = 60;
             // 
             // standingsLabel
             // 
@@ -352,43 +352,43 @@
             titleLabel.ForeColor = Color.FromArgb(0, 180, 80);
             titleLabel.Location = new Point(23, 30);
             titleLabel.Name = "titleLabel";
-            titleLabel.Size = new Size(368, 54);
+            titleLabel.Size = new Size(371, 54);
             titleLabel.TabIndex = 0;
             titleLabel.Text = "🏆 TOURNAMENT";
             // 
             // btnStart
             // 
-            btnStart.BackColor = Color.FromArgb(0, 180, 80);
+            btnStart.BackColor = Color.Transparent;
             btnStart.Cursor = Cursors.Hand;
             btnStart.FlatAppearance.BorderColor = Color.SpringGreen;
             btnStart.FlatAppearance.BorderSize = 0;
             btnStart.FlatStyle = FlatStyle.Flat;
-            btnStart.Font = new Font("Segoe UI", 22F, FontStyle.Bold, GraphicsUnit.Pixel, 0);
+            btnStart.Font = new Font("Segoe UI", 30F, FontStyle.Bold, GraphicsUnit.Pixel, 0);
             btnStart.ForeColor = Color.White;
-            btnStart.Location = new Point(44, 658);
+            btnStart.Location = new Point(579, 109);
             btnStart.Margin = new Padding(3, 4, 3, 4);
             btnStart.Name = "btnStart";
-            btnStart.Size = new Size(257, 61);
+            btnStart.Size = new Size(50, 50);
             btnStart.TabIndex = 7;
-            btnStart.Text = "START ROUND";
+            btnStart.Text = "🎲";
             btnStart.UseVisualStyleBackColor = false;
             btnStart.Click += btnStart_Click;
             // 
             // btnNextRound
             // 
-            btnNextRound.BackColor = Color.FromArgb(0, 180, 80);
+            btnNextRound.BackColor = Color.Transparent;
             btnNextRound.Cursor = Cursors.Hand;
             btnNextRound.FlatAppearance.BorderColor = Color.SpringGreen;
             btnNextRound.FlatAppearance.BorderSize = 0;
             btnNextRound.FlatStyle = FlatStyle.Flat;
-            btnNextRound.Font = new Font("Segoe UI", 22F, FontStyle.Bold, GraphicsUnit.Pixel, 0);
+            btnNextRound.Font = new Font("Segoe UI", 30F, FontStyle.Bold, GraphicsUnit.Pixel, 0);
             btnNextRound.ForeColor = Color.White;
-            btnNextRound.Location = new Point(363, 658);
+            btnNextRound.Location = new Point(579, 109);
             btnNextRound.Margin = new Padding(3, 4, 3, 4);
             btnNextRound.Name = "btnNextRound";
-            btnNextRound.Size = new Size(257, 61);
+            btnNextRound.Size = new Size(50, 50);
             btnNextRound.TabIndex = 8;
-            btnNextRound.Text = "NEXT ROUND";
+            btnNextRound.Text = "⏭";
             btnNextRound.UseVisualStyleBackColor = false;
             btnNextRound.Click += btnNextRound_Click;
             // 
@@ -401,7 +401,7 @@
             InforButton.FlatStyle = FlatStyle.Flat;
             InforButton.Font = new Font("Segoe UI", 30F, FontStyle.Regular, GraphicsUnit.Pixel);
             InforButton.ForeColor = Color.White;
-            InforButton.Location = new Point(567, 48);
+            InforButton.Location = new Point(1177, 104);
             InforButton.Name = "InforButton";
             InforButton.Size = new Size(62, 52);
             InforButton.TabIndex = 0;
@@ -417,10 +417,10 @@
             comboGroupFilter.Font = new Font("Microsoft Sans Serif", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
             comboGroupFilter.ForeColor = Color.White;
             comboGroupFilter.FormattingEnabled = true;
-            comboGroupFilter.Location = new Point(544, 119);
+            comboGroupFilter.Location = new Point(480, 119);
             comboGroupFilter.Margin = new Padding(3, 4, 3, 4);
             comboGroupFilter.Name = "comboGroupFilter";
-            comboGroupFilter.Size = new Size(85, 28);
+            comboGroupFilter.Size = new Size(85, 33);
             comboGroupFilter.TabIndex = 9;
             comboGroupFilter.SelectedIndexChanged += comboGroupFilter_SelectedIndexChanged;
             // 
