@@ -18,7 +18,7 @@ namespace TeamListForm
     }
     internal class DatabaseHelper
     {
-        private static string connectionString = @"Data Source=SQL9001.site4now.net;Initial Catalog=db_ac29fc_tournamenttracker;User Id=db_ac29fc_tournamenttracker_admin;Password=Nn3832143";
+        private static string connectionString = @"Data Source=localhost;Initial Catalog=TournamentTracker;Integrated Security=True;Persist Security Info=False;Pooling=False;MultipleActiveResultSets=False;Encrypt=False;TrustServerCertificate=True;Command Timeout=30";
 
         // TEAMS
         public static List<Team> GetTeams(int tournamentId, string search = "")
@@ -69,7 +69,28 @@ namespace TeamListForm
                 cmd.Parameters.AddWithValue("@Coach", string.IsNullOrWhiteSpace(team.COACH) ? (object)DBNull.Value : team.COACH);
 
                 conn.Open();
-                cmd.ExecuteNonQuery();
+                cmd.ExecuteScalar();
+            }
+        }
+        public static int InsertTeamAndGetID(Team team)
+        {
+            // Dùng OUTPUT INSERTED.ID để lấy ID ngay khi thêm
+            string sql = @"INSERT INTO Teams (TournamentID, TEAMNAME, COACH) 
+                   OUTPUT INSERTED.ID 
+                   VALUES (@TourID, @Name, @Coach)";
+
+            using (SqlConnection conn = new SqlConnection(connectionString))
+            using (SqlCommand cmd = new SqlCommand(sql, conn))
+            {
+                cmd.Parameters.AddWithValue("@TourID", team.TournamentID);
+                cmd.Parameters.AddWithValue("@Name", team.TEAMNAME);
+                cmd.Parameters.AddWithValue("@Coach", string.IsNullOrWhiteSpace(team.COACH) ? (object)DBNull.Value : team.COACH);
+
+                conn.Open();
+
+                // ExecuteScalar dùng để lấy giá trị ô đầu tiên trả về (chính là ID)
+                int newId = (int)cmd.ExecuteScalar();
+                return newId;
             }
         }
         public TeamCountInfo GetTeamCountInfo(int tournamentId)
