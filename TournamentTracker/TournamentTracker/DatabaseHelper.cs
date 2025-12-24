@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -665,10 +665,6 @@ namespace TeamListForm
         // =============================================================
         // PHẦN 4: TOURNAMENTS & MATCHES (CẬP NHẬT MỚI)
         // =============================================================
-
-        // [MỚI] 1. Lấy danh sách Giải đấu (Để đổ vào ComboBox chọn giải)
-
-
         //MATCHES
 
         // 1. Lấy danh sách các vòng đấu (để đổ vào ComboBox)
