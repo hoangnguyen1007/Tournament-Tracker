@@ -88,11 +88,7 @@
             choiceRoundComboBox.Location = new Point(380, 119);
             choiceRoundComboBox.Margin = new Padding(3, 4, 3, 4);
             choiceRoundComboBox.Name = "choiceRoundComboBox";
-<<<<<<< HEAD
             choiceRoundComboBox.Size = new Size(158, 28);
-=======
-            choiceRoundComboBox.Size = new Size(200, 37);
->>>>>>> 01da6fb4b90f7def795c6dfba154b42adbf7d185
             choiceRoundComboBox.TabIndex = 2;
             choiceRoundComboBox.SelectedIndexChanged += choiceRoundComboBox_SelectedIndexChanged;
             // 
