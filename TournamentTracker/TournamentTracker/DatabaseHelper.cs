@@ -18,7 +18,7 @@ namespace TeamListForm
     }
     internal class DatabaseHelper
     {
-        private static string connectionString = @"Data Source=localhost;Initial Catalog=TournamentTracker;Integrated Security=True;Persist Security Info=False;Pooling=False;MultipleActiveResultSets=False;Encrypt=False;TrustServerCertificate=True;Command Timeout=30";
+        private static string connectionString = @"Data Source=SQL9001.site4now.net;Initial Catalog=db_ac29fc_tournamenttracker;User Id=db_ac29fc_tournamenttracker_admin;Password=Nn3832143";
         // TEAMS
         public static List<Team> GetTeams(int tournamentId, string search = "")
         {
