@@ -52,6 +52,8 @@
             prizeTextBox = new TextBox();
             label5 = new Label();
             groupCbox = new ComboBox();
+            locationTextBox = new TextBox();
+            locaLabel = new Label();
             panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)numPar).BeginInit();
             Account.SuspendLayout();
@@ -191,7 +193,7 @@
             createBtn.FlatStyle = FlatStyle.Flat;
             createBtn.Font = new Font("Segoe UI", 20F, FontStyle.Bold, GraphicsUnit.Pixel);
             createBtn.ForeColor = Color.White;
-            createBtn.Location = new Point(205, 417);
+            createBtn.Location = new Point(214, 442);
             createBtn.Name = "createBtn";
             createBtn.Size = new Size(303, 60);
             createBtn.TabIndex = 15;
@@ -235,7 +237,7 @@
             label9.AutoSize = true;
             label9.Font = new Font("Segoe UI", 22F, FontStyle.Bold, GraphicsUnit.Pixel);
             label9.ForeColor = SystemColors.ButtonHighlight;
-            label9.Location = new Point(326, 322);
+            label9.Location = new Point(534, 326);
             label9.Name = "label9";
             label9.Size = new Size(65, 30);
             label9.TabIndex = 16;
@@ -268,7 +270,7 @@
             prizeTextBox.BackColor = Color.FromArgb(64, 64, 64);
             prizeTextBox.Font = new Font("Segoe UI", 20F, FontStyle.Regular, GraphicsUnit.Pixel);
             prizeTextBox.ForeColor = SystemColors.Info;
-            prizeTextBox.Location = new Point(224, 355);
+            prizeTextBox.Location = new Point(432, 359);
             prizeTextBox.Name = "prizeTextBox";
             prizeTextBox.PlaceholderText = "Tournament Prize";
             prizeTextBox.Size = new Size(279, 34);
@@ -300,11 +302,35 @@
             groupCbox.Size = new Size(282, 36);
             groupCbox.TabIndex = 20;
             // 
+            // locationTextBox
+            // 
+            locationTextBox.BackColor = Color.FromArgb(64, 64, 64);
+            locationTextBox.Font = new Font("Segoe UI", 20F, FontStyle.Regular, GraphicsUnit.Pixel);
+            locationTextBox.ForeColor = SystemColors.Info;
+            locationTextBox.Location = new Point(32, 359);
+            locationTextBox.Name = "locationTextBox";
+            locationTextBox.PlaceholderText = "Tournament Location";
+            locationTextBox.Size = new Size(279, 34);
+            locationTextBox.TabIndex = 23;
+            // 
+            // locaLabel
+            // 
+            locaLabel.AutoSize = true;
+            locaLabel.Font = new Font("Segoe UI", 22F, FontStyle.Bold, GraphicsUnit.Pixel);
+            locaLabel.ForeColor = SystemColors.ButtonHighlight;
+            locaLabel.Location = new Point(121, 326);
+            locaLabel.Name = "locaLabel";
+            locaLabel.Size = new Size(101, 30);
+            locaLabel.TabIndex = 22;
+            locaLabel.Text = "Location";
+            // 
             // CreaTourForm
             // 
             AutoScaleMode = AutoScaleMode.None;
             BackColor = Color.FromArgb(64, 64, 64);
-            ClientSize = new Size(737, 518);
+            ClientSize = new Size(737, 525);
+            Controls.Add(locationTextBox);
+            Controls.Add(locaLabel);
             Controls.Add(label5);
             Controls.Add(groupCbox);
             Controls.Add(prizeTextBox);
@@ -358,5 +384,7 @@
         private TextBox prizeTextBox;
         private Label label5;
         private ComboBox groupCbox;
+        private TextBox locationTextBox;
+        private Label locaLabel;
     }
 }

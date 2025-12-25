@@ -5,8 +5,6 @@ VisualStudioVersion = 17.13.35919.96
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TeamListForm", "TournamentTracker\TeamListForm.csproj", "{ABFA57D9-EC42-4509-B09E-C985D1CAD536}"
 EndProject
-Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "TournamentTrackerSetup", "..\..\..\TourSetup\TournamentTrackerSetup\TournamentTrackerSetup.vdproj", "{F11220C2-9BD3-C62C-F284-46F0B126F6A1}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -17,8 +15,6 @@ Global
 		{ABFA57D9-EC42-4509-B09E-C985D1CAD536}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{ABFA57D9-EC42-4509-B09E-C985D1CAD536}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{ABFA57D9-EC42-4509-B09E-C985D1CAD536}.Release|Any CPU.Build.0 = Release|Any CPU
-		{F11220C2-9BD3-C62C-F284-46F0B126F6A1}.Debug|Any CPU.ActiveCfg = Debug
-		{F11220C2-9BD3-C62C-F284-46F0B126F6A1}.Release|Any CPU.ActiveCfg = Release
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

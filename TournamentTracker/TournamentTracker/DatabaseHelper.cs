@@ -18,7 +18,7 @@ namespace TeamListForm
     }
     internal class DatabaseHelper
     {
-        private static string connectionString = @"Data Source=.\SQLEXPRESS;Initial Catalog=TournamentTracker;Integrated Security=True;TrustServerCertificate=True;";
+        private static string connectionString = @"Data Source=localhost;Initial Catalog=TournamentTracker;Integrated Security=True;Persist Security Info=False;Pooling=False;MultipleActiveResultSets=False;Encrypt=False;TrustServerCertificate=True;Command Timeout=30";
         // TEAMS
         public static List<Team> GetTeams(int tournamentId, string search = "")
         {
@@ -223,7 +223,7 @@ namespace TeamListForm
             {
                 cmd.Parameters.AddWithValue("@ID", id);
                 conn.Open();
-                cmd.ExecuteNonQuery();
+                 cmd.ExecuteNonQuery();
             }
         }
         public static bool IsRoundComplete(int tournamentId, int round)
@@ -948,6 +948,37 @@ namespace TeamListForm
                 }
             }
             return defaultCount;
+        }
+        // Kiểm tra xem giải đấu đã có lịch thi đấu chưa
+        public static bool HasSchedule(int tournamentId)
+        {
+            using (SqlConnection conn = new SqlConnection(connectionString))
+            {
+                conn.Open();
+                // Chỉ cần đếm xem có bất kỳ trận đấu nào thuộc giải này không
+                string sql = "SELECT COUNT(*) FROM Matches WHERE TournamentID = @tId";
+                using (SqlCommand cmd = new SqlCommand(sql, conn))
+                {
+                    cmd.Parameters.AddWithValue("@tId", tournamentId);
+                    int count = (int)cmd.ExecuteScalar();
+                    return count > 0; // Trả về True nếu đã có lịch
+                }
+            }
+        }
+
+        // Hàm Reset giải đấu (Xóa sạch lịch để làm lại từ đầu)
+        public static void ResetTournamentMatches(int tournamentId)
+        {
+            using (SqlConnection conn = new SqlConnection(connectionString))
+            {
+                conn.Open();
+                string sql = "DELETE FROM Matches WHERE TournamentID = @tId";
+                using (SqlCommand cmd = new SqlCommand(sql, conn))
+                {
+                    cmd.Parameters.AddWithValue("@tId", tournamentId);
+                    cmd.ExecuteNonQuery();
+                }
+            }
         }
     }
 }

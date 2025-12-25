@@ -203,6 +203,17 @@ namespace TeamListForm
         }
         private void btnStart_Click(object sender, EventArgs e)
         {
+            DatabaseHelper db = new DatabaseHelper();
+            var info = db.GetTeamCountInfo(_tournamentId);
+            if (info.CurrentCount < info.MaxCount)
+            {
+                MessageBox.Show($"Không thể chia bảng/bắt đầu giải đấu!\n\n" +
+                                $"Số lượng đội hiện tại: {info.CurrentCount}\n" +
+                                $"Yêu cầu của giải: {info.MaxCount}\n\n" +
+                                $"Vui lòng vào danh sách đội (Team List) thêm đủ {info.MaxCount - info.CurrentCount} đội nữa.",
+                                "Chưa đủ đội bóng", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return; // Dừng lại ngay
+            }
             // Tất cả logic kiểm tra và gọi SQL đã nằm trong hàm này rồi
             MatchGenerator.GenerateRound1(_tournamentId);
             UpdateButtonState();
