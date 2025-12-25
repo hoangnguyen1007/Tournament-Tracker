@@ -62,7 +62,7 @@ Dành cho người dùng phổ thông, tự động tạo Shortcut.
 
 ### 🔹 Cách 2: Bản Portable (Chạy ngay)
 Dành cho người dùng muốn nhanh gọn, copy vào USB.
-1. Tải file **`TournamentTracker_Portable.zip`**.
+1. Tải file **`TournamentTracker_Portable_v.1.0.3.zip`**.
 2. Giải nén (Extract) toàn bộ thư mục.
 3. Chạy file **`TournamentTracker.exe`** bên trong.
 
