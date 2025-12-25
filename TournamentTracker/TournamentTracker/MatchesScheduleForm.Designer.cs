@@ -70,7 +70,7 @@
             matchesLabel.BackColor = Color.Transparent;
             matchesLabel.Font = new Font("Segoe UI", 25F, FontStyle.Bold, GraphicsUnit.Pixel, 0);
             matchesLabel.ForeColor = Color.Gold;
-            matchesLabel.Location = new Point(44, 112);
+            matchesLabel.Location = new Point(44, 114);
             matchesLabel.Name = "matchesLabel";
             matchesLabel.Size = new Size(262, 35);
             matchesLabel.TabIndex = 1;
@@ -85,10 +85,10 @@
             choiceRoundComboBox.Font = new Font("Microsoft Sans Serif", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
             choiceRoundComboBox.ForeColor = Color.White;
             choiceRoundComboBox.FormattingEnabled = true;
-            choiceRoundComboBox.Location = new Point(315, 119);
+            choiceRoundComboBox.Location = new Point(379, 119);
             choiceRoundComboBox.Margin = new Padding(3, 4, 3, 4);
             choiceRoundComboBox.Name = "choiceRoundComboBox";
-            choiceRoundComboBox.Size = new Size(158, 33);
+            choiceRoundComboBox.Size = new Size(129, 33);
             choiceRoundComboBox.TabIndex = 2;
             choiceRoundComboBox.SelectedIndexChanged += choiceRoundComboBox_SelectedIndexChanged;
             // 
@@ -365,7 +365,7 @@
             btnStart.FlatStyle = FlatStyle.Flat;
             btnStart.Font = new Font("Segoe UI", 30F, FontStyle.Bold, GraphicsUnit.Pixel, 0);
             btnStart.ForeColor = Color.White;
-            btnStart.Location = new Point(579, 109);
+            btnStart.Location = new Point(315, 109);
             btnStart.Margin = new Padding(3, 4, 3, 4);
             btnStart.Name = "btnStart";
             btnStart.Size = new Size(50, 50);
@@ -383,7 +383,7 @@
             btnNextRound.FlatStyle = FlatStyle.Flat;
             btnNextRound.Font = new Font("Segoe UI", 30F, FontStyle.Bold, GraphicsUnit.Pixel, 0);
             btnNextRound.ForeColor = Color.White;
-            btnNextRound.Location = new Point(579, 109);
+            btnNextRound.Location = new Point(315, 109);
             btnNextRound.Margin = new Padding(3, 4, 3, 4);
             btnNextRound.Name = "btnNextRound";
             btnNextRound.Size = new Size(50, 50);
@@ -417,10 +417,10 @@
             comboGroupFilter.Font = new Font("Microsoft Sans Serif", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
             comboGroupFilter.ForeColor = Color.White;
             comboGroupFilter.FormattingEnabled = true;
-            comboGroupFilter.Location = new Point(480, 119);
+            comboGroupFilter.Location = new Point(514, 119);
             comboGroupFilter.Margin = new Padding(3, 4, 3, 4);
             comboGroupFilter.Name = "comboGroupFilter";
-            comboGroupFilter.Size = new Size(85, 33);
+            comboGroupFilter.Size = new Size(115, 33);
             comboGroupFilter.TabIndex = 9;
             comboGroupFilter.SelectedIndexChanged += comboGroupFilter_SelectedIndexChanged;
             // 
@@ -450,6 +450,7 @@
             Margin = new Padding(4, 5, 4, 5);
             MaximizeBox = false;
             Name = "MatchesScheduleForm";
+            StartPosition = FormStartPosition.CenterParent;
             Text = "Tournament Tracker";
             Load += MatchesScheduleForm_Load;
             ((System.ComponentModel.ISupportInitialize)matchesDataGridView).EndInit();
