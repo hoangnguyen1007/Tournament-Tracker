@@ -106,7 +106,16 @@ CREATE OR ALTER PROCEDURE [dbo].[sp_GenerateGroupStage]
 AS
 BEGIN
     SET NOCOUNT ON;
+    -- ======================================================================================
+    -- [PHẦN THÊM MỚI 1]: Khai báo biến và lấy thông tin từ bảng Tournaments
+    -- ======================================================================================
+    DECLARE @TourLocation NVARCHAR(100);
+    DECLARE @StartDate DATETIME;
     
+    -- Lấy địa điểm và ngày bắt đầu của giải đấu để dùng cho bên dưới
+    SELECT @TourLocation = LOCATION, @StartDate = STARTDATE 
+    FROM Tournaments WHERE ID = @TournamentID;
+
     -- A. KIỂM TRA INPUT (Validation)
     -- Kiểm tra số lượng đội
     DECLARE @TeamCount INT = (SELECT COUNT(*) FROM Teams WHERE TournamentID = @TournamentID);
@@ -146,7 +155,7 @@ BEGIN
 
     -- D. TẠO LỊCH ĐẤU VÒNG TRÒN (Round Robin)
     -- Ghép cặp tất cả các đội trong cùng bảng với nhau
-    INSERT INTO Matches (TournamentID, Round, RoundType, GroupName, HomeTeamID, AwayTeamID, Status, MatchDate)
+    INSERT INTO Matches (TournamentID, Round, RoundType, GroupName, HomeTeamID, AwayTeamID, Status, MatchDate, Location)
     SELECT 
         @TournamentID, 
         1,              -- Round 1
@@ -155,7 +164,8 @@ BEGIN
         T1.TeamID, 
         T2.TeamID, 
         0,              -- Status 0 (Chưa đá)
-        NULL            -- Ngày giờ update sau
+        DATEADD(HOUR, (ROW_NUMBER() OVER(ORDER BY NEWID()) - 1) * 2, @StartDate),           -- Ngày giờ, mỗi trận cách nhau 2 giờ
+        @TourLocation
     FROM #TempGroupMap T1
     JOIN #TempGroupMap T2 ON T1.GroupName = T2.GroupName 
     WHERE T1.TeamID < T2.TeamID; -- Điều kiện T1 < T2 để chỉ tạo 1 trận (A vs B) chứ không tạo thêm (B vs A)
