@@ -45,7 +45,7 @@ namespace TourApp
             {
                 // Load thông tin cơ bản
                 nameTextBox.Text = row["NAME"].ToString();
-
+                locationTextBox.Text = row["LOCATION"] != DBNull.Value ? row["LOCATION"].ToString() : "";
                 string sportDB = row["SPORT"].ToString();
                 if (!string.IsNullOrEmpty(sportDB)) sportCbox.Text = sportDB;
 
@@ -127,7 +127,7 @@ namespace TourApp
             string sport = sportCbox.Text;
             DateTime date = startDate.Value;
             string prize = prizeTextBox.Text.Trim();
-            string location = ""; 
+            string location = locaLabel.Text.Trim();
 
             DatabaseHelper db = new DatabaseHelper();
             bool isSuccess = false;

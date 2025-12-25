@@ -65,9 +65,18 @@ namespace TeamListForm
                 // Nếu không có dữ liệu thì mới set null
                 dgvTeams.CurrentCell = null;
         }
-        // PANEL OPTION CRUD NÈ 
         private void btnAdd_Click(object sender, EventArgs e)
         {
+            DatabaseHelper db = new DatabaseHelper();
+            var info = db.GetTeamCountInfo(_tournamentId);
+
+            // Nếu số đội hiện tại đã bằng (hoặc hơn) số đội quy định
+            if (info.CurrentCount >= info.MaxCount)
+            {
+                MessageBox.Show($"Giải đấu này đã đủ số lượng đội ({info.CurrentCount}/{info.MaxCount}).\nBạn không thể thêm đội mới được nữa!",
+                                "Đã đủ đội", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return; // Dừng lại ngay, không mở form thêm nữa
+            }
             TeamEditorForm editor = new TeamEditorForm(EditorMode.Add);
             if (editor.ShowDialog() == DialogResult.OK)
             {
@@ -123,7 +132,30 @@ namespace TeamListForm
                 MessageBox.Show("Vui lòng chọn một đội để xóa!", "Chưa chọn", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
+            // --- LOGIC MỚI: KIỂM TRA LỊCH THI ĐẤU ---
+            if (DatabaseHelper.HasSchedule(_tournamentId))
+            {
+                // Tùy chọn 2: LINH HOẠT (Hỏi user có muốn Reset luôn không?)
+                var askReset = MessageBox.Show(
+                    "CẢNH BÁO: Giải đấu này ĐÃ CÓ LỊCH THI ĐẤU!\n\n" +
+                    "Nếu bạn xóa đội này, TOÀN BỘ LỊCH THI ĐẤU và KẾT QUẢ hiện tại sẽ bị hủy bỏ để xếp lại từ đầu.\n\n" +
+                    "Bạn có chắc chắn muốn tiếp tục không?",
+                    "Cảnh báo nghiêm trọng", MessageBoxButtons.YesNo, MessageBoxIcon.Error);
 
+                if (askReset == DialogResult.Yes)
+                {
+                    // 1. Reset toàn bộ lịch đấu
+                    DatabaseHelper.ResetTournamentMatches(_tournamentId);
+
+                    // 2. Sau đó mới xóa đội (Lúc này xóa an toàn vì không còn trận đấu nào dính FK)
+                    DatabaseHelper.DeleteTeam(selectedTeam.ID);
+
+                    LoadTeams();
+                    MessageBox.Show("Đã xóa đội và Reset lại giải đấu thành công.\nVui lòng vào mục 'Lịch thi đấu' để tạo lại lịch mới!",
+                                    "Đã Reset", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+                return;
+            }
             var confirm = MessageBox.Show(
                 $"Bạn có chắc chắn muốn XÓA đội \"{selectedTeam.TEAMNAME}\" không?\n\nHành động này không thể hoàn tác!",
                 "Xác nhận xóa",
@@ -161,6 +193,15 @@ namespace TeamListForm
 
         private void btnImportExcel_Click(object sender, EventArgs e)
         {
+            DatabaseHelper db = new DatabaseHelper();
+            var info = db.GetTeamCountInfo(_tournamentId);
+
+            if (info.CurrentCount >= info.MaxCount)
+            {
+                MessageBox.Show($"Giải đấu đã đủ đội ({info.CurrentCount}/{info.MaxCount}).\nKhông thể Import thêm!",
+                                "Đã đủ đội", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
             OpenFileDialog openFileDialog = new OpenFileDialog();
             openFileDialog.Filter = "Excel Files|*.xlsx;*.xls";
             openFileDialog.Title = "Chọn file dữ liệu Giải đấu (Teams + Players)";
