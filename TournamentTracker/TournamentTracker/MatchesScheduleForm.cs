@@ -10,6 +10,7 @@ namespace TeamListForm
     public partial class MatchesScheduleForm : Form
     {
         private int _tournamentId;
+        private bool _isOwner = false;
         public MatchesScheduleForm(int tournamentId)
         {
             InitializeComponent();
