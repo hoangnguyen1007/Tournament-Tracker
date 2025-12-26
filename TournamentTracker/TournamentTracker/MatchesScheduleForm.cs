@@ -143,6 +143,27 @@ namespace TeamListForm
         {
             try
             {
+                  int currentUserId = Properties.Settings.Default.SavedUserId;
+    
+                  DatabaseHelper db = new DatabaseHelper();
+                  DataRow tourRow = db.GetTournamentById(_tournamentId);
+                
+                  if (tourRow != null)
+                  {
+                      int createdBy = tourRow["CreatedBy"] != DBNull.Value ? Convert.ToInt32(tourRow["CreatedBy"]) : -1;
+                
+                      // SO SÁNH:
+                      // 1. Nếu ID người dùng trùng với người tạo (Current == CreatedBy)
+                      // 2. Hoặc là Admin (ID = 1)
+                      if (currentUserId == createdBy)
+                      {
+                          _isOwner = true;
+                      }
+                      else
+                      {
+                          _isOwner = false;
+                      }
+                  }
                 LoadRounds();
                 LoadGroupComboBox();
                 RecalculateStandings();
@@ -183,6 +204,14 @@ namespace TeamListForm
         {
             // Lấy vòng lớn nhất hiện tại
             int currentRound = DatabaseHelper.GetMaxRound(_tournamentId);
+             if (_isOwner == false)
+             {
+                 btnStart.Visible = false;
+                 btnNextRound.Visible = false;
+                 updateButton.Visible = false;
+                 choiceRoundComboBox.Visible = (currentRound > 0);
+                 return;
+             }
             if (currentRound == 0)
             {
                 // TRƯỜNG HỢP 1: GIẢI CHƯA BẮT ĐẦU
