@@ -177,6 +177,16 @@ namespace TourApp
                 pnlEmptyState.Visible = true;
                 pnlEmptyState.BringToFront(); // Đảm bảo nó nổi lên trên
                 flowPanelCards.Visible = false;
+                if (viewMineOnly)
+                {
+                    label2.Text = "No tournaments yet!";
+                    label3.Text = "Get started by creating your first tournament.";
+                }
+                else
+                {
+                    label2.Text = "Not Found";
+                    label3.Text = "Couldn't find any tournaments matching your criteria.";
+                }
                 return;
             }
 
