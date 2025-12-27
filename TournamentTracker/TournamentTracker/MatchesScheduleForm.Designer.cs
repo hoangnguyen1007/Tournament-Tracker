@@ -61,6 +61,7 @@
             InforButton = new Button();
             comboGroupFilter = new ComboBox();
             backButton = new Button();
+            minimizeButton = new Button();
             ((System.ComponentModel.ISupportInitialize)matchesDataGridView).BeginInit();
             ((System.ComponentModel.ISupportInitialize)standingsDataGridView).BeginInit();
             SuspendLayout();
@@ -427,6 +428,7 @@
             // 
             // backButton
             // 
+            backButton.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             backButton.BackColor = Color.Transparent;
             backButton.Cursor = Cursors.Hand;
             backButton.FlatAppearance.BorderSize = 0;
@@ -442,6 +444,24 @@
             backButton.UseVisualStyleBackColor = false;
             backButton.Click += backButton_Click;
             // 
+            // minimizeButton
+            // 
+            minimizeButton.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            minimizeButton.BackColor = Color.Transparent;
+            minimizeButton.Cursor = Cursors.Hand;
+            minimizeButton.FlatAppearance.BorderSize = 0;
+            minimizeButton.FlatStyle = FlatStyle.Flat;
+            minimizeButton.Font = new Font("Segoe UI", 40F, FontStyle.Regular, GraphicsUnit.Pixel);
+            minimizeButton.ForeColor = SystemColors.ActiveBorder;
+            minimizeButton.Location = new Point(1125, 18);
+            minimizeButton.Name = "minimizeButton";
+            minimizeButton.Size = new Size(56, 63);
+            minimizeButton.TabIndex = 30;
+            minimizeButton.Text = "─";
+            minimizeButton.TextAlign = ContentAlignment.TopCenter;
+            minimizeButton.UseVisualStyleBackColor = false;
+            minimizeButton.Click += minimizeButton_Click;
+            // 
             // MatchesScheduleForm
             // 
             AutoScaleMode = AutoScaleMode.None;
@@ -450,6 +470,7 @@
             BackgroundImage = (Image)resources.GetObject("$this.BackgroundImage");
             BackgroundImageLayout = ImageLayout.Stretch;
             ClientSize = new Size(1282, 773);
+            Controls.Add(minimizeButton);
             Controls.Add(backButton);
             Controls.Add(comboGroupFilter);
             Controls.Add(btnNextRound);
@@ -505,6 +526,7 @@
         private Button InforButton;
         private ComboBox comboGroupFilter;
         private Button backButton;
+        private Button minimizeButton;
     }
 }
 
