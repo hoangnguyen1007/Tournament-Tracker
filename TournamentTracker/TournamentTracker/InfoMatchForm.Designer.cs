@@ -435,6 +435,7 @@
             // 
             // backButton
             // 
+            backButton.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
             backButton.BackColor = Color.Transparent;
             backButton.Cursor = Cursors.Hand;
             backButton.FlatAppearance.BorderSize = 0;
