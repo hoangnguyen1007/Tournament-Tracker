@@ -468,6 +468,22 @@ namespace TeamListForm
                 }
             }
         }
+
+        // Hàm tự động đánh số thứ tự (1, 2, 3...) cho cột #
+        private void standingsDataGridView_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
+        {
+            // Lấy GridView đang chạy
+            DataGridView dgv = sender as DataGridView;
+            if (dgv == null) return;
+
+            // Kiểm tra: Nếu cột hiện tại có tiêu đề là "#" thì điền số
+            if (dgv.Columns[e.ColumnIndex].HeaderText == "#" && e.RowIndex >= 0)
+            {
+                // Logic: Giá trị = Số dòng + 1
+                e.Value = (e.RowIndex + 1).ToString();
+                e.FormattingApplied = true;
+            }
+        }
     }
 
     // ==========================================
@@ -487,5 +503,4 @@ namespace TeamListForm
         public DateTime? MatchDate { get; set; } // Dùng dấu ? vì ngày có thể chưa có (NULL)
         public string Location { get; set; }
     }
-
 }
