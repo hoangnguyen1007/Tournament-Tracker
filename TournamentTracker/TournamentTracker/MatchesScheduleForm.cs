@@ -210,6 +210,7 @@ namespace TeamListForm
                 btnStart.Visible = false;
                 btnNextRound.Visible = false;
                 updateButton.Visible = false;
+                btnReset.Visible = false;
                 choiceRoundComboBox.Visible = (currentRound > 0);
                 return;
             }
@@ -218,7 +219,7 @@ namespace TeamListForm
                 // TRƯỜNG HỢP 1: GIẢI CHƯA BẮT ĐẦU
                 btnStart.Visible = true;
                 btnNextRound.Visible = false;
-
+                btnReset.Visible = false;
                 // QUAN TRỌNG: Ẩn luôn ComboBox vì chưa có gì để xem
                 choiceRoundComboBox.Visible = false;
             }
@@ -227,7 +228,7 @@ namespace TeamListForm
                 // TRƯỜNG HỢP 2: ĐANG DIỄN RA
                 btnStart.Visible = false;
                 btnNextRound.Visible = true;
-
+                btnReset.Visible = true;
                 choiceRoundComboBox.Visible = true; // Hiện ComboBox để chọn vòng
             }
         }
@@ -402,6 +403,63 @@ namespace TeamListForm
         private void minimizeButton_Click(object sender, EventArgs e)
         {
             this.WindowState = FormWindowState.Minimized;
+        }
+
+        private void btnReset_Click(object sender, EventArgs e)
+        {
+            if (!_isOwner)
+            {
+                MessageBox.Show("Bạn không có quyền thực hiện thao tác này!");
+                return;
+            }
+
+            // 2. Kiểm tra xem giải đã có lịch đấu chưa (để tránh reset khi chưa có gì)
+            if (!DatabaseHelper.HasSchedule(_tournamentId))
+            {
+                MessageBox.Show("Giải đấu chưa bắt đầu, không cần reset.", "Thông báo");
+                return;
+            }
+
+            // 3. Hỏi xác nhận (QUAN TRỌNG)
+            DialogResult result = MessageBox.Show(
+                "CẢNH BÁO NGUY HIỂM:\n\n" +
+                "Hành động này sẽ XÓA TOÀN BỘ LỊCH THI ĐẤU và KẾT QUẢ hiện tại.\n" +
+                "Giải đấu sẽ quay về trạng thái chưa chia bảng.\n\n" +
+                "Bạn có chắc chắn muốn làm lại từ đầu không?",
+                "Xác nhận Reset",
+                MessageBoxButtons.YesNo,
+                MessageBoxIcon.Warning,
+                MessageBoxDefaultButton.Button2); // Mặc định chọn No để an toàn
+
+            if (result == DialogResult.Yes)
+            {
+                try
+                {
+                    // 4. Gọi hàm xóa dữ liệu trong Database
+                    DatabaseHelper.ResetTournamentMatches(_tournamentId);
+
+                    // 5. Xóa dữ liệu trên giao diện
+                    matchesDataGridView.DataSource = null;
+                    standingsDataGridView.DataSource = null;
+                    choiceRoundComboBox.Items.Clear();
+
+                    // Reset bộ lọc bảng về mặc định
+                    if (comboGroupFilter.Items.Count > 0) comboGroupFilter.SelectedIndex = 0;
+
+                    // 6. Cập nhật lại trạng thái các nút (Nút Start sẽ hiện lại)
+                    UpdateButtonState();
+
+                    // Load lại các thông tin bổ trợ (để đảm bảo sạch sẽ)
+                    LoadRounds();
+
+                    MessageBox.Show("Đã xóa dữ liệu thành công! Bạn có thể chia bảng và bắt đầu lại.",
+                                    "Thành công", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Lỗi khi reset giải đấu: " + ex.Message, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
         }
     }
 

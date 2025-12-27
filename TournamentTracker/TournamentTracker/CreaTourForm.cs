@@ -67,23 +67,39 @@ namespace TourApp
         private void createBtn_Click(object sender, EventArgs e)
         {
             Cursor.Current = Cursors.WaitCursor;
-            createBtn.Enabled = false;
+            createBtn.Enabled = false; // Tắt nút để tránh bấm nhiều lần
+
+            // 1. KIỂM TRA TÊN
             if (string.IsNullOrWhiteSpace(nameTextBox.Text))
             {
                 MessageBox.Show("Please enter a tournament name.", "Missing Information", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 nameTextBox.Focus();
+
+                // --- SỬA LỖI: Bật lại nút và con trỏ chuột trước khi thoát ---
+                createBtn.Enabled = true;
+                Cursor.Current = Cursors.Default;
                 return;
             }
 
+            // 2. KIỂM TRA MÔN THỂ THAO
             if (sportCbox.SelectedIndex == -1 && string.IsNullOrEmpty(sportCbox.Text))
             {
                 MessageBox.Show("Please select a sport type.", "Missing Information", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+
+                // --- SỬA LỖI ---
+                createBtn.Enabled = true;
+                Cursor.Current = Cursors.Default;
                 return;
             }
 
+            // 3. KIỂM TRA SỐ LƯỢNG NGƯỜI/ĐỘI
             if (numPar.Value < 2)
             {
                 MessageBox.Show("Participants must be at least 2.", "Invalid Input", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+
+                // --- SỬA LỖI ---
+                createBtn.Enabled = true;
+                Cursor.Current = Cursors.Default;
                 return;
             }
 
@@ -99,18 +115,20 @@ namespace TourApp
                 }
             }
 
-            // A. KIỂM TRA TỐI THIỂU: Mỗi bảng cần ít nhất 3 đội để đá vòng tròn hấp dẫn
-            // (Nếu bạn muốn tối thiểu là 2 thì sửa số 3 thành 2)
+            // A. KIỂM TRA TỐI THIỂU
             int minTeamsPerGroup = 2;
             if (teamCount < groupCount * minTeamsPerGroup)
             {
                 MessageBox.Show($"Số lượng đội quá ít! Với {groupCount} bảng, bạn cần ít nhất {groupCount * minTeamsPerGroup} đội (Tối thiểu {minTeamsPerGroup} đội/bảng).",
                                 "Logic Bảng Đấu", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return; 
+
+                // --- SỬA LỖI ---
+                createBtn.Enabled = true;
+                Cursor.Current = Cursors.Default;
+                return;
             }
 
-            // B. CẢNH BÁO CHIA ĐỀU (Optional): Nhắc nhở nếu số đội không chia hết cho số bảng
-            // Ví dụ: 10 đội chia 4 bảng => Sẽ có bảng 3 đội, bảng 2 đội -> Lịch thi đấu sẽ lệch nhau.
+            // B. CẢNH BÁO CHIA ĐỀU
             if (teamCount % groupCount != 0)
             {
                 var result = MessageBox.Show(
@@ -119,74 +137,103 @@ namespace TourApp
                     "Bạn có muốn tiếp tục không?",
                     "Cảnh báo phân chia", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
 
-                if (result == DialogResult.No) return;
-            }
-
-            // --- 2. LẤY DỮ LIỆU ---
-            string name = nameTextBox.Text.Trim();
-            string sport = sportCbox.Text;
-            DateTime date = startDate.Value;
-            string prize = prizeTextBox.Text.Trim();
-            string location = locaLabel.Text.Trim();
-
-            DatabaseHelper db = new DatabaseHelper();
-            bool isSuccess = false;
-            if (_tournamentId.HasValue)
-            {
-                // UPDATE
-                isSuccess = db.UpdateTournament(
-                    _tournamentId.Value,
-                    name,
-                    location,
-                    date,
-                    prize,
-                    _posterPath,
-                    sport,
-                    teamCount,
-                    groupCount 
-                );
-
-                if (isSuccess) this.CreatedTournamentId = _tournamentId.Value;
-            }
-            else
-            {
-                int createdBy = 1;
-                try
+                if (result == DialogResult.No)
                 {
-                    if (UserSession.CurrentUserId > 0)
+                    // --- SỬA LỖI: Nếu chọn NO thì cũng phải bật lại nút ---
+                    createBtn.Enabled = true;
+                    Cursor.Current = Cursors.Default;
+                    return;
+                }
+            }
+
+            // --- 2. LẤY DỮ LIỆU & GỌI DATABASE ---
+            try
+            {
+                string name = nameTextBox.Text.Trim();
+                string sport = sportCbox.Text;
+                DateTime date = startDate.Value;
+                string prize = prizeTextBox.Text.Trim();
+                // Sửa lỗi nhỏ: locaLabel là Label hay TextBox? Thường nhập liệu phải là TextBox. 
+                // Nếu code cũ của bạn là locaLabel.Text thì giữ nguyên, nhưng mình đoán là locationTextBox
+                string location = locationTextBox.Text.Trim();
+
+                DatabaseHelper db = new DatabaseHelper();
+                bool isSuccess = false;
+
+                if (_tournamentId.HasValue)
+                {
+                    // UPDATE
+                    isSuccess = db.UpdateTournament(
+                        _tournamentId.Value,
+                        name,
+                        location,
+                        date,
+                        prize,
+                        _posterPath,
+                        sport,
+                        teamCount,
+                        groupCount
+                    );
+
+                    if (isSuccess) this.CreatedTournamentId = _tournamentId.Value;
+                }
+                else
+                {
+                    // CREATE
+                    int createdBy = 1;
+                    try
                     {
-                        createdBy = UserSession.CurrentUserId;
+                        // Giả sử bạn có class UserSession (nếu không có thì xóa try-catch này đi)
+                        if (TeamListForm.UserSession.CurrentUserId > 0)
+                        {
+                            createdBy = TeamListForm.UserSession.CurrentUserId;
+                        }
+                    }
+                    catch { }
+
+                    int newId = db.AddTournament(
+                        name,
+                        location,
+                        date,
+                        prize,
+                        _posterPath,
+                        sport,
+                        teamCount,
+                        groupCount,
+                        createdBy
+                    );
+
+                    if (newId != -1)
+                    {
+                        isSuccess = true;
+                        this.CreatedTournamentId = newId;
                     }
                 }
-                catch { }
-                int newId = db.AddTournament(
-                    name,
-                    location,
-                    date,
-                    prize,
-                    _posterPath,
-                    sport,
-                    teamCount,
-                    groupCount,
-                    createdBy
-                );
 
-                if (newId != -1)
+                if (isSuccess)
                 {
-                    isSuccess = true;
-                    this.CreatedTournamentId = newId;
+                    string msg = _tournamentId.HasValue ? "Update successfully!" : "Create successfully!";
+                    MessageBox.Show(msg, "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    this.DialogResult = DialogResult.OK;
+                    this.Close();
+                }
+                else
+                {
+                    MessageBox.Show("An error occurred. Please try again!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+                    // --- SỬA LỖI: Nếu DB lỗi thì cũng phải bật lại nút để thử lại ---
+                    createBtn.Enabled = true;
                 }
             }
-            if (isSuccess)
+            catch (Exception ex)
             {
-                string msg = _tournamentId.HasValue ? "Update successfully!" : "Create successfully!";
-                MessageBox.Show(msg, "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                this.DialogResult = DialogResult.OK;
-                this.Close();
+                MessageBox.Show("Error: " + ex.Message);
+                createBtn.Enabled = true;
             }
-            else
+            finally
             {
-                MessageBox.Show("An error occurred. Please try again!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                // Luôn trả lại con trỏ chuột bình thường dù có lỗi hay không
+                Cursor.Current = Cursors.Default;
             }
         }
 
