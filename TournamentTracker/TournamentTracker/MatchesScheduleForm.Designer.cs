@@ -44,12 +44,6 @@
             colAway = new DataGridViewTextBoxColumn();
             updateButton = new Button();
             standingsDataGridView = new DataGridView();
-            colSTT = new DataGridViewTextBoxColumn();
-            colTeam = new DataGridViewTextBoxColumn();
-            colGF = new DataGridViewTextBoxColumn();
-            colGA = new DataGridViewTextBoxColumn();
-            colGD = new DataGridViewTextBoxColumn();
-            colPTS = new DataGridViewTextBoxColumn();
             standingsLabel = new Label();
             titleLabel = new Label();
             btnStart = new Button();
@@ -59,6 +53,12 @@
             backButton = new Button();
             minimizeButton = new Button();
             btnReset = new Button();
+            colSTT = new DataGridViewTextBoxColumn();
+            colTeam = new DataGridViewTextBoxColumn();
+            colGF = new DataGridViewTextBoxColumn();
+            colGA = new DataGridViewTextBoxColumn();
+            colGD = new DataGridViewTextBoxColumn();
+            colPTS = new DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)matchesDataGridView).BeginInit();
             ((System.ComponentModel.ISupportInitialize)standingsDataGridView).BeginInit();
             SuspendLayout();
@@ -227,69 +227,6 @@
             standingsDataGridView.Size = new Size(585, 549);
             standingsDataGridView.TabIndex = 5;
             // 
-            // colSTT
-            // 
-            colSTT.DataPropertyName = "Rank";
-            dataGridViewCellStyle6.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle6.BackColor = Color.Black;
-            dataGridViewCellStyle6.ForeColor = Color.White;
-            dataGridViewCellStyle6.SelectionBackColor = Color.Black;
-            colSTT.DefaultCellStyle = dataGridViewCellStyle6;
-            colSTT.HeaderText = "#";
-            colSTT.MinimumWidth = 30;
-            colSTT.Name = "colSTT";
-            colSTT.ReadOnly = true;
-            colSTT.Width = 30;
-            // 
-            // colTeam
-            // 
-            colTeam.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-            colTeam.DataPropertyName = "Name";
-            colTeam.HeaderText = "TEAM";
-            colTeam.MinimumWidth = 100;
-            colTeam.Name = "colTeam";
-            colTeam.ReadOnly = true;
-            // 
-            // colGF
-            // 
-            colGF.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
-            colGF.DataPropertyName = "GF";
-            colGF.HeaderText = "GF";
-            colGF.MinimumWidth = 30;
-            colGF.Name = "colGF";
-            colGF.ReadOnly = true;
-            colGF.Width = 53;
-            // 
-            // colGA
-            // 
-            colGA.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
-            colGA.DataPropertyName = "GA";
-            colGA.HeaderText = "GA";
-            colGA.MinimumWidth = 30;
-            colGA.Name = "colGA";
-            colGA.ReadOnly = true;
-            colGA.Width = 56;
-            // 
-            // colGD
-            // 
-            colGD.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
-            colGD.DataPropertyName = "GD";
-            colGD.HeaderText = "+/-";
-            colGD.MinimumWidth = 30;
-            colGD.Name = "colGD";
-            colGD.ReadOnly = true;
-            colGD.Width = 58;
-            // 
-            // colPTS
-            // 
-            colPTS.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
-            colPTS.DataPropertyName = "Points";
-            colPTS.HeaderText = "PTS";
-            colPTS.MinimumWidth = 30;
-            colPTS.Name = "colPTS";
-            colPTS.ReadOnly = true;
-            colPTS.Width = 60;
-            // 
             // standingsLabel
             // 
             standingsLabel.AutoSize = true;
@@ -437,6 +374,68 @@
             btnReset.UseVisualStyleBackColor = false;
             btnReset.Click += btnReset_Click;
             // 
+            // colSTT
+            // 
+            dataGridViewCellStyle6.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle6.BackColor = Color.Black;
+            dataGridViewCellStyle6.ForeColor = Color.White;
+            dataGridViewCellStyle6.SelectionBackColor = Color.Black;
+            colSTT.DefaultCellStyle = dataGridViewCellStyle6;
+            colSTT.HeaderText = "#";
+            colSTT.MinimumWidth = 30;
+            colSTT.Name = "colSTT";
+            colSTT.ReadOnly = true;
+            colSTT.Width = 30;
+            // 
+            // colTeam
+            // 
+            colTeam.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            colTeam.DataPropertyName = "Name";
+            colTeam.HeaderText = "TEAM";
+            colTeam.MinimumWidth = 100;
+            colTeam.Name = "colTeam";
+            colTeam.ReadOnly = true;
+            // 
+            // colGF
+            // 
+            colGF.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+            colGF.DataPropertyName = "GF";
+            colGF.HeaderText = "GF";
+            colGF.MinimumWidth = 30;
+            colGF.Name = "colGF";
+            colGF.ReadOnly = true;
+            colGF.Width = 53;
+            // 
+            // colGA
+            // 
+            colGA.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+            colGA.DataPropertyName = "GA";
+            colGA.HeaderText = "GA";
+            colGA.MinimumWidth = 30;
+            colGA.Name = "colGA";
+            colGA.ReadOnly = true;
+            colGA.Width = 56;
+            // 
+            // colGD
+            // 
+            colGD.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+            colGD.DataPropertyName = "GD";
+            colGD.HeaderText = "+/-";
+            colGD.MinimumWidth = 30;
+            colGD.Name = "colGD";
+            colGD.ReadOnly = true;
+            colGD.Width = 58;
+            // 
+            // colPTS
+            // 
+            colPTS.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+            colPTS.DataPropertyName = "Points";
+            colPTS.HeaderText = "PTS";
+            colPTS.MinimumWidth = 30;
+            colPTS.Name = "colPTS";
+            colPTS.ReadOnly = true;
+            colPTS.Width = 60;
+            // 
             // MatchesScheduleForm
             // 
             AutoScaleMode = AutoScaleMode.None;
@@ -493,13 +492,13 @@
         private ComboBox comboGroupFilter;
         private Button backButton;
         private Button minimizeButton;
+        private Button btnReset;
         private DataGridViewTextBoxColumn colSTT;
         private DataGridViewTextBoxColumn colTeam;
         private DataGridViewTextBoxColumn colGF;
         private DataGridViewTextBoxColumn colGA;
         private DataGridViewTextBoxColumn colGD;
         private DataGridViewTextBoxColumn colPTS;
-        private Button btnReset;
     }
 }
 
