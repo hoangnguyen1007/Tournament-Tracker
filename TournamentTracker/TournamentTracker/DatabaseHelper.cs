@@ -694,38 +694,46 @@ namespace TeamListForm
         {
             using (SqlConnection conn = new SqlConnection(connectionString))
             {
+                // LOGIC MỚI: JOIN VỚI BẢNG TOURNAMENTS ĐỂ LẤY LOCATION CHUẨN
                 string sql = @"
-            SELECT 
-                M.ID as MatchID,
-                M.Round,
-                M.GroupName,
-                M.Status,
-                M.HomeScore,
-                M.AwayScore,
-                M.HomeTeamID,
-                M.AwayTeamID,
-                M.MatchDate,
-                M.Location,
-                T1.TEAMNAME as HomeTeamName, 
-                T2.TEAMNAME as AwayTeamName,
-                CASE 
-                    WHEN M.Status = 2 THEN CAST(M.HomeScore AS NVARCHAR) + ' - ' + CAST(M.AwayScore AS NVARCHAR)
-                    ELSE 'vs' 
-                END as ScoreDisplay
-            FROM Matches M
-            LEFT JOIN Teams T1 ON M.HomeTeamID = T1.ID
-            LEFT JOIN Teams T2 ON M.AwayTeamID = T2.ID
-            WHERE M.TournamentID = @tId AND M.Round = @r";
+                SELECT 
+                    M.ID as MatchID,
+                    M.Round,
+                    M.GroupName,
+                    M.Status,
+                    M.HomeScore,
+                    M.AwayScore,
+                    M.HomeTeamID,
+                    M.AwayTeamID,
+                    M.MatchDate,
+        
+                    -- [QUAN TRỌNG] Lấy địa điểm từ bảng Tournaments (viết tắt là T)
+                    -- Dùng ISNULL để nếu bảng Tournaments không có thì trả về chuỗi rỗng
+                    ISNULL(T.LOCATION, '') as Location,
 
-                // Logic lọc bảng đấu (giữ nguyên logic cũ của bạn)
+                    T1.TEAMNAME as HomeTeamName, 
+                    T2.TEAMNAME as AwayTeamName,
+                    CASE 
+                        WHEN M.Status = 2 THEN CAST(M.HomeScore AS NVARCHAR) + ' - ' + CAST(M.AwayScore AS NVARCHAR)
+                        ELSE 'vs' 
+                    END as ScoreDisplay
+                FROM Matches M
+                LEFT JOIN Teams T1 ON M.HomeTeamID = T1.ID
+                LEFT JOIN Teams T2 ON M.AwayTeamID = T2.ID
+    
+                -- [BẮT BUỘC] JOIN Bảng Giải Đấu để lấy địa điểm
+                INNER JOIN Tournaments T ON M.TournamentID = T.ID
+
+                WHERE M.TournamentID = @tId AND M.Round = @r";
+
+                // --- Phần logic lọc và thực thi giữ nguyên ---
                 bool hasGroupFilter = !string.IsNullOrEmpty(groupName)
                                       && groupName != "All"
                                       && groupName != "Tất cả các bảng";
 
                 if (hasGroupFilter)
-                    sql += " AND M.GroupName = @gName"; // Lưu ý thêm M. trước GroupName cho chắc
+                    sql += " AND M.GroupName = @gName";
 
-                // Sắp xếp
                 sql += " ORDER BY M.GroupName, M.MatchDate";
 
                 using (SqlCommand cmd = new SqlCommand(sql, conn))
@@ -747,7 +755,6 @@ namespace TeamListForm
                     }
                     catch (Exception ex)
                     {
-                        // Có thể log lỗi ra debug
                         System.Diagnostics.Debug.WriteLine(ex.Message);
                     }
                     return dt;
