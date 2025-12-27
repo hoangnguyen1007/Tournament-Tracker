@@ -123,7 +123,7 @@
             sportCbox.ForeColor = SystemColors.Info;
             sportCbox.FormattingEnabled = true;
             sportCbox.IntegralHeight = false;
-            sportCbox.Items.AddRange(new object[] { "Athletics", "Badminton", "Baseball", "Basketball", "Boxing", "Cycling", "Football", "Golf", "Handball", "Hockey", "Judo", "Karate", "Rowing", "Rugby", "Swimming", "Table Tennis", "Taekwondo", "Tennis", "Volleyball" });
+            sportCbox.Items.AddRange(new object[] { "Athletics", "Badminton", "Baseball", "Basketball", "Boxing", "Cycling", "E-Sport", "Football", "Golf", "Handball", "Hockey", "Judo", "Karate", "League of Legends", "Rowing", "Rugby", "Swimming", "Table Tennis", "Taekwondo", "Tennis", "Volleyball" });
             sportCbox.Location = new Point(29, 188);
             sportCbox.Name = "sportCbox";
             sportCbox.Size = new Size(282, 36);
