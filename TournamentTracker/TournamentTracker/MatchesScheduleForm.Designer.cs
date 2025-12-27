@@ -60,6 +60,7 @@
             btnNextRound = new Button();
             InforButton = new Button();
             comboGroupFilter = new ComboBox();
+            backButton = new Button();
             ((System.ComponentModel.ISupportInitialize)matchesDataGridView).BeginInit();
             ((System.ComponentModel.ISupportInitialize)standingsDataGridView).BeginInit();
             SuspendLayout();
@@ -424,6 +425,23 @@
             comboGroupFilter.TabIndex = 9;
             comboGroupFilter.SelectedIndexChanged += comboGroupFilter_SelectedIndexChanged;
             // 
+            // backButton
+            // 
+            backButton.BackColor = Color.Transparent;
+            backButton.Cursor = Cursors.Hand;
+            backButton.FlatAppearance.BorderSize = 0;
+            backButton.FlatStyle = FlatStyle.Flat;
+            backButton.Font = new Font("Segoe UI", 40F, FontStyle.Bold, GraphicsUnit.Pixel);
+            backButton.ForeColor = SystemColors.ActiveBorder;
+            backButton.Location = new Point(1184, 18);
+            backButton.Name = "backButton";
+            backButton.Size = new Size(79, 63);
+            backButton.TabIndex = 29;
+            backButton.Text = "✕";
+            backButton.TextAlign = ContentAlignment.TopCenter;
+            backButton.UseVisualStyleBackColor = false;
+            backButton.Click += backButton_Click;
+            // 
             // MatchesScheduleForm
             // 
             AutoScaleMode = AutoScaleMode.None;
@@ -432,6 +450,7 @@
             BackgroundImage = (Image)resources.GetObject("$this.BackgroundImage");
             BackgroundImageLayout = ImageLayout.Stretch;
             ClientSize = new Size(1282, 773);
+            Controls.Add(backButton);
             Controls.Add(comboGroupFilter);
             Controls.Add(btnNextRound);
             Controls.Add(btnStart);
@@ -445,7 +464,7 @@
             Controls.Add(matchesLabel);
             DoubleBuffered = true;
             Font = new Font("Segoe UI", 15F, FontStyle.Regular, GraphicsUnit.Pixel);
-            FormBorderStyle = FormBorderStyle.FixedSingle;
+            FormBorderStyle = FormBorderStyle.None;
             Icon = (Icon)resources.GetObject("$this.Icon");
             Margin = new Padding(4, 5, 4, 5);
             MaximizeBox = false;
@@ -485,6 +504,7 @@
         private Button btnNextRound;
         private Button InforButton;
         private ComboBox comboGroupFilter;
+        private Button backButton;
     }
 }
 

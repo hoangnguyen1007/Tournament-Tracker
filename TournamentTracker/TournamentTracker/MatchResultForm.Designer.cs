@@ -89,7 +89,7 @@
             homeLabel.ForeColor = Color.Silver;
             homeLabel.Location = new Point(-12, 7);
             homeLabel.Name = "homeLabel";
-            homeLabel.Size = new Size(70, 55);
+            homeLabel.Size = new Size(81, 55);
             homeLabel.TabIndex = 3;
             homeLabel.Text = "🛡️";
             // 
@@ -182,7 +182,7 @@
             MatchInfoLabel.ForeColor = Color.Silver;
             MatchInfoLabel.Location = new Point(175, 10);
             MatchInfoLabel.Name = "MatchInfoLabel";
-            MatchInfoLabel.Size = new Size(226, 32);
+            MatchInfoLabel.Size = new Size(230, 35);
             MatchInfoLabel.TabIndex = 10;
             MatchInfoLabel.Text = "Round 0 - Match 0";
             MatchInfoLabel.TextAlign = ContentAlignment.MiddleCenter;
@@ -209,7 +209,7 @@
             finishedCheckBox.AutoSize = true;
             finishedCheckBox.Location = new Point(211, 180);
             finishedCheckBox.Name = "finishedCheckBox";
-            finishedCheckBox.Size = new Size(162, 27);
+            finishedCheckBox.Size = new Size(158, 27);
             finishedCheckBox.TabIndex = 9;
             finishedCheckBox.Text = "Mark as Finished";
             finishedCheckBox.UseVisualStyleBackColor = true;

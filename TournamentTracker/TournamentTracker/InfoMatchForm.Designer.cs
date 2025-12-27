@@ -144,10 +144,10 @@
             dataGridViewCellStyle2.SelectionBackColor = Color.Black;
             colSTT.DefaultCellStyle = dataGridViewCellStyle2;
             colSTT.HeaderText = "#";
-            colSTT.MinimumWidth = 30;
+            colSTT.MinimumWidth = 40;
             colSTT.Name = "colSTT";
             colSTT.ReadOnly = true;
-            colSTT.Width = 30;
+            colSTT.Width = 40;
             // 
             // colTeam
             // 
@@ -271,10 +271,10 @@
             dataGridViewCellStyle6.SelectionBackColor = Color.Black;
             dataGridViewTextBoxColumn1.DefaultCellStyle = dataGridViewCellStyle6;
             dataGridViewTextBoxColumn1.HeaderText = "#";
-            dataGridViewTextBoxColumn1.MinimumWidth = 30;
+            dataGridViewTextBoxColumn1.MinimumWidth = 40;
             dataGridViewTextBoxColumn1.Name = "dataGridViewTextBoxColumn1";
             dataGridViewTextBoxColumn1.ReadOnly = true;
-            dataGridViewTextBoxColumn1.Width = 30;
+            dataGridViewTextBoxColumn1.Width = 40;
             // 
             // dataGridViewTextBoxColumn2
             // 
@@ -475,7 +475,7 @@
             Controls.Add(homeTeamDataGridView);
             DoubleBuffered = true;
             Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Pixel);
-            FormBorderStyle = FormBorderStyle.FixedSingle;
+            FormBorderStyle = FormBorderStyle.None;
             Icon = (Icon)resources.GetObject("$this.Icon");
             Margin = new Padding(2);
             MaximizeBox = false;
@@ -504,6 +504,7 @@
         private Label label2;
         private Label resultHTeamLabel;
         private Label resultATeamLabel;
+        private Button backButton;
         private DataGridViewTextBoxColumn colSTT;
         private DataGridViewTextBoxColumn colTeam;
         private DataGridViewTextBoxColumn colP;
@@ -516,6 +517,5 @@
         private DataGridViewTextBoxColumn dataGridViewTextBoxColumn4;
         private DataGridViewTextBoxColumn dataGridViewTextBoxColumn5;
         private DataGridViewTextBoxColumn dataGridViewTextBoxColumn6;
-        private Button backButton;
     }
 }

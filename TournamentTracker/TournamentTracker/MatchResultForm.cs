@@ -70,7 +70,8 @@ namespace TeamListForm
             bool choPhepSua = !finishedCheckBox.Checked; // Đảo ngược trạng thái
 
             homeNumericUpDown.Enabled = choPhepSua;
-            awayNumericUpDown.Enabled = choPhepSua; 
+            awayNumericUpDown.Enabled = choPhepSua;
+            finishedCheckBox.Enabled = choPhepSua;
         }
     }
 }
