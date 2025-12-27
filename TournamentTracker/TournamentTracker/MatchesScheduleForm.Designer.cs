@@ -87,7 +87,7 @@
             choiceRoundComboBox.Location = new Point(379, 119);
             choiceRoundComboBox.Margin = new Padding(3, 4, 3, 4);
             choiceRoundComboBox.Name = "choiceRoundComboBox";
-            choiceRoundComboBox.Size = new Size(129, 37);
+            choiceRoundComboBox.Size = new Size(129, 33);
             choiceRoundComboBox.TabIndex = 2;
             choiceRoundComboBox.SelectedIndexChanged += choiceRoundComboBox_SelectedIndexChanged;
             // 
@@ -258,7 +258,7 @@
             colGF.MinimumWidth = 30;
             colGF.Name = "colGF";
             colGF.ReadOnly = true;
-            colGF.Width = 60;
+            colGF.Width = 53;
             // 
             // colGA
             // 
@@ -268,7 +268,7 @@
             colGA.MinimumWidth = 30;
             colGA.Name = "colGA";
             colGA.ReadOnly = true;
-            colGA.Width = 63;
+            colGA.Width = 56;
             // 
             // colGD
             // 
@@ -278,7 +278,7 @@
             colGD.MinimumWidth = 30;
             colGD.Name = "colGD";
             colGD.ReadOnly = true;
-            colGD.Width = 65;
+            colGD.Width = 58;
             // 
             // colPTS
             // 
@@ -288,7 +288,7 @@
             colPTS.MinimumWidth = 30;
             colPTS.Name = "colPTS";
             colPTS.ReadOnly = true;
-            colPTS.Width = 67;
+            colPTS.Width = 60;
             // 
             // standingsLabel
             // 
@@ -311,7 +311,7 @@
             titleLabel.ForeColor = Color.FromArgb(0, 180, 80);
             titleLabel.Location = new Point(23, 30);
             titleLabel.Name = "titleLabel";
-            titleLabel.Size = new Size(368, 54);
+            titleLabel.Size = new Size(371, 54);
             titleLabel.TabIndex = 0;
             titleLabel.Text = "🏆 TOURNAMENT";
             // 
@@ -322,9 +322,9 @@
             btnStart.FlatAppearance.BorderColor = Color.SpringGreen;
             btnStart.FlatAppearance.BorderSize = 0;
             btnStart.FlatStyle = FlatStyle.Flat;
-            btnStart.Font = new Font("Segoe UI", 30F, FontStyle.Bold, GraphicsUnit.Pixel, 0);
+            btnStart.Font = new Font("Segoe UI", 31F, FontStyle.Bold, GraphicsUnit.Pixel, 0);
             btnStart.ForeColor = Color.White;
-            btnStart.Location = new Point(315, 109);
+            btnStart.Location = new Point(315, 110);
             btnStart.Margin = new Padding(3, 4, 3, 4);
             btnStart.Name = "btnStart";
             btnStart.Size = new Size(50, 50);
@@ -340,9 +340,9 @@
             btnNextRound.FlatAppearance.BorderColor = Color.SpringGreen;
             btnNextRound.FlatAppearance.BorderSize = 0;
             btnNextRound.FlatStyle = FlatStyle.Flat;
-            btnNextRound.Font = new Font("Segoe UI", 30F, FontStyle.Bold, GraphicsUnit.Pixel, 0);
+            btnNextRound.Font = new Font("Segoe UI", 31F, FontStyle.Bold, GraphicsUnit.Pixel, 0);
             btnNextRound.ForeColor = Color.White;
-            btnNextRound.Location = new Point(315, 109);
+            btnNextRound.Location = new Point(315, 110);
             btnNextRound.Margin = new Padding(3, 4, 3, 4);
             btnNextRound.Name = "btnNextRound";
             btnNextRound.Size = new Size(50, 50);
@@ -353,18 +353,18 @@
             // 
             // InforButton
             // 
-            InforButton.AutoSize = true;
             InforButton.BackColor = Color.Transparent;
             InforButton.Cursor = Cursors.Hand;
             InforButton.FlatAppearance.BorderSize = 0;
             InforButton.FlatStyle = FlatStyle.Flat;
-            InforButton.Font = new Font("Segoe UI", 30F, FontStyle.Regular, GraphicsUnit.Pixel);
+            InforButton.Font = new Font("Segoe UI", 31F, FontStyle.Regular, GraphicsUnit.Pixel);
             InforButton.ForeColor = Color.White;
-            InforButton.Location = new Point(1177, 104);
+            InforButton.Location = new Point(1177, 110);
             InforButton.Name = "InforButton";
-            InforButton.Size = new Size(62, 52);
+            InforButton.Size = new Size(62, 50);
             InforButton.TabIndex = 0;
             InforButton.Text = "⌞⌝";
+            InforButton.TextAlign = ContentAlignment.TopCenter;
             InforButton.UseVisualStyleBackColor = false;
             InforButton.Click += InforButton_Click;
             // 
@@ -379,7 +379,7 @@
             comboGroupFilter.Location = new Point(514, 119);
             comboGroupFilter.Margin = new Padding(3, 4, 3, 4);
             comboGroupFilter.Name = "comboGroupFilter";
-            comboGroupFilter.Size = new Size(115, 37);
+            comboGroupFilter.Size = new Size(115, 33);
             comboGroupFilter.TabIndex = 9;
             comboGroupFilter.SelectedIndexChanged += comboGroupFilter_SelectedIndexChanged;
             // 
@@ -426,14 +426,14 @@
             btnReset.FlatAppearance.BorderColor = Color.SpringGreen;
             btnReset.FlatAppearance.BorderSize = 0;
             btnReset.FlatStyle = FlatStyle.Flat;
-            btnReset.Font = new Font("Segoe UI", 30F, FontStyle.Bold, GraphicsUnit.Pixel, 0);
+            btnReset.Font = new Font("Segoe UI", 31F, FontStyle.Bold, GraphicsUnit.Pixel, 0);
             btnReset.ForeColor = Color.White;
-            btnReset.Location = new Point(818, 112);
+            btnReset.Location = new Point(1121, 110);
             btnReset.Margin = new Padding(3, 4, 3, 4);
             btnReset.Name = "btnReset";
             btnReset.Size = new Size(50, 50);
             btnReset.TabIndex = 31;
-            btnReset.Text = "⏭";
+            btnReset.Text = "🔄";
             btnReset.UseVisualStyleBackColor = false;
             btnReset.Click += btnReset_Click;
             // 
