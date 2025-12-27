@@ -690,70 +690,77 @@ namespace TeamListForm
             return rounds;
         }
         // 2. Lấy danh sách trận đấu (Có hỗ trợ lọc theo vòng)
-        public static DataTable GetMatchesTable(int tournamentId, int round, string groupName)
-        {
-            using (SqlConnection conn = new SqlConnection(connectionString))
-            {
-                string sql = @"
-            SELECT 
-                M.ID as MatchID,
-                M.Round,
-                M.GroupName,
-                M.Status,
-                M.HomeScore,
-                M.AwayScore,
-                M.HomeTeamID,
-                M.AwayTeamID,
-                M.MatchDate,
-                M.Location,
-                T1.TEAMNAME as HomeTeamName, 
-                T2.TEAMNAME as AwayTeamName,
-                CASE 
-                    WHEN M.Status = 2 THEN CAST(M.HomeScore AS NVARCHAR) + ' - ' + CAST(M.AwayScore AS NVARCHAR)
-                    ELSE 'vs' 
-                END as ScoreDisplay
-            FROM Matches M
-            LEFT JOIN Teams T1 ON M.HomeTeamID = T1.ID
-            LEFT JOIN Teams T2 ON M.AwayTeamID = T2.ID
-            WHERE M.TournamentID = @tId AND M.Round = @r";
+               public static DataTable GetMatchesTable(int tournamentId, int round, string groupName)
+       {
+           using (SqlConnection conn = new SqlConnection(connectionString))
+           {
+               // LOGIC MỚI: JOIN VỚI BẢNG TOURNAMENTS ĐỂ LẤY LOCATION CHUẨN
+               string sql = @"
+               SELECT 
+                   M.ID as MatchID,
+                   M.Round,
+                   M.GroupName,
+                   M.Status,
+                   M.HomeScore,
+                   M.AwayScore,
+                   M.HomeTeamID,
+                   M.AwayTeamID,
+                   M.MatchDate,
+       
+                   -- [QUAN TRỌNG] Lấy địa điểm từ bảng Tournaments (viết tắt là T)
+                   -- Dùng ISNULL để nếu bảng Tournaments không có thì trả về chuỗi rỗng
+                   ISNULL(T.LOCATION, '') as Location,
 
-                // Logic lọc bảng đấu (giữ nguyên logic cũ của bạn)
-                bool hasGroupFilter = !string.IsNullOrEmpty(groupName)
-                                      && groupName != "All"
-                                      && groupName != "Tất cả các bảng";
+                   T1.TEAMNAME as HomeTeamName, 
+                   T2.TEAMNAME as AwayTeamName,
+                   CASE 
+                       WHEN M.Status = 2 THEN CAST(M.HomeScore AS NVARCHAR) + ' - ' + CAST(M.AwayScore AS NVARCHAR)
+                       ELSE 'vs' 
+                   END as ScoreDisplay
+               FROM Matches M
+               LEFT JOIN Teams T1 ON M.HomeTeamID = T1.ID
+               LEFT JOIN Teams T2 ON M.AwayTeamID = T2.ID
+   
+               -- [BẮT BUỘC] JOIN Bảng Giải Đấu để lấy địa điểm
+               INNER JOIN Tournaments T ON M.TournamentID = T.ID
 
-                if (hasGroupFilter)
-                    sql += " AND M.GroupName = @gName"; // Lưu ý thêm M. trước GroupName cho chắc
+               WHERE M.TournamentID = @tId AND M.Round = @r";
 
-                // Sắp xếp
-                sql += " ORDER BY M.GroupName, M.MatchDate";
+               // --- Phần logic lọc và thực thi giữ nguyên ---
+               bool hasGroupFilter = !string.IsNullOrEmpty(groupName)
+                                     && groupName != "All"
+                                     && groupName != "Tất cả các bảng";
 
-                using (SqlCommand cmd = new SqlCommand(sql, conn))
-                {
-                    cmd.Parameters.AddWithValue("@tId", tournamentId);
-                    cmd.Parameters.AddWithValue("@r", round);
+               if (hasGroupFilter)
+                   sql += " AND M.GroupName = @gName";
 
-                    if (hasGroupFilter)
-                    {
-                        cmd.Parameters.AddWithValue("@gName", groupName);
-                    }
+               sql += " ORDER BY M.GroupName, M.MatchDate";
 
-                    DataTable dt = new DataTable();
-                    try
-                    {
-                        conn.Open();
-                        SqlDataAdapter da = new SqlDataAdapter(cmd);
-                        da.Fill(dt);
-                    }
-                    catch (Exception ex)
-                    {
-                        // Có thể log lỗi ra debug
-                        System.Diagnostics.Debug.WriteLine(ex.Message);
-                    }
-                    return dt;
-                }
-            }
-        }
+               using (SqlCommand cmd = new SqlCommand(sql, conn))
+               {
+                   cmd.Parameters.AddWithValue("@tId", tournamentId);
+                   cmd.Parameters.AddWithValue("@r", round);
+
+                   if (hasGroupFilter)
+                   {
+                       cmd.Parameters.AddWithValue("@gName", groupName);
+                   }
+
+                   DataTable dt = new DataTable();
+                   try
+                   {
+                       conn.Open();
+                       SqlDataAdapter da = new SqlDataAdapter(cmd);
+                       da.Fill(dt);
+                   }
+                   catch (Exception ex)
+                   {
+                       System.Diagnostics.Debug.WriteLine(ex.Message);
+                   }
+                   return dt;
+               }
+           }
+       }
 
         // Cập nhật kết quả trận đấu
         public static void UpdateMatchResult(int matchId, int homeScore, int awayScore)
