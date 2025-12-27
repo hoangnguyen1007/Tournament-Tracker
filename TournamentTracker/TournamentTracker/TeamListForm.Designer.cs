@@ -274,7 +274,7 @@
             btnImportExcel.Name = "btnImportExcel";
             btnImportExcel.Size = new Size(178, 48);
             btnImportExcel.TabIndex = 11;
-            btnImportExcel.Text = "Import form Excel";
+            btnImportExcel.Text = "Import from Excel";
             btnImportExcel.UseVisualStyleBackColor = false;
             btnImportExcel.Click += btnImportExcel_Click;
             // 
