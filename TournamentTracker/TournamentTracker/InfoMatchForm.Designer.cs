@@ -30,31 +30,19 @@
         {
             DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle4 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle3 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle5 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle8 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle3 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle6 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle7 = new DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(InfoMatchForm));
             AwayTeamTitleLabel = new Label();
             HomeTeamTitleLabel = new Label();
             homeTeamDataGridView = new DataGridView();
-            colSTT = new DataGridViewTextBoxColumn();
-            colTeam = new DataGridViewTextBoxColumn();
-            colP = new DataGridViewTextBoxColumn();
-            colW = new DataGridViewTextBoxColumn();
-            colD = new DataGridViewTextBoxColumn();
-            colL = new DataGridViewTextBoxColumn();
             homeLabel = new Label();
             awayLabel = new Label();
             awayTeamdataGridView = new DataGridView();
-            dataGridViewTextBoxColumn1 = new DataGridViewTextBoxColumn();
-            dataGridViewTextBoxColumn2 = new DataGridViewTextBoxColumn();
-            dataGridViewTextBoxColumn3 = new DataGridViewTextBoxColumn();
-            dataGridViewTextBoxColumn4 = new DataGridViewTextBoxColumn();
-            dataGridViewTextBoxColumn5 = new DataGridViewTextBoxColumn();
-            dataGridViewTextBoxColumn6 = new DataGridViewTextBoxColumn();
             dateLabel = new Label();
             homeScoreLabel = new Label();
             locationLabel = new Label();
@@ -65,6 +53,18 @@
             resultHTeamLabel = new Label();
             resultATeamLabel = new Label();
             backButton = new Button();
+            colSTT = new DataGridViewTextBoxColumn();
+            colTeam = new DataGridViewTextBoxColumn();
+            colP = new DataGridViewTextBoxColumn();
+            colW = new DataGridViewTextBoxColumn();
+            colD = new DataGridViewTextBoxColumn();
+            colL = new DataGridViewTextBoxColumn();
+            dataGridViewTextBoxColumn1 = new DataGridViewTextBoxColumn();
+            dataGridViewTextBoxColumn2 = new DataGridViewTextBoxColumn();
+            dataGridViewTextBoxColumn3 = new DataGridViewTextBoxColumn();
+            dataGridViewTextBoxColumn4 = new DataGridViewTextBoxColumn();
+            dataGridViewTextBoxColumn5 = new DataGridViewTextBoxColumn();
+            dataGridViewTextBoxColumn6 = new DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)homeTeamDataGridView).BeginInit();
             ((System.ComponentModel.ISupportInitialize)awayTeamdataGridView).BeginInit();
             SuspendLayout();
@@ -134,70 +134,6 @@
             homeTeamDataGridView.Size = new Size(575, 494);
             homeTeamDataGridView.TabIndex = 14;
             // 
-            // colSTT
-            // 
-            colSTT.DataPropertyName = "#";
-            dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle2.BackColor = Color.Black;
-            dataGridViewCellStyle2.Font = new Font("Microsoft Sans Serif", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            dataGridViewCellStyle2.ForeColor = Color.White;
-            dataGridViewCellStyle2.SelectionBackColor = Color.Black;
-            colSTT.DefaultCellStyle = dataGridViewCellStyle2;
-            colSTT.HeaderText = "#";
-            colSTT.MinimumWidth = 40;
-            colSTT.Name = "colSTT";
-            colSTT.ReadOnly = true;
-            colSTT.Width = 40;
-            // 
-            // colTeam
-            // 
-            colTeam.DataPropertyName = "ID";
-            dataGridViewCellStyle3.Font = new Font("Microsoft Sans Serif", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            colTeam.DefaultCellStyle = dataGridViewCellStyle3;
-            colTeam.HeaderText = "ID";
-            colTeam.MinimumWidth = 80;
-            colTeam.Name = "colTeam";
-            colTeam.ReadOnly = true;
-            colTeam.Width = 80;
-            // 
-            // colP
-            // 
-            colP.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-            colP.DataPropertyName = "PlayerName";
-            colP.HeaderText = "PLAYER NAME";
-            colP.MinimumWidth = 100;
-            colP.Name = "colP";
-            colP.ReadOnly = true;
-            // 
-            // colW
-            // 
-            colW.DataPropertyName = "Position";
-            colW.HeaderText = "POSITION";
-            colW.MinimumWidth = 100;
-            colW.Name = "colW";
-            colW.ReadOnly = true;
-            colW.Width = 125;
-            // 
-            // colD
-            // 
-            colD.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
-            colD.DataPropertyName = "Age";
-            colD.HeaderText = "AGE";
-            colD.MinimumWidth = 30;
-            colD.Name = "colD";
-            colD.ReadOnly = true;
-            colD.Width = 64;
-            // 
-            // colL
-            // 
-            colL.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
-            colL.DataPropertyName = "Number";
-            colL.HeaderText = "NUMBER";
-            colL.MinimumWidth = 30;
-            colL.Name = "colL";
-            colL.ReadOnly = true;
-            colL.Width = 96;
-            // 
             // homeLabel
             // 
             homeLabel.BackColor = Color.Transparent;
@@ -260,70 +196,6 @@
             awayTeamdataGridView.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             awayTeamdataGridView.Size = new Size(575, 494);
             awayTeamdataGridView.TabIndex = 17;
-            // 
-            // dataGridViewTextBoxColumn1
-            // 
-            dataGridViewTextBoxColumn1.DataPropertyName = "#";
-            dataGridViewCellStyle6.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle6.BackColor = Color.Black;
-            dataGridViewCellStyle6.Font = new Font("Microsoft Sans Serif", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            dataGridViewCellStyle6.ForeColor = Color.White;
-            dataGridViewCellStyle6.SelectionBackColor = Color.Black;
-            dataGridViewTextBoxColumn1.DefaultCellStyle = dataGridViewCellStyle6;
-            dataGridViewTextBoxColumn1.HeaderText = "#";
-            dataGridViewTextBoxColumn1.MinimumWidth = 40;
-            dataGridViewTextBoxColumn1.Name = "dataGridViewTextBoxColumn1";
-            dataGridViewTextBoxColumn1.ReadOnly = true;
-            dataGridViewTextBoxColumn1.Width = 40;
-            // 
-            // dataGridViewTextBoxColumn2
-            // 
-            dataGridViewTextBoxColumn2.DataPropertyName = "ID";
-            dataGridViewCellStyle7.Font = new Font("Microsoft Sans Serif", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            dataGridViewTextBoxColumn2.DefaultCellStyle = dataGridViewCellStyle7;
-            dataGridViewTextBoxColumn2.HeaderText = "ID";
-            dataGridViewTextBoxColumn2.MinimumWidth = 80;
-            dataGridViewTextBoxColumn2.Name = "dataGridViewTextBoxColumn2";
-            dataGridViewTextBoxColumn2.ReadOnly = true;
-            dataGridViewTextBoxColumn2.Width = 80;
-            // 
-            // dataGridViewTextBoxColumn3
-            // 
-            dataGridViewTextBoxColumn3.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-            dataGridViewTextBoxColumn3.DataPropertyName = "PlayerName";
-            dataGridViewTextBoxColumn3.HeaderText = "PLAYER NAME";
-            dataGridViewTextBoxColumn3.MinimumWidth = 100;
-            dataGridViewTextBoxColumn3.Name = "dataGridViewTextBoxColumn3";
-            dataGridViewTextBoxColumn3.ReadOnly = true;
-            // 
-            // dataGridViewTextBoxColumn4
-            // 
-            dataGridViewTextBoxColumn4.DataPropertyName = "Position";
-            dataGridViewTextBoxColumn4.HeaderText = "POSITION";
-            dataGridViewTextBoxColumn4.MinimumWidth = 100;
-            dataGridViewTextBoxColumn4.Name = "dataGridViewTextBoxColumn4";
-            dataGridViewTextBoxColumn4.ReadOnly = true;
-            dataGridViewTextBoxColumn4.Width = 125;
-            // 
-            // dataGridViewTextBoxColumn5
-            // 
-            dataGridViewTextBoxColumn5.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
-            dataGridViewTextBoxColumn5.DataPropertyName = "Age";
-            dataGridViewTextBoxColumn5.HeaderText = "AGE";
-            dataGridViewTextBoxColumn5.MinimumWidth = 30;
-            dataGridViewTextBoxColumn5.Name = "dataGridViewTextBoxColumn5";
-            dataGridViewTextBoxColumn5.ReadOnly = true;
-            dataGridViewTextBoxColumn5.Width = 64;
-            // 
-            // dataGridViewTextBoxColumn6
-            // 
-            dataGridViewTextBoxColumn6.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
-            dataGridViewTextBoxColumn6.DataPropertyName = "Number";
-            dataGridViewTextBoxColumn6.HeaderText = "NUMBER";
-            dataGridViewTextBoxColumn6.MinimumWidth = 30;
-            dataGridViewTextBoxColumn6.Name = "dataGridViewTextBoxColumn6";
-            dataGridViewTextBoxColumn6.ReadOnly = true;
-            dataGridViewTextBoxColumn6.Width = 96;
             // 
             // dateLabel
             // 
@@ -450,6 +322,134 @@
             backButton.TextAlign = ContentAlignment.TopCenter;
             backButton.UseVisualStyleBackColor = false;
             backButton.Click += backButton_Click;
+            // 
+            // colSTT
+            // 
+            colSTT.DataPropertyName = "#";
+            dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle2.BackColor = Color.Black;
+            dataGridViewCellStyle2.Font = new Font("Microsoft Sans Serif", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            dataGridViewCellStyle2.ForeColor = Color.White;
+            dataGridViewCellStyle2.SelectionBackColor = Color.Black;
+            colSTT.DefaultCellStyle = dataGridViewCellStyle2;
+            colSTT.HeaderText = "#";
+            colSTT.MinimumWidth = 40;
+            colSTT.Name = "colSTT";
+            colSTT.ReadOnly = true;
+            colSTT.Width = 40;
+            // 
+            // colTeam
+            // 
+            colTeam.DataPropertyName = "ID";
+            dataGridViewCellStyle3.Font = new Font("Microsoft Sans Serif", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            colTeam.DefaultCellStyle = dataGridViewCellStyle3;
+            colTeam.HeaderText = "ID";
+            colTeam.MinimumWidth = 80;
+            colTeam.Name = "colTeam";
+            colTeam.ReadOnly = true;
+            colTeam.Width = 80;
+            // 
+            // colP
+            // 
+            colP.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            colP.DataPropertyName = "PlayerName";
+            colP.HeaderText = "PLAYER NAME";
+            colP.MinimumWidth = 100;
+            colP.Name = "colP";
+            colP.ReadOnly = true;
+            // 
+            // colW
+            // 
+            colW.DataPropertyName = "Position";
+            colW.HeaderText = "POSITION";
+            colW.MinimumWidth = 100;
+            colW.Name = "colW";
+            colW.ReadOnly = true;
+            colW.Width = 125;
+            // 
+            // colD
+            // 
+            colD.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+            colD.DataPropertyName = "Age";
+            colD.HeaderText = "AGE";
+            colD.MinimumWidth = 30;
+            colD.Name = "colD";
+            colD.ReadOnly = true;
+            colD.Width = 64;
+            // 
+            // colL
+            // 
+            colL.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+            colL.DataPropertyName = "Number";
+            colL.HeaderText = "NUMBER";
+            colL.MinimumWidth = 30;
+            colL.Name = "colL";
+            colL.ReadOnly = true;
+            colL.Width = 96;
+            // 
+            // dataGridViewTextBoxColumn1
+            // 
+            dataGridViewTextBoxColumn1.DataPropertyName = "#";
+            dataGridViewCellStyle6.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle6.BackColor = Color.Black;
+            dataGridViewCellStyle6.Font = new Font("Microsoft Sans Serif", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            dataGridViewCellStyle6.ForeColor = Color.White;
+            dataGridViewCellStyle6.SelectionBackColor = Color.Black;
+            dataGridViewTextBoxColumn1.DefaultCellStyle = dataGridViewCellStyle6;
+            dataGridViewTextBoxColumn1.HeaderText = "#";
+            dataGridViewTextBoxColumn1.MinimumWidth = 40;
+            dataGridViewTextBoxColumn1.Name = "dataGridViewTextBoxColumn1";
+            dataGridViewTextBoxColumn1.ReadOnly = true;
+            dataGridViewTextBoxColumn1.Width = 40;
+            // 
+            // dataGridViewTextBoxColumn2
+            // 
+            dataGridViewTextBoxColumn2.DataPropertyName = "ID";
+            dataGridViewCellStyle7.Font = new Font("Microsoft Sans Serif", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            dataGridViewTextBoxColumn2.DefaultCellStyle = dataGridViewCellStyle7;
+            dataGridViewTextBoxColumn2.HeaderText = "ID";
+            dataGridViewTextBoxColumn2.MinimumWidth = 80;
+            dataGridViewTextBoxColumn2.Name = "dataGridViewTextBoxColumn2";
+            dataGridViewTextBoxColumn2.ReadOnly = true;
+            dataGridViewTextBoxColumn2.Width = 80;
+            // 
+            // dataGridViewTextBoxColumn3
+            // 
+            dataGridViewTextBoxColumn3.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            dataGridViewTextBoxColumn3.DataPropertyName = "PlayerName";
+            dataGridViewTextBoxColumn3.HeaderText = "PLAYER NAME";
+            dataGridViewTextBoxColumn3.MinimumWidth = 100;
+            dataGridViewTextBoxColumn3.Name = "dataGridViewTextBoxColumn3";
+            dataGridViewTextBoxColumn3.ReadOnly = true;
+            // 
+            // dataGridViewTextBoxColumn4
+            // 
+            dataGridViewTextBoxColumn4.DataPropertyName = "Position";
+            dataGridViewTextBoxColumn4.HeaderText = "POSITION";
+            dataGridViewTextBoxColumn4.MinimumWidth = 100;
+            dataGridViewTextBoxColumn4.Name = "dataGridViewTextBoxColumn4";
+            dataGridViewTextBoxColumn4.ReadOnly = true;
+            dataGridViewTextBoxColumn4.Width = 125;
+            // 
+            // dataGridViewTextBoxColumn5
+            // 
+            dataGridViewTextBoxColumn5.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+            dataGridViewTextBoxColumn5.DataPropertyName = "Age";
+            dataGridViewTextBoxColumn5.HeaderText = "AGE";
+            dataGridViewTextBoxColumn5.MinimumWidth = 30;
+            dataGridViewTextBoxColumn5.Name = "dataGridViewTextBoxColumn5";
+            dataGridViewTextBoxColumn5.ReadOnly = true;
+            dataGridViewTextBoxColumn5.Width = 64;
+            // 
+            // dataGridViewTextBoxColumn6
+            // 
+            dataGridViewTextBoxColumn6.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+            dataGridViewTextBoxColumn6.DataPropertyName = "Number";
+            dataGridViewTextBoxColumn6.HeaderText = "NUMBER";
+            dataGridViewTextBoxColumn6.MinimumWidth = 30;
+            dataGridViewTextBoxColumn6.Name = "dataGridViewTextBoxColumn6";
+            dataGridViewTextBoxColumn6.ReadOnly = true;
+            dataGridViewTextBoxColumn6.Width = 96;
             // 
             // InfoMatchForm
             // 
