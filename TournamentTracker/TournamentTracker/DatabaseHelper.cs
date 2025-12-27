@@ -987,5 +987,23 @@ namespace TeamListForm
                 }
             }
         }
+
+        // Hàm khóa toàn bộ trận đấu của một vòng (Set Status = 2)
+        public static void LockRound(int tournamentId, int round)
+        {
+            using (SqlConnection conn = new SqlConnection(connectionString))
+            {
+                conn.Open();
+                // Câu lệnh SQL: Cập nhật tất cả trận đấu của vòng 'round' thành Status 2 (Đã kết thúc)
+                string sql = "UPDATE Matches SET Status = 2 WHERE TournamentID = @tId AND Round = @r";
+
+                using (SqlCommand cmd = new SqlCommand(sql, conn))
+                {
+                    cmd.Parameters.AddWithValue("@tId", tournamentId);
+                    cmd.Parameters.AddWithValue("@r", round);
+                    cmd.ExecuteNonQuery();
+                }
+            }
+        }
     }
 }

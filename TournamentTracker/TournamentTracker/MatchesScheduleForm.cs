@@ -257,6 +257,13 @@ namespace TeamListForm
         {
             try
             {
+                // --- 1. LẤY VÒNG HIỆN TẠI (Vòng sắp trở thành quá khứ) ---
+                int currentRound = DatabaseHelper.GetMaxRound(_tournamentId);
+
+                // --- 2. [QUAN TRỌNG] KHÓA SỔ VÒNG CŨ ---
+                // Hành động này set Status = 2 cho toàn bộ trận đấu vòng hiện tại.
+                // Nhờ đó, khi mở lại MatchResultForm, code "if (_match.IsPlayed)" sẽ chạy và khóa form lại.
+                DatabaseHelper.LockRound(_tournamentId, currentRound);
                 // 1. Tạo dữ liệu vòng mới trong SQL
                 MatchGenerator.GenerateNextRound(_tournamentId);
 

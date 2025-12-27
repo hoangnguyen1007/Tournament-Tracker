@@ -42,6 +42,21 @@ namespace TeamListForm
             // 5. [MỚI] Cập nhật trạng thái khóa/mở ô nhập ngay lập tức
             // Gọi hàm sự kiện này để: Nếu Checkbox được tích -> Khóa ô nhập, ngược lại -> Mở ô nhập
             finishedCheckBox_CheckedChanged(null, null);
+            if (_match.IsPlayed)
+            {
+                // 1. Khóa nút Lưu
+                saveMatchButton.Enabled = false;
+
+                // 2. Khóa Checkbox (Không cho bỏ tích nữa)
+                finishedCheckBox.Enabled = false;
+
+                // 3. Khóa luôn ô nhập điểm cho chắc chắn
+                homeNumericUpDown.Enabled = false;
+                awayNumericUpDown.Enabled = false;
+
+                // vô hiệu hóa saveMatchButton
+                saveMatchButton.Enabled = false;
+            }
         }
 
         private void saveMatchButton_Click(object sender, EventArgs e)
@@ -71,7 +86,6 @@ namespace TeamListForm
 
             homeNumericUpDown.Enabled = choPhepSua;
             awayNumericUpDown.Enabled = choPhepSua;
-            finishedCheckBox.Enabled = choPhepSua;
         }
     }
 }
