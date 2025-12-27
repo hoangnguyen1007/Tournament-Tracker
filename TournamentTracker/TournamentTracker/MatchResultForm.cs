@@ -64,14 +64,7 @@ namespace TeamListForm
             // Cập nhật điểm mới vào biến _match
             _match.HomeScore = (int)homeNumericUpDown.Value;
             _match.AwayScore = (int)awayNumericUpDown.Value;
-            _match.IsPlayed = true; // Đánh dấu là đã đá
-
-            // Đổ dữ liệu Checkbox
-            finishedCheckBox.Checked = _match.IsPlayed;
-
-            // Gọi sự kiện 1 lần để khóa/mở ô nhập ngay khi vừa mở Form
-            finishedCheckBox_CheckedChanged(null, null);
-
+            _match.IsPlayed = finishedCheckBox.Checked;
             // Đóng form và báo kết quả OK
             this.DialogResult = DialogResult.OK;
             this.Close();
@@ -79,6 +72,22 @@ namespace TeamListForm
 
         private void finishedCheckBox_CheckedChanged(object sender, EventArgs e)
         {
+            if (finishedCheckBox.Checked && finishedCheckBox.Focused)
+            {
+                DialogResult result = MessageBox.Show(
+                    "Xác nhận kết thúc trận đấu?\n\nLưu ý: Sau khi kết thúc, kết quả không thể chỉnh sửa được nữa.",
+                    "Xác nhận kết thúc",
+                    MessageBoxButtons.YesNo,
+                    MessageBoxIcon.Question);
+
+                if (result == DialogResult.No)
+                {
+                    // Nếu chọn No: Bỏ tích checkbox
+                    // (Lệnh này sẽ kích hoạt lại sự kiện này một lần nữa, nhưng Checked sẽ là false nên không bị lặp)
+                    finishedCheckBox.Checked = false;
+                    return; // Thoát hàm để phần logic đệ quy tự xử lý việc mở khóa ô nhập
+                }
+            }
             // Kiểm tra: Nếu ĐÃ TÍCH (Checked) thì KHÓA ô nhập (Enabled = false)
             // Nếu CHƯA TÍCH thì MỞ ô nhập (Enabled = true)
 

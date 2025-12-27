@@ -112,7 +112,7 @@ namespace TeamListForm
                     // Nếu người dùng bấm Save và OK:
 
                     // a. Lưu xuống Database
-                    DatabaseHelper.UpdateMatchResult(m.MatchId, m.HomeScore, m.AwayScore);
+                    DatabaseHelper.UpdateMatchResult(m.MatchId, m.HomeScore, m.AwayScore, m.IsPlayed);
 
                     // b. Tải lại lưới trận đấu để cập nhật điểm số mới
                     LoadMatchesToGrid();
@@ -178,6 +178,12 @@ namespace TeamListForm
         // Hiển thị bảng xếp hạng
         private void RecalculateStandings()
         {
+            // Kiểm tra: Nếu giải chưa có lịch thi đấu (chưa ghép trận) thì xóa trắng bảng xếp hạng và thoát luôn.
+            if (!DatabaseHelper.HasSchedule(_tournamentId))
+            {
+                standingsDataGridView.DataSource = null;
+                return;
+            }
             try
             {
                 string groupName = "All"; // Giá trị mặc định là xem hết
@@ -212,6 +218,7 @@ namespace TeamListForm
                 updateButton.Visible = false;
                 btnReset.Visible = false;
                 choiceRoundComboBox.Visible = (currentRound > 0);
+                comboGroupFilter.Visible = (currentRound > 0);
                 return;
             }
             if (currentRound == 0)
@@ -220,8 +227,11 @@ namespace TeamListForm
                 btnStart.Visible = true;
                 btnNextRound.Visible = false;
                 btnReset.Visible = false;
+                InforButton.Visible = false;
+                updateButton.Enabled = false;
                 // QUAN TRỌNG: Ẩn luôn ComboBox vì chưa có gì để xem
                 choiceRoundComboBox.Visible = false;
+                comboGroupFilter.Visible = false;
             }
             else
             {
@@ -230,6 +240,8 @@ namespace TeamListForm
                 btnNextRound.Visible = true;
                 btnReset.Visible = true;
                 choiceRoundComboBox.Visible = true; // Hiện ComboBox để chọn vòng
+                InforButton.Visible = true;
+                updateButton.Enabled = true;
             }
         }
         private void btnStart_Click(object sender, EventArgs e)
@@ -252,6 +264,7 @@ namespace TeamListForm
             LoadRounds();
             if (choiceRoundComboBox.Items.Count > 0) choiceRoundComboBox.SelectedIndex = 0;
             else LoadMatchesToGrid();
+            RecalculateStandings();
         }
         private void btnNextRound_Click(object sender, EventArgs e)
         {
@@ -452,6 +465,7 @@ namespace TeamListForm
 
                     // Reset bộ lọc bảng về mặc định
                     if (comboGroupFilter.Items.Count > 0) comboGroupFilter.SelectedIndex = 0;
+                    comboGroupFilter.Visible = false;
 
                     // 6. Cập nhật lại trạng thái các nút (Nút Start sẽ hiện lại)
                     UpdateButtonState();

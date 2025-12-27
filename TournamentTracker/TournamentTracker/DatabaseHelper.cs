@@ -713,9 +713,11 @@ namespace TeamListForm
 
                     T1.TEAMNAME as HomeTeamName, 
                     T2.TEAMNAME as AwayTeamName,
-                    CASE 
-                        WHEN M.Status = 2 THEN CAST(M.HomeScore AS NVARCHAR) + ' - ' + CAST(M.AwayScore AS NVARCHAR)
-                        ELSE 'vs' 
+                    CASE
+                        -- Nếu đã kết thúc hoặc ĐÃ CÓ ĐIỂM SỐ thì hiện tỷ số
+                        WHEN M.Status = 2 OR (M.HomeScore IS NOT NULL AND M.AwayScore IS NOT NULL) 
+                        THEN CAST(M.HomeScore AS NVARCHAR) + ' - ' + CAST(M.AwayScore AS NVARCHAR)
+                    ELSE 'vs'
                     END as ScoreDisplay
                 FROM Matches M
                 LEFT JOIN Teams T1 ON M.HomeTeamID = T1.ID
@@ -763,36 +765,48 @@ namespace TeamListForm
         }
 
         // Cập nhật kết quả trận đấu
-        public static void UpdateMatchResult(int matchId, int homeScore, int awayScore)
+        public static void UpdateMatchResult(int matchId, int homeScore, int awayScore, bool isFinished)
         {
+            // 1. Xác định Status: Nếu xong thì 2, chưa xong thì 0
+            int status = isFinished ? 2 : 0;
+
             object winnerId = DBNull.Value;
             int homeTeamId = 0, awayTeamId = 0;
+
             using (SqlConnection conn = new SqlConnection(connectionString))
             {
                 conn.Open();
-                // Lấy ID 2 đội
-                string getTeamsSql = "SELECT HomeTeamID, AwayTeamID FROM Matches WHERE ID = @id";
-                using (SqlCommand cmd = new SqlCommand(getTeamsSql, conn))
+
+                // 2. Chỉ cần tính người thắng nếu trận đấu ĐÃ KẾT THÚC
+                // (Nếu chưa kết thúc, WinnerID sẽ là DBNull.Value)
+                if (isFinished)
                 {
-                    cmd.Parameters.AddWithValue("@id", matchId);
-                    using (SqlDataReader reader = cmd.ExecuteReader())
+                    string getTeamsSql = "SELECT HomeTeamID, AwayTeamID FROM Matches WHERE ID = @id";
+                    using (SqlCommand cmd = new SqlCommand(getTeamsSql, conn))
                     {
-                        if (reader.Read())
+                        cmd.Parameters.AddWithValue("@id", matchId);
+                        using (SqlDataReader reader = cmd.ExecuteReader())
                         {
-                            homeTeamId = reader.GetInt32(0);
-                            awayTeamId = reader.GetInt32(1);
+                            if (reader.Read())
+                            {
+                                homeTeamId = reader.GetInt32(0);
+                                awayTeamId = reader.GetInt32(1);
+                            }
                         }
                     }
+                    // Logic tính thắng thua
+                    if (homeScore > awayScore) winnerId = homeTeamId;
+                    else if (awayScore > homeScore) winnerId = awayTeamId;
                 }
-                // Xác định người thắng
-                if (homeScore > awayScore) winnerId = homeTeamId;
-                else if (awayScore > homeScore) winnerId = awayTeamId;
-                // Cập nhật DB
-                string updateSql = "UPDATE Matches SET HomeScore=@h, AwayScore=@a, Status=2, WinnerID=@win WHERE ID=@id";
+
+                // 3. Cập nhật DB: Thay số 2 cứng bằng tham số @stat
+                string updateSql = "UPDATE Matches SET HomeScore=@h, AwayScore=@a, Status=@stat, WinnerID=@win WHERE ID=@id";
+
                 using (SqlCommand cmd = new SqlCommand(updateSql, conn))
                 {
                     cmd.Parameters.AddWithValue("@h", homeScore);
                     cmd.Parameters.AddWithValue("@a", awayScore);
+                    cmd.Parameters.AddWithValue("@stat", status);
                     cmd.Parameters.AddWithValue("@win", winnerId);
                     cmd.Parameters.AddWithValue("@id", matchId);
                     cmd.ExecuteNonQuery();
@@ -988,14 +1002,19 @@ namespace TeamListForm
             }
         }
 
-        // Hàm khóa toàn bộ trận đấu của một vòng (Set Status = 2)
+        // Hàm khóa toàn bộ trận đấu và quy về 0-0 nếu chưa đá
         public static void LockRound(int tournamentId, int round)
         {
             using (SqlConnection conn = new SqlConnection(connectionString))
             {
                 conn.Open();
-                // Câu lệnh SQL: Cập nhật tất cả trận đấu của vòng 'round' thành Status 2 (Đã kết thúc)
-                string sql = "UPDATE Matches SET Status = 2 WHERE TournamentID = @tId AND Round = @r";
+
+                // Ngoài việc set Status = 2, ta dùng ISNULL để set điểm về 0 nếu chưa có điểm
+                string sql = @"UPDATE Matches 
+                       SET Status = 2, 
+                           HomeScore = ISNULL(HomeScore, 0), 
+                           AwayScore = ISNULL(AwayScore, 0) 
+                       WHERE TournamentID = @tId AND Round = @r";
 
                 using (SqlCommand cmd = new SqlCommand(sql, conn))
                 {
