@@ -22,9 +22,9 @@
 
 ## 📖 Giới thiệu (About)
 
-**Tournament Tracker** là giải pháp phần mềm Desktop Application hiện đại, giúp đơn giản hóa quy trình tổ chức và quản lý các giải đấu thể thao. Dự án tập trung giải quyết bài toán đồng bộ dữ liệu giữa nhiều người dùng thông qua kiến trúc **Centralized Cloud Database**.
+**Tournament Tracker** là một ứng dụng Desktop được xây dựng trên nền tảng .NET 8 (Windows Forms), được thiết kế để giải quyết các bài toán phức tạp trong việc tổ chức và vận hành các giải đấu thể thao.
 
-Thay vì lưu trữ cục bộ, ứng dụng cho phép Ban tổ chức (Admin) tạo giải đấu tại máy chủ, và Người xem (Viewer) có thể cập nhật kết quả theo thời gian thực từ bất kỳ đâu chỉ cần có Internet.
+Trong thực tế, việc quản lý giải đấu bằng các công cụ thủ công như giấy tờ hay bảng tính Excel thường gặp nhiều hạn chế: dễ sai sót khi nhập liệu, khó khăn trong việc tính toán hiệu số bàn thắng/bại, và tốn nhiều thời gian để sắp xếp lịch thi đấu công bằng. **Tournament Tracker** số hóa toàn bộ quy trình này, mang đến một trải nghiệm quản lý khép kín và chuyên nghiệp
 
 ---
 
@@ -79,12 +79,4 @@ Dành cho người dùng muốn nhanh gọn, copy vào USB.
 | **3** | **Nguyễn Quốc Nguyên** | 24521197 | 
 
 ---
-
-<br>
-
-<div align="center">
-  
-  **TOURNAMENT TRACKER PROJECT**  
-  <br> 
-  
-</div>
+*© 2025 Tournament Tracker Project.* 
