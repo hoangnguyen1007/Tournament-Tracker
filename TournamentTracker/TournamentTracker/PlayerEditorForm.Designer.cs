@@ -98,10 +98,9 @@
             // lbPosition
             // 
             lbPosition.AutoSize = true;
-            lbPlayerName.BackColor = Color.Transparent;
             lbPosition.Font = new Font("Segoe UI Semibold", 24F, FontStyle.Bold, GraphicsUnit.Pixel, 0);
+            lbPosition.ForeColor = Color.White;
             lbPosition.Location = new Point(39, 74);
-            lbPlayerName.ForeColor = Color.White;
             lbPosition.Name = "lbPosition";
             lbPosition.Size = new Size(100, 32);
             lbPosition.TabIndex = 0;
@@ -133,10 +132,9 @@
             // lbAge
             // 
             lbAge.AutoSize = true;
-            lbPlayerName.BackColor = Color.Transparent;
             lbAge.Font = new Font("Segoe UI Semibold", 24F, FontStyle.Bold, GraphicsUnit.Pixel, 0);
+            lbAge.ForeColor = Color.White;
             lbAge.Location = new Point(39, 122);
-            lbPlayerName.ForeColor = Color.White;
             lbAge.Name = "lbAge";
             lbAge.Size = new Size(57, 32);
             lbAge.TabIndex = 0;
@@ -186,10 +184,9 @@
             // lbNumber
             // 
             lbNumber.AutoSize = true;
-            lbPlayerName.BackColor = Color.Transparent;
             lbNumber.Font = new Font("Segoe UI Semibold", 24F, FontStyle.Bold, GraphicsUnit.Pixel, 0);
+            lbNumber.ForeColor = Color.White;
             lbNumber.Location = new Point(39, 171);
-            lbPlayerName.ForeColor = Color.White;
             lbNumber.Name = "lbNumber";
             lbNumber.Size = new Size(103, 32);
             lbNumber.TabIndex = 0;
