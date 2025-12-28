@@ -21,36 +21,36 @@ namespace TeamListForm
 
             _match = match; // Lưu lại biến match để sử dụng khi bấm nút Save
 
-            // 1. Hiển thị thông tin tiêu đề (Vòng đấu - Mã trận)
+            // Hiển thị thông tin tiêu đề (Vòng đấu - Mã trận)
             MatchInfoLabel.Text = $"Round {_match.Round} - Match {_match.MatchId}";
 
-            // 2. Hiển thị tên 2 đội bóng
+            // Hiển thị tên 2 đội bóng
             if (_match.HomeTeam != null)
                 HGLabel.Text = _match.HomeTeam.TEAMNAME;
 
             if (_match.AwayTeam != null)
                 AGLabel.Text = _match.AwayTeam.TEAMNAME;
 
-            // 3. Đổ điểm số hiện tại lên ô nhập
+            // Đổ điểm số hiện tại lên ô nhập
             homeNumericUpDown.Value = _match.HomeScore;
             awayNumericUpDown.Value = _match.AwayScore;
 
-            // 4. [MỚI - QUAN TRỌNG] Đổ trạng thái "Đã kết thúc" vào Checkbox
+            // Đổ trạng thái "Đã kết thúc" vào Checkbox
             // Nếu _match.IsPlayed là true -> Checkbox sẽ được tích
             finishedCheckBox.Checked = _match.IsPlayed;
 
-            // 5. [MỚI] Cập nhật trạng thái khóa/mở ô nhập ngay lập tức
+            // Cập nhật trạng thái khóa/mở ô nhập ngay lập tức
             // Gọi hàm sự kiện này để: Nếu Checkbox được tích -> Khóa ô nhập, ngược lại -> Mở ô nhập
             finishedCheckBox_CheckedChanged(null, null);
             if (_match.IsPlayed)
             {
-                // 1. Khóa nút Lưu
+                // Khóa nút Lưu
                 saveMatchButton.Enabled = false;
 
-                // 2. Khóa Checkbox (Không cho bỏ tích nữa)
+                // Khóa Checkbox (Không cho bỏ tích nữa)
                 finishedCheckBox.Enabled = false;
 
-                // 3. Khóa luôn ô nhập điểm cho chắc chắn
+                // Khóa luôn ô nhập điểm cho chắc chắn
                 homeNumericUpDown.Enabled = false;
                 awayNumericUpDown.Enabled = false;
 
@@ -78,7 +78,8 @@ namespace TeamListForm
                     "Xác nhận kết thúc trận đấu?\n\nLưu ý: Sau khi kết thúc, kết quả không thể chỉnh sửa được nữa.",
                     "Xác nhận kết thúc",
                     MessageBoxButtons.YesNo,
-                    MessageBoxIcon.Question);
+                    MessageBoxIcon.Warning,
+                    MessageBoxDefaultButton.Button2); // Mặc định chọn No để an toàn
 
                 if (result == DialogResult.No)
                 {

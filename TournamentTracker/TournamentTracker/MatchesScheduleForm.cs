@@ -15,7 +15,7 @@ namespace TeamListForm
         {
             InitializeComponent();
             _tournamentId = tournamentId;
-            matchesDataGridView.AutoGenerateColumns = false; // Giữ nguyên design cột
+            matchesDataGridView.AutoGenerateColumns = false; // Ngăn tự động tạo cột
         }
 
         private void choiceRoundComboBox_SelectedIndexChanged(object sender, EventArgs e)
@@ -27,7 +27,7 @@ namespace TeamListForm
         {
             // Kiểm tra nếu chưa chọn vòng đấu thì thoát
             if (choiceRoundComboBox.SelectedItem == null) return;
-            matchesDataGridView.AutoGenerateColumns = false; // Giữ nguyên design cột
+            matchesDataGridView.AutoGenerateColumns = false; // Ngăn tự động tạo cột
             try
             {
                 int roundNum = 1;
@@ -68,17 +68,17 @@ namespace TeamListForm
         }
         private void updateButton_Click(object sender, EventArgs e)
         {
-            // 1. Kiểm tra xem người dùng có chọn dòng nào không
+            // Kiểm tra xem người dùng có chọn dòng nào không
             if (matchesDataGridView.CurrentRow == null)
             {
                 MessageBox.Show("Vui lòng chọn trận đấu cần cập nhật!");
                 return;
             }
 
-            // 2. Lấy dữ liệu từ dòng đang chọn ép kiểu về DataRowView
+            // Lấy dữ liệu từ dòng đang chọn ép kiểu về DataRowView
             DataRowView row = (DataRowView)matchesDataGridView.CurrentRow.DataBoundItem;
 
-            // 3. Tạo object Match để truyền sang form Update
+            // Tạo object Match để truyền sang form Update
             Match m = new Match();
             m.MatchId = (int)row["MatchID"];
             m.Round = (int)row["Round"];
@@ -87,11 +87,11 @@ namespace TeamListForm
             m.HomeTeam = new Team { TEAMNAME = row["HomeTeamName"].ToString() };
             m.AwayTeam = new Team { TEAMNAME = row["AwayTeamName"].ToString() };
 
-            // 4. Xử lý điểm số (Nếu null thì cho bằng 0)
+            // Xử lý điểm số (Nếu null thì cho bằng 0)
             m.HomeScore = row["HomeScore"] == DBNull.Value ? 0 : (int)row["HomeScore"];
             m.AwayScore = row["AwayScore"] == DBNull.Value ? 0 : (int)row["AwayScore"];
 
-            // 5. [QUAN TRỌNG - MỚI] Xử lý trạng thái (Đã đá hay chưa?)
+            // Xử lý trạng thái (Đã đá hay chưa?)
             // Kiểm tra an toàn: Xem cột Status có tồn tại trong dữ liệu lấy lên không
             if (row.Row.Table.Columns.Contains("Status") && row["Status"] != DBNull.Value)
             {
@@ -104,20 +104,20 @@ namespace TeamListForm
                 m.IsPlayed = false; // Mặc định là chưa đá
             }
 
-            // 6. Mở form cập nhật (Truyền object Match vừa tạo vào)
+            // Mở form cập nhật (Truyền object Match vừa tạo vào)
             using (var frm = new MatchResultForm(m))
             {
                 if (frm.ShowDialog() == DialogResult.OK)
                 {
                     // Nếu người dùng bấm Save và OK:
 
-                    // a. Lưu xuống Database
+                    // Lưu xuống Database
                     DatabaseHelper.UpdateMatchResult(m.MatchId, m.HomeScore, m.AwayScore, m.IsPlayed);
 
-                    // b. Tải lại lưới trận đấu để cập nhật điểm số mới
+                    // Tải lại lưới trận đấu để cập nhật điểm số mới
                     LoadMatchesToGrid();
 
-                    // c. Tính toán lại Bảng xếp hạng ngay lập tức
+                    // Tính toán lại Bảng xếp hạng ngay lập tức
                     RecalculateStandings();
                 }
             }
@@ -126,9 +126,9 @@ namespace TeamListForm
         private void LoadRounds()
         {
             choiceRoundComboBox.Items.Clear();
-            // Lấy danh sách thật từ DB
+            // Lấy danh sách từ DB
             List<string> rounds = DatabaseHelper.GetRounds(_tournamentId);
-            // Chỉ thêm vào nếu có dữ liệu thật
+            // Chỉ thêm vào nếu danh sách lấy về có dữ liệu
             if (rounds.Count > 0)
             {
                 foreach (string r in rounds)
@@ -153,9 +153,7 @@ namespace TeamListForm
                 {
                     int createdBy = tourRow["CreatedBy"] != DBNull.Value ? Convert.ToInt32(tourRow["CreatedBy"]) : -1;
 
-                    // SO SÁNH:
-                    // 1. Nếu ID người dùng trùng với người tạo (Current == CreatedBy)
-                    // 2. Hoặc là Admin (ID = 1)
+                    // Nếu ID người dùng trùng với người tạo (Current == CreatedBy)
                     if (currentUserId == createdBy)
                     {
                         _isOwner = true;
@@ -178,7 +176,7 @@ namespace TeamListForm
         // Hiển thị bảng xếp hạng
         private void RecalculateStandings()
         {
-            // Kiểm tra: Nếu giải chưa có lịch thi đấu (chưa ghép trận) thì xóa trắng bảng xếp hạng và thoát luôn.
+            // Nếu giải chưa có lịch thi đấu (chưa ghép trận) thì xóa trắng bảng xếp hạng và return.
             if (!DatabaseHelper.HasSchedule(_tournamentId))
             {
                 standingsDataGridView.DataSource = null;
@@ -229,7 +227,7 @@ namespace TeamListForm
                 btnReset.Visible = false;
                 InforButton.Visible = false;
                 updateButton.Enabled = false;
-                // QUAN TRỌNG: Ẩn luôn ComboBox vì chưa có gì để xem
+                // Ẩn luôn ComboBox vì chưa có gì để xem
                 choiceRoundComboBox.Visible = false;
                 comboGroupFilter.Visible = false;
             }
@@ -257,7 +255,7 @@ namespace TeamListForm
                                 "Chưa đủ đội bóng", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return; // Dừng lại ngay
             }
-            // Tất cả logic kiểm tra và gọi SQL đã nằm trong hàm này rồi
+            // Tất cả logic kiểm tra và gọi SQL nằm trong hàm này
             MatchGenerator.GenerateRound1(_tournamentId);
             UpdateButtonState();
             // Cập nhật giao diện sau khi tạo xong
@@ -270,23 +268,22 @@ namespace TeamListForm
         {
             try
             {
-                // --- 1. LẤY VÒNG HIỆN TẠI (Vòng sắp trở thành quá khứ) ---
+                // LẤY VÒNG HIỆN TẠI (Vòng sắp trở thành quá khứ)
                 int currentRound = DatabaseHelper.GetMaxRound(_tournamentId);
 
-                // --- 2. [QUAN TRỌNG] KHÓA SỔ VÒNG CŨ ---
+                // KHÓA VÒNG CŨ --> không cho sửa nữa
                 // Hành động này set Status = 2 cho toàn bộ trận đấu vòng hiện tại.
-                // Nhờ đó, khi mở lại MatchResultForm, code "if (_match.IsPlayed)" sẽ chạy và khóa form lại.
                 DatabaseHelper.LockRound(_tournamentId, currentRound);
-                // 1. Tạo dữ liệu vòng mới trong SQL
+                // Tạo dữ liệu vòng mới trong SQL
                 MatchGenerator.GenerateNextRound(_tournamentId);
 
-                // 2. Load lại danh sách vòng đấu vào ComboBox
+                // Load lại danh sách vòng đấu vào ComboBox
                 LoadRounds();
 
-                // 3. Cập nhật trạng thái nút
+                // Cập nhật trạng thái nút
                 UpdateButtonState();
 
-                // 4. Chọn vòng mới nhất
+                // Chọn vòng mới nhất
                 if (choiceRoundComboBox.Items.Count > 0)
                 {
                     choiceRoundComboBox.SelectedIndex = choiceRoundComboBox.Items.Count - 1;
@@ -301,17 +298,17 @@ namespace TeamListForm
         // INFO BUTTON
         private void InforButton_Click(object sender, EventArgs e)
         {
-            // 1. Kiểm tra xem người dùng có chọn dòng nào không
+            // Kiểm tra xem người dùng có chọn dòng nào không
             if (matchesDataGridView.CurrentRow == null)
             {
                 MessageBox.Show("Vui lòng chọn trận đấu để xem chi tiết!");
                 return;
             }
 
-            // 2. Lấy dữ liệu dòng đang chọn
+            // Lấy dữ liệu dòng đang chọn
             DataRowView row = (DataRowView)matchesDataGridView.CurrentRow.DataBoundItem;
 
-            // 3. Tạo object Match và đổ dữ liệu vào
+            // Tạo object Match và đổ dữ liệu vào
             Match m = new Match();
             m.MatchId = (int)row["MatchID"];
             m.Round = (int)row["Round"];
@@ -332,7 +329,7 @@ namespace TeamListForm
             m.AwayScore = row["AwayScore"] == DBNull.Value ? 0 : (int)row["AwayScore"];
             m.IsPlayed = row["HomeScore"] != DBNull.Value;
 
-            // --- PHẦN QUAN TRỌNG: LẤY NGÀY GIỜ VÀ ĐỊA ĐIỂM TỪ DB ---
+            // LẤY NGÀY GIỜ VÀ ĐỊA ĐIỂM TỪ DB
 
             // Kiểm tra cột MatchDate có tồn tại và có dữ liệu không
             if (row.Row.Table.Columns.Contains("MatchDate") && row["MatchDate"] != DBNull.Value)
@@ -353,13 +350,13 @@ namespace TeamListForm
             {
                 m.Location = ""; // Chưa có sân
             }
-            // --------------------------------------------------------
 
-            // 4. Mở Form InfoMatchForm
+            // Mở Form InfoMatchForm
             InfoMatchForm frm = new InfoMatchForm(m);
             frm.ShowDialog();
         }
 
+        // Mở form Info khi double click vào dòng
         private void matchesDataGridView_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
             InforButton_Click(sender, e);
@@ -433,7 +430,7 @@ namespace TeamListForm
                 return;
             }
 
-            // 2. Kiểm tra xem giải đã có lịch đấu chưa (để tránh reset khi chưa có gì)
+            // Kiểm tra xem giải đã có lịch đấu chưa (để tránh reset khi chưa có gì)
             if (!DatabaseHelper.HasSchedule(_tournamentId))
             {
                 MessageBox.Show("Giải đấu chưa bắt đầu, không cần reset.", "Thông báo");
@@ -455,10 +452,10 @@ namespace TeamListForm
             {
                 try
                 {
-                    // 4. Gọi hàm xóa dữ liệu trong Database
+                    // Gọi hàm xóa dữ liệu trong Database
                     DatabaseHelper.ResetTournamentMatches(_tournamentId);
 
-                    // 5. Xóa dữ liệu trên giao diện
+                    // Xóa dữ liệu trên giao diện
                     matchesDataGridView.DataSource = null;
                     standingsDataGridView.DataSource = null;
                     choiceRoundComboBox.Items.Clear();
@@ -467,7 +464,7 @@ namespace TeamListForm
                     if (comboGroupFilter.Items.Count > 0) comboGroupFilter.SelectedIndex = 0;
                     comboGroupFilter.Visible = false;
 
-                    // 6. Cập nhật lại trạng thái các nút (Nút Start sẽ hiện lại)
+                    // Cập nhật lại trạng thái các nút (Nút Start sẽ hiện lại)
                     UpdateButtonState();
 
                     // Load lại các thông tin bổ trợ (để đảm bảo sạch sẽ)
@@ -486,23 +483,15 @@ namespace TeamListForm
         // Hàm tự động đánh số thứ tự (1, 2, 3...) cho cột #
         private void standingsDataGridView_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
         {
-            // Lấy GridView đang chạy
-            DataGridView dgv = sender as DataGridView;
-            if (dgv == null) return;
-
-            // Kiểm tra: Nếu cột hiện tại có tiêu đề là "#" thì điền số
-            if (dgv.Columns[e.ColumnIndex].HeaderText == "#" && e.RowIndex >= 0)
+            if (e.ColumnIndex == 0 && e.RowIndex >= 0)
             {
-                // Logic: Giá trị = Số dòng + 1
                 e.Value = (e.RowIndex + 1).ToString();
                 e.FormattingApplied = true;
             }
         }
     }
 
-    // ==========================================
     // CÁC CLASS MODEL
-    // ==========================================
 
     public class Match
     {

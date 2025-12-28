@@ -14,20 +14,16 @@ namespace TeamListForm
 
             // Gán sự kiện
             this.Load += InfoMatchForm_Load;
-
-            // Sự kiện để tự điền số thứ tự (1, 2, 3...)
-            homeTeamDataGridView.CellFormatting += DataGridView_CellFormatting;
-            awayTeamdataGridView.CellFormatting += DataGridView_CellFormatting;
         }
 
         private void InfoMatchForm_Load(object sender, EventArgs e)
         {
             try
             {
-                // 1. Hiển thị thông tin chung
+                // Hiển thị thông tin chung
                 LoadMatchInfo();
 
-                // 2. Hiển thị danh sách cầu thủ
+                // Hiển thị danh sách cầu thủ
                 LoadPlayers();
             }
             catch (Exception ex)
@@ -64,7 +60,7 @@ namespace TeamListForm
             // Ngày giờ hiện tại
             if (_match.MatchDate != null)
             {
-                // Sửa định dạng ở đây: "yyyy-MM-dd HH:mm:ss"
+                // Định dạng: "yyyy-MM-dd HH:mm:ss"
                 dateLabel.Text = _match.MatchDate.Value.ToString("yyyy-MM-dd HH:mm:ss");
             }
             else
@@ -84,13 +80,13 @@ namespace TeamListForm
 
         private void LoadPlayers()
         {
-            // Tắt tự động tạo cột thừa (Quan trọng)
+            // Tắt tự động tạo cột thừa
             homeTeamDataGridView.AutoGenerateColumns = false;
             awayTeamdataGridView.AutoGenerateColumns = false;
 
             if (_match.HomeTeam != null)
             {
-                // Tên biến PlayerName, Position... sẽ tự map vào DataPropertyName bạn vừa chỉnh
+                // Tên biến PlayerName, Position... sẽ tự map vào DataPropertyName
                 homeTeamDataGridView.DataSource = DatabaseHelper.GetPlayersByTeam(_match.HomeTeam.ID);
             }
 
@@ -113,6 +109,16 @@ namespace TeamListForm
         private void backButton_Click(object sender, EventArgs e)
         {
             Close();
+        }
+
+        private void homeTeamDataGridView_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
+        {
+            DataGridView_CellFormatting(sender, e);
+        }
+
+        private void awayTeamdataGridView_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
+        {
+            DataGridView_CellFormatting(sender, e);
         }
     }
 }

@@ -662,13 +662,11 @@ namespace TeamListForm
             }
             return dt;
         }
-        // =============================================================
-        // PHẦN 4: TOURNAMENTS & MATCHES (CẬP NHẬT MỚI)
-        // =============================================================
+        // TOURNAMENTS & MATCHES
         //MATCHES
 
-        // 1. Lấy danh sách các vòng đấu (để đổ vào ComboBox)
-        public static List<string> GetRounds(int tournamentId) // Nên thêm tham số ID giải
+        // Lấy danh sách các vòng đấu (để đổ vào ComboBox)
+        public static List<string> GetRounds(int tournamentId)
         {
             var rounds = new List<string>();
             // Lọc theo giải đấu hiện tại
@@ -689,12 +687,12 @@ namespace TeamListForm
             }
             return rounds;
         }
-        // 2. Lấy danh sách trận đấu (Có hỗ trợ lọc theo vòng)
+        // Lấy danh sách trận đấu (Có hỗ trợ lọc theo vòng)
         public static DataTable GetMatchesTable(int tournamentId, int round, string groupName)
         {
             using (SqlConnection conn = new SqlConnection(connectionString))
             {
-                // LOGIC MỚI: JOIN VỚI BẢNG TOURNAMENTS ĐỂ LẤY LOCATION CHUẨN
+                // JOIN VỚI BẢNG TOURNAMENTS ĐỂ LẤY LOCATION CHUẨN
                 string sql = @"
                 SELECT 
                     M.ID as MatchID,
@@ -728,7 +726,6 @@ namespace TeamListForm
 
                 WHERE M.TournamentID = @tId AND M.Round = @r";
 
-                // --- Phần logic lọc và thực thi giữ nguyên ---
                 bool hasGroupFilter = !string.IsNullOrEmpty(groupName)
                                       && groupName != "All"
                                       && groupName != "Tất cả các bảng";
@@ -767,7 +764,7 @@ namespace TeamListForm
         // Cập nhật kết quả trận đấu
         public static void UpdateMatchResult(int matchId, int homeScore, int awayScore, bool isFinished)
         {
-            // 1. Xác định Status: Nếu xong thì 2, chưa xong thì 0
+            // Xác định Status: Nếu xong thì 2, chưa xong thì 0
             int status = isFinished ? 2 : 0;
 
             object winnerId = DBNull.Value;
@@ -777,7 +774,7 @@ namespace TeamListForm
             {
                 conn.Open();
 
-                // 2. Chỉ cần tính người thắng nếu trận đấu ĐÃ KẾT THÚC
+                // Chỉ cần tính người thắng nếu trận đấu ĐÃ KẾT THÚC
                 // (Nếu chưa kết thúc, WinnerID sẽ là DBNull.Value)
                 if (isFinished)
                 {
@@ -799,7 +796,7 @@ namespace TeamListForm
                     else if (awayScore > homeScore) winnerId = awayTeamId;
                 }
 
-                // 3. Cập nhật DB: Thay số 2 cứng bằng tham số @stat
+                // Tham số @stat để lưu trạng thái trận đấu
                 string updateSql = "UPDATE Matches SET HomeScore=@h, AwayScore=@a, Status=@stat, WinnerID=@win WHERE ID=@id";
 
                 using (SqlCommand cmd = new SqlCommand(updateSql, conn))
@@ -813,7 +810,7 @@ namespace TeamListForm
                 }
             }
         }
-        // [MỚI] 5. Lấy danh sách đội bóng thuộc một giải đấu cụ thể
+        // Lấy danh sách đội bóng thuộc một giải đấu cụ thể
         public static List<Team> GetTeamsByTournament(int tournamentId)
         {
             List<Team> list = new List<Team>();
@@ -887,7 +884,7 @@ namespace TeamListForm
                 }
                 catch (Exception ex)
                 {
-                    // "IM LẶNG LÀ VÀNG"
+                    // Không làm gì cả, trả về bảng rỗng
                 }
                 return dt;
             }
@@ -918,7 +915,7 @@ namespace TeamListForm
                 return (int)cmd.ExecuteScalar();
             }
         }
-        //  Hàm gọi Stored Procedure chia bảng
+        // Hàm gọi Stored Procedure chia bảng
         public static bool GenerateGroupStage(int tournamentId, int numberOfGroups)
         {
             using (SqlConnection conn = new SqlConnection(connectionString))
@@ -944,7 +941,7 @@ namespace TeamListForm
         // Hàm lấy số bảng của giải đấu
         public static int GetTournamentGroupCount(int tournamentId)
         {
-            // Mặc định là 1 bảng (nếu lỗi hay gì cũng về 1 cho an toàn)
+            // Mặc định là 1 bảng
             int defaultCount = 1;
             using (SqlConnection conn = new SqlConnection(connectionString))
             {
@@ -965,7 +962,7 @@ namespace TeamListForm
                 }
                 catch
                 {
-                    // "Im lặng là vàng" :v 
+                    // Nếu có lỗi thì trả về mặc định
                 }
             }
             return defaultCount;
