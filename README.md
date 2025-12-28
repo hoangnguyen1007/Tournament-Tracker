@@ -2,7 +2,7 @@
 
   # 🏆 TOURNAMENT TRACKER
   
-  **Hệ thống Quản lý Giải đấu Bóng đá & Theo dõi Tỉ số Trực tuyến**
+  **Hệ thống Quản lý Giải đấu & Theo dõi Tỉ số Trực tuyến**
   
   [![.NET](https://img.shields.io/badge/.NET-8.0-purple.svg)](https://dotnet.microsoft.com/)
   [![Language](https://img.shields.io/badge/Language-C%23-blue.svg)](https://docs.microsoft.com/en-us/dotnet/csharp/)
@@ -62,7 +62,7 @@ Dành cho người dùng phổ thông, tự động tạo Shortcut.
 
 ### 🔹 Cách 2: Bản Portable (Chạy ngay)
 Dành cho người dùng muốn nhanh gọn, copy vào USB.
-1. Tải file **`TournamentTracker_Portable_v.1.0.3.zip`**.
+1. Tải file **`TournamentTracker_v2.0.zip`**.
 2. Giải nén (Extract) toàn bộ thư mục.
 3. Chạy file **`TournamentTracker.exe`** bên trong.
 
@@ -86,6 +86,5 @@ Dành cho người dùng muốn nhanh gọn, copy vào USB.
   
   **TOURNAMENT TRACKER PROJECT**  
   <br> 
-  <i>Developed with ❤️, ☕ and C# by UIT Students.</i>
   
 </div>
