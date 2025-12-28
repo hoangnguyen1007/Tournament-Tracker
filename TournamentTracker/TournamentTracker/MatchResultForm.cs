@@ -46,16 +46,8 @@ namespace TeamListForm
             {
                 // Khóa nút Lưu
                 saveMatchButton.Enabled = false;
-
                 // Khóa Checkbox (Không cho bỏ tích nữa)
                 finishedCheckBox.Enabled = false;
-
-                // Khóa luôn ô nhập điểm cho chắc chắn
-                homeNumericUpDown.Enabled = false;
-                awayNumericUpDown.Enabled = false;
-
-                // vô hiệu hóa saveMatchButton
-                saveMatchButton.Enabled = false;
             }
         }
 

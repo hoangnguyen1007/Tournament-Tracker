@@ -270,6 +270,18 @@ namespace TeamListForm
             {
                 // LẤY VÒNG HIỆN TẠI (Vòng sắp trở thành quá khứ)
                 int currentRound = DatabaseHelper.GetMaxRound(_tournamentId);
+                // Kiểm tra chặt chẽ với Vòng loại trực tiếp (Round > 1)
+                // Round 1 (Vòng bảng) được phép bỏ qua để LockRound tự động điền 0-0 (Hòa)
+                if (currentRound > 1)
+                {
+                    // Kiểm tra: Nếu còn trận chưa đá (Status != 2) thì BÁO LỖI và DỪNG LẠI
+                    // Để ngăn chặn việc LockRound tự điền 0-0 gây lỗi không tìm được đội thắng
+                    if (!DatabaseHelper.IsRoundComplete(_tournamentId, currentRound))
+                    {
+                        MessageBox.Show("Chưa có kết quả của vòng hiện tại.");
+                        return;
+                    }
+                }
 
                 // KHÓA VÒNG CŨ --> không cho sửa nữa
                 // Hành động này set Status = 2 cho toàn bộ trận đấu vòng hiện tại.

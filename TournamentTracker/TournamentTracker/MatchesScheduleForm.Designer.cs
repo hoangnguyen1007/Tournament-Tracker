@@ -357,11 +357,11 @@
             InforButton.Cursor = Cursors.Hand;
             InforButton.FlatAppearance.BorderSize = 0;
             InforButton.FlatStyle = FlatStyle.Flat;
-            InforButton.Font = new Font("Segoe UI", 31F, FontStyle.Regular, GraphicsUnit.Pixel);
+            InforButton.Font = new Font("Segoe UI", 31F, FontStyle.Bold, GraphicsUnit.Pixel);
             InforButton.ForeColor = Color.White;
-            InforButton.Location = new Point(1177, 110);
+            InforButton.Location = new Point(1172, 110);
             InforButton.Name = "InforButton";
-            InforButton.Size = new Size(62, 50);
+            InforButton.Size = new Size(67, 50);
             InforButton.TabIndex = 0;
             InforButton.Text = "⌞⌝";
             InforButton.TextAlign = ContentAlignment.TopCenter;
@@ -428,7 +428,7 @@
             btnReset.FlatStyle = FlatStyle.Flat;
             btnReset.Font = new Font("Segoe UI", 31F, FontStyle.Bold, GraphicsUnit.Pixel, 0);
             btnReset.ForeColor = Color.White;
-            btnReset.Location = new Point(1121, 110);
+            btnReset.Location = new Point(1116, 110);
             btnReset.Margin = new Padding(3, 4, 3, 4);
             btnReset.Name = "btnReset";
             btnReset.Size = new Size(50, 50);
