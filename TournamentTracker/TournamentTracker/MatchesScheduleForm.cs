@@ -25,6 +25,14 @@ namespace TeamListForm
 
         private void LoadMatchesToGrid()
         {
+            if (!_isOwner)
+            {
+                matchesDataGridView.Size = new Size(585, 549);
+            }
+            else
+            {
+                matchesDataGridView.Size = new Size(585, 478);
+            }
             // Kiểm tra nếu chưa chọn vòng đấu thì thoát
             if (choiceRoundComboBox.SelectedItem == null) return;
             matchesDataGridView.AutoGenerateColumns = false; // Ngăn tự động tạo cột
