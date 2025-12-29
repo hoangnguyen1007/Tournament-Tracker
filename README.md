@@ -6,7 +6,7 @@
   
   [![.NET](https://img.shields.io/badge/.NET-8.0-purple.svg)](https://dotnet.microsoft.com/)
   [![Language](https://img.shields.io/badge/Language-C%23-blue.svg)](https://docs.microsoft.com/en-us/dotnet/csharp/)
-  [![Database](https://img.shields.io/badge/Database-SQL%20Server%20Cloud-red.svg)]()
+  [![Database](https://img.shields.io/badge/Database-SQL%20Server%20Cloud-red.svg)](https://www.smarterasp.net/)
   [![Status](https://img.shields.io/badge/Status-Release%20v1.0-success.svg)]()
 
   <p align="center">
@@ -56,13 +56,13 @@ Dự án cung cấp 2 phiên bản tại mục [**Releases**](../../releases). V
 
 ### 🔹 Cách 1: Cài đặt chuyên nghiệp (Recommended)
 Dành cho người dùng phổ thông, tự động tạo Shortcut.
-1. Tải file **`TournamentTracker_Installer.msi`**.
+1. Tải file **`TournamentTrackerSetup.msi`**.
 2. Chạy file cài đặt và nhấn **Next** liên tục.
 3. Mở ứng dụng từ biểu tượng ngoài Desktop.
 
 ### 🔹 Cách 2: Bản Portable (Chạy ngay)
-Dành cho người dùng muốn nhanh gọn, copy vào USB.
-1. Tải file **`TournamentTracker_v2.0.zip`**.
+Dành cho người dùng muốn nhanh gọn.
+1. Tải file **`TournamentTracker_v1.0.zip`**.
 2. Giải nén (Extract) toàn bộ thư mục.
 3. Chạy file **`TournamentTracker.exe`** bên trong.
 
