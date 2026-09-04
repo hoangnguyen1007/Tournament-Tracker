@@ -1,82 +1,61 @@
-<div align="center">
+# Tournament Tracker
 
-  # 🏆 TOURNAMENT TRACKER
-  
-  **Hệ thống Quản lý Giải đấu & Theo dõi Tỉ số Trực tuyến**
-  
-  [![.NET](https://img.shields.io/badge/.NET-8.0-purple.svg)](https://dotnet.microsoft.com/)
-  [![Language](https://img.shields.io/badge/Language-C%23-blue.svg)](https://docs.microsoft.com/en-us/dotnet/csharp/)
-  [![Database](https://img.shields.io/badge/Database-SQL%20Server%20Cloud-red.svg)](https://www.smarterasp.net/)
-  [![Status](https://img.shields.io/badge/Status-Release%20v1.0-success.svg)]()
+Tournament Tracker is a C# Windows Forms desktop application designed to streamline the management of competitive tournaments. It provides a complete workflow for registering teams, configuring brackets, logging match scores, and tracking overall tournament progress using a Microsoft SQL Server database.
 
-  <p align="center">
-    <a href="#tính-năng-nổi-bật">Tính năng</a> •
-    <a href="#công-nghệ-sử-dụng">Công nghệ</a> •
-    <a href="#cài-đặt">Cài đặt</a> •
-    <a href="#kiến-trúc-hệ-thống">Kiến trúc</a> •
-    <a href="#nhóm-tác-giả">Tác giả</a>
-  </p>
-</div>
+## Key Features
 
----
+- **Tournament Configuration**: Set up new tournaments, define entry fees, and allocate prize distributions.
+- **Team Management**: Register teams, add players, and manage participant data.
+- **Bracket Generation**: Automatically schedule matchups and organize rounds based on the number of participating teams.
+- **Match Scoring**: Record scores for individual fixtures and automatically advance winning teams to the next round.
+- **Dashboard Overview**: Monitor active tournaments, view upcoming fixtures, and track completed matches from a centralized dashboard.
+- **Data Persistence**: Reliable data management using SQL Server, ensuring consistent state tracking across application sessions.
 
-## 📖 Giới thiệu (About)
+## Tech Stack
 
-**Tournament Tracker** là một ứng dụng Desktop được xây dựng trên nền tảng .NET 8 (Windows Forms), được thiết kế để giải quyết các bài toán phức tạp trong việc tổ chức và vận hành các giải đấu thể thao.
+- **Language**: C# (.NET Framework)
+- **UI Framework**: Windows Forms (WinForms)
+- **Database Engine**: Microsoft SQL Server
+- **Data Access**: ADO.NET (encapsulated within `DatabaseHelper`)
 
-Trong thực tế, việc quản lý giải đấu bằng các công cụ thủ công như giấy tờ hay bảng tính Excel thường gặp nhiều hạn chế: dễ sai sót khi nhập liệu, khó khăn trong việc tính toán hiệu số bàn thắng/bại, và tốn nhiều thời gian để sắp xếp lịch thi đấu công bằng. **Tournament Tracker** số hóa toàn bộ quy trình này, mang đến một trải nghiệm quản lý khép kín và chuyên nghiệp
+## Project Structure
 
----
+The application is structured to separate data access from UI logic:
 
-## 🚀 Tính năng nổi bật (Key Features)
+- `Database/TournamentTracker.sql`: The SQL script containing the schema, tables, and relationships.
+- `App.config`: Stores the database connection string and application settings.
+- `DatabaseHelper.cs`: A utility class handling SQL connection pooling, command execution, and data retrieval.
+- `Home.cs`: The main dashboard for viewing tournament progress and matchups.
+- `CreaTourForm.cs`: The interface for creating and configuring new tournaments.
+- `InfoMatchForm.cs`: The interface for inspecting match details and submitting scores.
 
-* **☁️ Cloud-First Architecture:** Dữ liệu được lưu trữ tập trung trên máy chủ SQL Server Cloud, đảm bảo tính nhất quán và đồng bộ thời gian thực (Real-time Sync).
-* **🔒 Secure Authentication:** Hệ thống đăng ký/đăng nhập bảo mật, phân quyền người dùng.
-* **📅 Smart Scheduling:** Thuật toán tự động sắp xếp lịch thi đấu vòng tròn (Round-Robin) và tạo bảng đấu một cách công bằng.
-* **📊 Dashboard Trực quan:** Giao diện theo dõi tỉ số, bảng xếp hạng (Standings) được cập nhật tự động ngay khi có kết quả trận đấu.
-* **📦 Flexible Deployment:** Cung cấp đa dạng tùy chọn cài đặt: Bộ cài chuẩn Windows (.msi) hoặc bản Portable (.zip) chạy ngay không cần cài đặt.
+## Setup and Installation
 
----
+### 1. Database Configuration
+1. Open SQL Server Management Studio (SSMS) or Azure Data Studio.
+2. Open and execute the `TournamentTracker/Database/TournamentTracker.sql` script.
+3. Verify that the `TournamentTracker` database and all required tables have been created successfully.
 
-## 🛠 Công nghệ sử dụng (Tech Stack)
+### 2. Application Configuration
+1. Open the solution file (`TournamentTracker.sln`) in Visual Studio.
+2. Locate the `App.config` file in the main project directory.
+3. Update the `connectionStrings` section to point to your local SQL Server instance:
 
-| Thành phần | Công nghệ | Chi tiết |
-| :--- | :--- | :--- |
-| **Frontend** | Windows Forms (WinForms) | .NET 8.0, Modern UI Design |
-| **Backend Logic** | C# | OOP, LINQ, Exception Handling |
-| **Database** | SQL Server (Cloud Hosted) | T-SQL, Stored Procedures, Relational Design |
-| **Connectivity** | ADO.NET | Direct TCP/IP Connection, SqlClient |
-| **Tools** | Visual Studio 2022 | SSMS, Git, GitHub Actions |
+    <connectionStrings>
+      <add name="TournamentTracker" 
+           connectionString="Server=YOUR_SERVER_NAME;Database=TournamentTracker;Trusted_Connection=True;" 
+           providerName="System.Data.SqlClient" />
+    </connectionStrings>
 
----
+### 3. Build and Run
+1. Set the build configuration to `Debug` or `Release`.
+2. Build the solution (Ctrl + Shift + B).
+3. Run the application (F5).
 
-## 📥 Hướng dẫn Cài đặt & Sử dụng (Installation)
+## Usage Flow
 
-Dự án cung cấp 2 phiên bản tại mục [**Releases**](../../releases). Vui lòng chọn phiên bản phù hợp:
-
-### 🔹 Cách 1: Cài đặt chuyên nghiệp (Recommended)
-Dành cho người dùng phổ thông, tự động tạo Shortcut.
-1. Tải file **`TournamentTrackerSetup.msi`**.
-2. Chạy file cài đặt và nhấn **Next** liên tục.
-3. Mở ứng dụng từ biểu tượng ngoài Desktop.
-
-### 🔹 Cách 2: Bản Portable (Chạy ngay)
-Dành cho người dùng muốn nhanh gọn.
-1. Tải file **`TournamentTracker_v1.0.zip`**.
-2. Giải nén (Extract) toàn bộ thư mục.
-3. Chạy file **`TournamentTracker.exe`** bên trong.
-
-> **⚠️ Lưu ý:** Do ứng dụng chưa được ký số (Digital Signature), Windows Defender có thể hiện cảnh báo màu xanh (SmartScreen). Bạn vui lòng chọn **"More info"** -> **"Run anyway"** để tiếp tục.
-
----
-
-## 👥 Nhóm Tác giả (Authors) 
-
-| STT | Sinh viên thực hiện | MSSV |
-| :--: | :--- | :--- |
-| **1** | **Tô Thành Nguyên** | 24521207 |
-| **2** | **Lê Vũ Hoàng Nguyên** | 24521182 | 
-| **3** | **Nguyễn Quốc Nguyên** | 24521197 | 
-
----
-*© 2025 Tournament Tracker Project.* 
+1. Launch the application to access the `Home` dashboard.
+2. Navigate to `CreaTourForm` to initialize a new tournament, add teams, and configure the prize pool.
+3. Once the tournament is created, the system will generate the first round of matchups.
+4. Select a matchup from the dashboard to open `InfoMatchForm`.
+5. Enter the final score for the match and submit. The system will automatically move the winner to the next bracket until a champion is crowned.
